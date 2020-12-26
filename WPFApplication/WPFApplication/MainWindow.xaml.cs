@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,29 @@ namespace WPFApplication
         public MainWindow()
         {
             InitializeComponent();
+            loadUsers();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Test Clicked");
+        }
+
+        private void loadUsers()
+        {
+            NpgsqlConnection con = new NpgsqlConnection("Server=localhost;Port=5432;Database=Test;Username=postgres;Password=Password");
+            con.Open();
+
+            NpgsqlCommand command = new NpgsqlCommand("select * from \"UserDetails\"", con);
+            NpgsqlDataReader reader = command.ExecuteReader();
+
+            Paragraph paragraph = new Paragraph();
+            while (reader.Read())
+            {
+                paragraph.Inlines.Add(reader["Username"].ToString());
+            }
+            richTextBox.Document = new FlowDocument(paragraph);
+
         }
     }
 }
