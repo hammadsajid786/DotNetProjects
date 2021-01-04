@@ -46,7 +46,7 @@ namespace WPFApplication
                 paragraph.Inlines.Add(reader["Username"].ToString());
             }
             richTextBox.Document = new FlowDocument(paragraph);
-
+            // Need to update it to the MVVVM template
         }
     }
 }
