@@ -29,7 +29,7 @@ namespace WPFApplication
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Test Clicked");
+            MessageBox.Show("Test Clicked Time 11:58Pm 2 Feb 2021");
         }
 
         private void loadUsers()
