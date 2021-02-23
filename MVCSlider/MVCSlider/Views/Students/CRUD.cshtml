@@ -1,0 +1,283 @@
+﻿@model IEnumerable<object>
+
+@{
+    MVCSlider.Models.Students modelStudent = (MVCSlider.Models.Students)Model.Where(item => item is MVCSlider.Models.Students).FirstOrDefault();
+    List<MVCSlider.Models.StudentsSubjects> modelStudentSubjectList = (List<MVCSlider.Models.StudentsSubjects>)Model.Where(item => item is List<MVCSlider.Models.StudentsSubjects>).FirstOrDefault();
+
+
+    if (Request.QueryString["Mode"] == null)
+    {
+        ViewBag.Title = "Add New Student";
+    }
+    else
+    {
+        if (Convert.ToString(Request.QueryString["Mode"]) == "Edit")
+        {
+            ViewBag.Title = "Modify Student";
+        }
+    }
+
+
+
+}
+
+
+<style type="text/css">
+    #frmStudents div {
+        padding-bottom: 5px;
+    }
+
+    #frmStudents .validate {
+        color: red;
+    }
+
+    .div-Table {
+        display: table;
+    }
+
+        .div-Table div {
+            display: table-row;
+            padding-bottom:16px;
+        }
+
+            .div-Table div div {
+                display: table-cell;
+                padding-right: 20px;
+                padding-bottom:16px;
+            }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnSave").click(function () {
+            var response = true;
+            $("#ValidationSummary").html("");
+
+            $("#ValidationSummary").append("<ul>");
+            if ($("input[name='StudentNumber']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter Student Number.</li>");
+                response = false;
+            }
+            if ($("input[name='Password']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter user password.</li>");
+                response = false;
+            }
+
+            if ($("input[name='FirstName']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter First Name.</li>");
+                response = false;
+            }
+
+            if ($("input[name='LastName']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter Last Name.</li>");
+                response = false;
+            }
+
+            if ($("input[name='DateofBirth']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter date of birth (MM/dd/yyyy).</li>");
+                response = false;
+            }
+
+
+            if ($("input[name='BatchCode']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter student's batch.</li>");
+                response = false;
+            }
+
+
+            $("#ValidationSummary").append("</ul>");
+
+            return response;
+        });
+
+
+
+    });
+
+</script>
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Student Definition  </h2>
+</div>
+<hr />
+
+<h3>
+    @{
+
+        if (Request.QueryString["Mode"] == null)
+        {
+            Write("Add New Student");
+        }
+        else
+        {
+            if (Convert.ToString(Request.QueryString["Mode"]) == "Edit")
+            {
+                Write("Modify Student");
+            }
+        }
+    }
+</h3>
+
+
+
+<div style="display:block; margin-top:20px;" class="form-group">
+
+    <div style="color: red;">
+        @ViewBag.Error
+        <span id="ValidationSummary">
+            &nbsp;
+        </span>
+
+    </div>
+
+
+    <form id="frmStudents" action="CRUD" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="StudentID" value="@modelStudent.StudentID">
+        @{var vMode = String.IsNullOrEmpty(Request.QueryString["Mode"]) == true ? "" : Request.QueryString["Mode"]; }
+        <input type="hidden" name="Mode" value="@vMode">
+
+        <div>
+            Student Number <span class="validate">*</span>
+        </div>
+        <div>
+            <input type="text" name="StudentNumber" class="form-control" style="width:120px;" maxlength="10" value="@modelStudent.StudentNumber" />
+        </div>
+        <div>
+            Password <span class="validate">*</span>
+        </div>
+        <div>
+            <input type="password" name="Password" class="form-control" style="width:100px;" maxlength="20" value="@modelStudent.Password" />
+        </div>
+        <div class="div-Table">
+
+            <div>
+
+                <div>
+                    First Name <span class="validate">*</span>
+
+                </div>
+                <div>
+                    Middle Initials 
+                </div>
+                <div>
+                    Last Name <span class="validate">*</span>
+                </div>
+
+            </div>
+
+            <div>
+
+                <div>
+                    <input type="text" name="FirstName" class="form-control" style="width:150px;" maxlength="50" value="@modelStudent.FirstName" />
+                </div>
+
+                <div>
+                    <input type="text" name="MiddleInit" class="form-control" style="width:80px;" maxlength="50" value="@modelStudent.MiddleInit" />
+                </div>
+
+
+                <div>
+                    <input type="text" name="LastName" class="form-control" style="width:150px;" maxlength="50" value="@modelStudent.LastName" />
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            Date of Birth <span class="validate">*</span>
+        </div>
+        <div>
+            @{ var DOB = modelStudent.DateofBirth == DateTime.MinValue ? "" : modelStudent.DateofBirth.ToString("MM/dd/yyyy");  }
+            <input type="text" name="DateofBirth" class="form-control" style="width:180px;" placeholder="mm/dd/yyyy" value="@DOB" />
+        </div>
+
+        <div>
+            Batch <span class="validate">*</span>
+        </div>
+        <div>
+            <input type="text" name="BatchCode" class="form-control" style="width:80px;" maxlength="50" value="@modelStudent.BatchCode" />
+        </div>
+
+        <div class="div-Table">
+            <div>
+                <div>
+                    Street 1
+                </div>
+                <div>
+                    Street 2
+                </div>
+                <div>
+                    City
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <input type="text" name="Address1" class="form-control" style="width:250px;" maxlength="50" value="@modelStudent.Address1" />
+                </div>
+
+                <div>
+                    <input type="text" name="Address2" class="form-control" style="width:250px;" maxlength="50" value="@modelStudent.Address2" />
+                </div>
+                <div>
+                    <input type="text" name="City" class="form-control" style="width:150px;" maxlength="50" value="@modelStudent.City" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="div-Table">
+            <div>
+                <div>
+                    Zip Code
+                </div>
+                <div>
+                    State Code
+                </div>
+            </div>
+            <div>
+                <div>
+                    <input type="text" name="Zipcode" class="form-control" style="width:80px;" maxlength="50" value="@modelStudent.Zipcode" />
+                </div>
+                <div>
+                    <input type="text" name="StateCode" class="form-control" style="width:80px;" maxlength="50" value="@modelStudent.StateCode" />
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <h4>Subjects To Assign</h4>
+        </div>
+        <div style="width:50%; display:inline-block;">
+
+            @foreach (var item in modelStudentSubjectList)
+            {
+                <div style="float:left; padding-right:10px; min-width:200px;">
+                    <input type="checkbox" name="SelectedSubjects" value="@item.SubjectName" checked="@item.IsSelected" />@item.SubjectName
+                </div>
+            }
+
+        </div>
+
+
+        <div style="float:none; display:block;">
+            &nbsp;
+        </div>
+        <div style="float:left; padding-right:5px;">
+            @{var varSubmitCaption = Request.QueryString["Mode"] == null ? "Save" : (Convert.ToString(Request.QueryString["Mode"]) == "Edit" ? "Update" : "Save ");}
+            <input type="submit" id="btnSave" value="@varSubmitCaption" class=" btn btn-primary" />
+        </div>
+        <div>
+            <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@Url.Action("List","Students")'" />
+        </div>
+
+    </form>
+
+</div>

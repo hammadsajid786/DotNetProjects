@@ -1,0 +1,173 @@
+﻿@model List<object>
+
+@{
+    ViewBag.Title = "Modify Subject";
+    MVCSlider.Models.Subjects modelSubject = (MVCSlider.Models.Subjects)ViewBag.MainModel;
+    IEnumerable<SelectListItem> slstSubjectType = (IEnumerable<SelectListItem>)ViewBag.ddSubjectTypelist;
+    IEnumerable<SelectListItem> ddlparentSubjects = (IEnumerable<SelectListItem>)ViewBag.ddlparentSubjectslist;
+
+}
+
+
+<style type="text/css">
+    #frmSubjects div {
+        padding-bottom: 5px;
+    }
+
+    #frmSubjects .validate {
+        color: red;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnSave").click(function () {
+            var response = true;
+            $("#ValidationSummary").html("");
+
+            $("#ValidationSummary").append("<ul>");
+            if ($("input[name='SubjectCode']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter subject code.</li>");
+                response = false;
+            }
+
+            if ($("input[name='SubjectName']").val() == "") {
+                $("#ValidationSummary").append("<li>Please enter subject name.</li>");
+                response = false;
+            }
+
+            var ddlsubjectType = $("#modelSubject_SubjectType");
+
+
+            if ($("#modelSubject_SubjectType option:selected").val() == "8") {
+
+                if ($("input[name='SubjectYear']").val() == "") {
+                    $("#ValidationSummary").append("<li>Please select paper year.</li>");
+                    response = false;
+                }
+            }
+
+
+            $("#ValidationSummary").append("</ul>");
+
+            return response;
+        });
+
+        $("#modelSubject_SubjectType").change(function () { ddSubjectType_SelectedIndexChanged(this) });
+
+
+    });
+
+    function ddSubjectType_SelectedIndexChanged(sender) {
+
+        if (sender.options.item(sender.options.selectedIndex).value == "8") {
+            $("#paperDiv").show();
+        }
+    }
+
+
+    window.onload = function(){
+        if ($("#modelSubject_SubjectType option:selected").val() == "8") {
+            $("#paperDiv").show();
+        }
+
+    };
+
+</script>
+
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Subject Definition  </h2>
+</div>
+<hr />
+
+<h3>Modify Subject</h3>
+
+
+<div style="display:block; margin-top:20px;" class="form-group">
+
+    <div style="color: red;">
+        @ViewBag.Error
+        <span id="ValidationSummary">
+            &nbsp;
+        </span>
+
+    </div>
+
+    <form id="frmSubjects" action="Edit" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="@modelSubject.SubjectID" />
+
+        <div>
+            Subject Code <span class="validate">*</span>
+        </div>
+        <div>
+            <input type="text" name="SubjectCode" class="form-control" style="width:80px;" maxlength="5" value="@modelSubject.SubjectCode" />
+        </div>
+
+        <div>
+            Subject Name <span class="validate">*</span>
+
+        </div>
+        <div>
+            <input type="text" name="SubjectName" class="form-control" style="width:180px;" maxlength="50" value="@modelSubject.SubjectName" />
+        </div>
+        <div>
+            Type <span class="validate">*</span>
+
+        </div>
+        <div>
+            @Html.DropDownListFor(x => modelSubject.SubjectType, slstSubjectType, new { @name = "SubjectType" })
+        </div>
+
+        <div id="paperDiv" style="display:none;">
+            <div>
+                Paper Year <span class="validate">*</span>
+
+            </div>
+            <div>
+                <input type="text" name="SubjectYear" class="form-control" style="width:100px;" maxlength="10" value="@modelSubject.SubjectYear">
+            </div>
+            <div>
+                Paper of <span class="validate">*</span>
+
+            </div>
+            <div>
+                @Html.DropDownListFor(x => modelSubject.ParentSubjectID, ddlparentSubjects)
+            </div>
+        </div>
+
+
+        <div>
+            Subject Image
+
+        </div>
+        <div>
+            <input type="file" name="SubjectImage" accept="*.jpg" class="form-control-file" />
+        </div>
+        <div>
+            @{
+                var imagedatainbase = Convert.ToBase64String(modelSubject.SubjectImage);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", imagedatainbase);
+            }
+            <img src="@imgSrc" style="width:180px;" />
+            <input type="hidden" name="SubjectImage" value="@imagedatainbase" />
+        </div>
+        <div>
+            &nbsp;
+        </div>
+        <div style="float:left;  padding-right:5px;">
+            <input type="submit" id="btnSave" value="Update" class="btn btn-primary" />
+        </div>
+        <div>
+            <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@Url.Action("List","Subjects")'" />
+        </div>
+
+    </form>
+
+</div>

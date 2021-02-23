@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Exercises";
+    WebGrid mygrid = new WebGrid(source: ViewBag.ExercisesList, rowsPerPage: 10, canPage: true, canSort: true);
+
+}
+
+<style type="text/css">
+    #frmMain div {
+        display: table;
+        margin-bottom: 5px;
+    }
+
+        #frmMain div div {
+            display: table-row;
+        }
+
+            #frmMain div div div {
+                display: table-cell;
+                padding-right: 10px;
+                vertical-align: middle;
+            }
+
+    #frmMain span {
+        color: red;
+    }
+
+    .grdCol {
+        width: 120px;
+    }
+
+    .grdColD {
+        width: 200px;
+    }
+
+    .grdViewEdit {
+        width: 32px;
+    }
+</style>
+
+<script type="text/javascript">
+
+
+    function fnEditRecord(SubjectsChaptersID, Code, ExerciseName) {
+
+        $("[name*='SubjectsChaptersID']").val(SubjectsChaptersID);
+        $("[name*='ExerciseCode']").val(Code);
+        $("[name*='ExerciseName']").val(ExerciseName);
+        $("#btnSave").val("Modify");
+        return false;
+    }
+
+    function fnReset() {
+
+        $("[name*='SubjectsChaptersID']").val(0);
+        $("[name*='ExerciseCode']").val("");
+        $("[name*='ExerciseName']").val("");
+        $("#btnSave").val("Save");
+    }
+
+
+
+</script>
+
+
+<div style="display:inline-block; margin-top:50px; width:100%">
+    <div style="float:left;">
+        <img src="~/Images/AdminPanel.png" alt="" />
+    </div>
+    <div style="margin-bottom:20px;">
+        <h2>Admin Dashboard - Exercise Definition </h2>
+    </div>
+</div>
+<hr />
+
+<div style="width:80%; padding-left:15px; display:inline-block;">
+
+    <form id="frmMain" action="Exercises" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="SubjectsChaptersID" value="0" />
+
+        <input type="hidden" name="ParentChapterID" value="@ViewBag.ParentChapterID" />
+
+
+        <div>
+            <div>
+                <div>
+                    Subject:
+                </div>
+                <div>
+                    @ViewBag.SubjectName
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    Chapter:
+                </div>
+                <div>
+                    @ViewBag.ChapterName
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <div>
+                    Exercise Code <span class="validate">*</span>
+                </div>
+                <div>
+                    <input type="text" name="ExerciseCode" class="form-control" style="width:80px;" maxlength="5" />
+                </div>
+                <div>
+                    Exercise Name <span class="validate">*</span>
+                </div>
+                <div>
+                    <input type="text" name="ExerciseName" class="form-control" style="width:180px;" maxlength="50" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            &nbsp;
+        </div>
+
+        <div style="display:inline-block; width:500px;">
+
+
+
+            <div style="float:right">
+                <input type="button" value="Reset" id="btnReset" onclick="fnReset();" class="btn btn-primary" />
+            </div>
+            <div style="float:right; padding-right:10px;">
+                <input type="submit" value="Save" id="btnSave" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+<div style="width:500px;  margin-left:15px; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+    @mygrid.GetHtml(
+
+    tableStyle: "webGrid",
+    headerStyle: "header",
+    footerStyle: "",
+    rowStyle: "",
+    alternatingRowStyle: "alt",
+    fillEmptyRows: true,
+    mode: WebGridPagerModes.All,
+    firstText: "First",
+    previousText: "Prev",
+    nextText: "Next",
+    lastText: "Last",
+    columns: mygrid.Columns(
+                            mygrid.Column(header: "", format: @<text><a href="#" onclick="return fnEditRecord(@item.SubjectsChaptersID,'@item.ExerciseCode','@item.ExerciseName',@item.ParentChapterID);"><img alt="" src="~/Images/EditRecord.png" style="width:32px;" title="Edit record" /></a></text>, style: "grdViewEdit"),
+                            mygrid.Column(header: "", format: @<text><a href="../Chapters/ChapterContents?ID=@item.SubjectsChaptersID"><img alt="" src="~/Images/Box_content.png" style="width:32px;" title="Load Contents" /></a></text>, style: "grdViewEdit"),
+                                                            mygrid.Column("ExerciseCode", "Exercise Code", style: "grdCol"),
+                                                            mygrid.Column("ExerciseName", "Exercise Name", style: "grdColD"),
+                            mygrid.Column(header: "", format: @<text><a href="../Chapters/ExercisesDelete?ID=@item.SubjectsChaptersID&ParentID=@item.ParentChapterID"><img alt="" src="~/Images/DeleteRed.png" style="width:32px;" title="Remove record" /></a></text>, style: "grdViewEdit")
+                                                                                                       )
+                                                                                            )
+
+</div>

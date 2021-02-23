@@ -1,0 +1,66 @@
+﻿@model List<MVCSlider.Models.SubjectChapters>
+
+
+@{
+    ViewBag.Title = "Chapters";
+    var lstSubjectInfo = Model.FirstOrDefault();
+    var lstChapters = Model.Where(item => item.ChapterType == 1);
+    var lstExercises = Model.Where(item => item.ChapterType == 2);
+}
+
+<div style="float:left; display:block;">
+    <img src="~/Images/StudentPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Student Dashboard</h2>
+</div>
+<hr />
+
+<div style="display:inline-block; width:100%">
+    <div style="float:right;">
+        <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@Url.Action("Index","User")'" />
+    </div>
+</div>
+
+<div style="font-size:20px; font-weight:bold;">
+
+    @{
+        if (lstSubjectInfo != null)
+        {
+            var SubjetName = lstSubjectInfo.SubjectName;
+            Write("Subject: " + SubjetName);
+        }
+        else
+        {
+            Write("This subject does not have any chapters attached, please check...");
+
+        }
+    }
+</div>
+
+<div style="display:inline-block; width:100%">
+    <ul class="chapters-list">
+        @foreach (var itemChapters in lstChapters)
+        {
+            <li>
+                @{var varAction = @Url.Action("ChaptersDetails", "User") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID);  }
+                <a href="@varAction">@itemChapters.ChapterName</a>
+
+                @if (lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID).Count() > 0)
+                {
+                    <ul>
+                        @foreach (var itemExercise in lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID))
+                        {
+                            <li>
+                                @{var varExAction = @Url.Action("ChaptersDetails", "User") + string.Format("?SubChapID={0}", itemExercise.SubjectsChaptersID);  }
+                                <a href="@varExAction">@itemExercise.ChapterName</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                }
+            </li>
+        }
+    </ul>
+</div>

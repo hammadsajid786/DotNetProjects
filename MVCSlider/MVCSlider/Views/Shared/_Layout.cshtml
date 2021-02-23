@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="SHORTCUT ICON" href="~/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/flexslider.css" rel="stylesheet" />
+    <link href="~/Styles/styles.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.flexslider-min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86943021-2">
+    </script>
+    <script type="text/javascript">
+
+                            //$(document).contextmenu(function () { window.status = "Right click is blocked by site administrator..."; return false; });
+                       // < !--Global site tag(gtag.js) - Google Analytics-- >
+
+              
+                    window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+
+                  gtag('config', 'UA-86943021-2');
+   
+    </script>
+
+
+</head>
+<body>
+    
+    <div class="logout-bar">
+        <div class="container">
+            <div style="float:right; display:block;">
+                @{
+                    if (Session["UserName"] == null)
+                    {
+                        <span>Please Login...</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Logout","Home")">Logout</a>
+                        <span>@Convert.ToString(Session["UserFirstName"]) @Convert.ToString(Session["UserLastName"]) [@Convert.ToString(Session["UserType"])]</span>
+                        
+                        
+                    }
+                }
+            </div>
+        </div>
+    </div>
+        
+    @{
+
+        var lnkHome = Session["UserID"] == null ? Url.Action("Index", "Home") : (Convert.ToString(Session["UserType"]) == "Admin" ? Url.Action("Index", "Admin") : Url.Action("Index", "User"));
+
+        <div class="index-menu-wraper">
+            <div class="container">
+               <!-- <a class="login-btn" href="">Login</a>-->
+                <a class="cam-logo" href="@lnkHome"> <img src="~/Images/cam-logo.png" /></a>
+                <div id="mainMenuBlack" class="main-menu">
+                    <div>
+                        
+                        <ul class="nav nav-pills">
+                            <li role="presentation"><a href="@lnkHome">Home</a> </li>
+                            <li role="presentation"><a href="@Url.Action("AboutUs","Home")">About US</a></li>
+                            <li role="presentation"><a href="@Url.Action("OurConsultants","Home")">Our Consultants</a></li>
+                            <li role="presentation"><a href="@Url.Action("ServicesAndBenefits","Home")">Services &amp; Benefits</a></li>
+                            <li role="presentation"><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+
+        <div id="mainMenuBlack">
+            <div>
+                <ul class="nav nav-pills">
+                    <li role="presentation"><a href="@lnkHome">HOME</a> </li>
+                    <li role="presentation"><a href="@Url.Action("AboutUs","Home")">ABOUT US</a></li>
+                    <li role="presentation"><a href="@Url.Action("OurConsultants","Home")">OUR CONSULTANTS</a></li>
+                    <li role="presentation"><a href="@Url.Action("ServicesAndBenefits","Home")">SERVICES &amp; BENEFITS</a></li>
+                    <li role="presentation"><a href="@Url.Action("ContactUs","Home")">CONTACT US</a></li>
+                </ul>
+            </div>
+
+        </div>
+-->
+    }
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div style="height:50px;">
+        &nbsp;
+    </div>
+    <div class="sitefooter">
+        Copyrights ® 2016
+    </div>
+</body>
+</html>

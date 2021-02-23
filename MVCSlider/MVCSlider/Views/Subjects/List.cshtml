@@ -1,0 +1,57 @@
+﻿@model List<MVCSlider.Models.Subjects>
+
+@{
+    ViewBag.Title = "Subjects - Listings";
+    WebGrid mygrid = new WebGrid(source: Model, rowsPerPage: 10, canPage: true, canSort: true);
+
+}
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Subject Definition  </h2>
+</div>
+<hr />
+
+<h3>Subjects - Listings</h3>
+
+
+<div style="width:80%; display:block;">
+    <div style="float:right; display:block;">
+        <input type="button" value="Add New Subject" class="btn btn-primary" onclick="location.href='@Url.Action("Create","Subjects")'" />
+    </div>
+    <div style="float:right; display:block; margin-right:5px;">
+        <input type="button" value="Back to Admin Dashboard" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Admin")'" />
+    </div>
+</div>
+
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+
+
+<div style="width:80%; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+    @mygrid.GetHtml(
+
+    tableStyle: "webGrid",
+    headerStyle: "header",
+    footerStyle: "",
+    rowStyle: "",
+    alternatingRowStyle: "alt",
+    fillEmptyRows: true,
+    mode: WebGridPagerModes.All,
+    firstText: "First",
+    previousText: "Prev",
+    nextText: "Next",
+    lastText: "Last",
+    columns: mygrid.Columns(
+                            mygrid.Column(header: "", format: @<text><a href="~/Subjects/Edit/@item.SubjectID"><img alt="" src="~/Images/EditRecord.png" style="width:32px;" title="View/Edit Record" /></a></text>, style: "ViewEdit"),
+                            mygrid.Column("SubjectCode", "Code"),
+                            mygrid.Column("SubjectName", "Name"),
+                            mygrid.Column("SubjectTypeDesc", "Type"),
+                            mygrid.Column(header: "", format: @<text><a href="~/Subjects/Delete/@item.SubjectID"><img alt="" src="~/Images/DeleteRed.png" style="width:32px;" title="Remove Record" /></a></text>, style: "ViewEdit")
+                               )
+            )
+
+</div>

@@ -1,0 +1,62 @@
+﻿@model dynamic
+
+
+@{
+        ViewBag.Title = "Student Dashboard";
+
+        var lstRet = ((List<object>)Model).FirstOrDefault();
+
+}
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/StudentPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Student Dashboard</h2>
+</div>
+<hr />
+
+<div>
+
+    @*<div style="font-size:20px; font-weight:bold;">
+        Roll#:
+       @lstRet.GetType().GetProperty("StudentNumber").GetValue(lstRet, null)
+    </div>
+    <div>
+        Student Name:
+        @lstRet.GetType().GetProperty("FirstName").GetValue(lstRet, null)
+        @lstRet.GetType().GetProperty("LastName").GetValue(lstRet, null)
+    </div>
+    <div>
+        Batch:
+        @lstRet.GetType().GetProperty("BatchCode").GetValue(lstRet, null)
+    </div>
+    <div>
+        &nbsp;
+    </div>*@
+</div>
+
+
+<div style="width:100%;">
+
+    @foreach (var itemSubjects in Model)
+        {
+
+            var imagedatainbase = Convert.ToBase64String((byte[])itemSubjects.GetType().GetProperty("SubjectImage").GetValue(itemSubjects, null));
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", imagedatainbase);
+
+        <div style="float:left; margin-right:10px; margin-bottom:10px; border:solid 0px gray; width:180px;">
+            <div>
+                <img src="@imgSrc" style="width:180px;" />
+            </div>
+            <div style="text-align:center; font-size:13px; font-weight:bold">
+                @{var varAction = @Url.Action("Chapters", "User") + string.Format("?Sub={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));  }
+                <div class="text-setting" >Please click the below link</div>
+                <a class="chapters-heading" href="@varAction">@itemSubjects.GetType().GetProperty("SubjectName").GetValue(itemSubjects, null)</a>
+
+            </div>
+        </div>
+        }
+
+</div>

@@ -1,0 +1,105 @@
+@model MVCSlider.Models.ShowVideoViewModel
+
+@{
+    ViewBag.Title = "Chapters Contents";
+}
+<style>
+    .table-bordered, .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+        border: 1px solid #ca4141;
+    }
+</style>
+@if (ViewBag.DownloadURL != null && ViewBag.transactionid != null)
+{
+    <a id="downLoadLink" href="@string.Format("{0}&tId={1}",ViewBag.DownloadURL,ViewBag.transactionid) +" target="_blank">Download Video and Document</a>
+
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#downLoadLink").trigger("click");
+
+    });
+
+</script>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+<br />
+<br />
+<br />
+
+<table class="table table-bordered" bordercolor="#ff0000">
+    <thead class="thead-light">
+        <tr>
+
+            @{
+
+                <th colspan="4" style="text-align: center;">
+                    Subject: @Model.SubjectName
+                </th>
+
+            }
+
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td colspan="4" style="text-align: center;">
+
+                Chapter Name: @Model.ChapterName
+
+            </td>
+
+        </tr>
+        @if (ViewBag.ShowVideoPastPaper != 1)
+        {
+            <tr>
+
+                <td colspan="4" style="text-align: center;">
+                    Exercise: @Model.ExerciseName
+                </td>
+
+            </tr>
+        }
+        <tr>
+
+            <td colspan="4" style="text-align: center;">
+                @Html.Raw(@Model.QuestionText)
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center;">
+                <video id="mainVideo" width="50%" height="400px" src="@ViewBag.Path" autoplay controls controlsList="nodownload">
+                    Your browser does not support the video tag.
+                </video>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<div style="display:inline-block; width:100%">
+    <div style="float:right;">
+        @{var varAction = @Url.Action("Chapters", "Home") + string.Format("?Sub={0}", Model.SubjectID); }
+        <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@varAction'" />
+    </div>
+</div>
+
+
+
+

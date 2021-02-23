@@ -1,0 +1,336 @@
+﻿@model IEnumerable<object>
+
+@{
+    ViewBag.Title = "Home";
+
+    MVCSlider.Models.Login modelLogin = (MVCSlider.Models.Login)Model.Where(item => item is MVCSlider.Models.Login).FirstOrDefault();
+    List<MVCSlider.Models.Subjects> modelSubjectList = (List<MVCSlider.Models.Subjects>)Model.Where(item => item is List<MVCSlider.Models.Subjects>).FirstOrDefault();
+    List<MVCSlider.Models.Subjects> modelSubjectsTopicsList = (List<MVCSlider.Models.Subjects>)Model.Where(item => item is List<MVCSlider.Models.Subjects>).FirstOrDefault();
+}
+
+<style type="text/css">
+    .flex-caption {
+        width: 100%;
+        padding: 2%;
+        left: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.5);
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+        font-size: 10px;
+        line-height: 12px;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.flexslider').flexslider({
+            animation: "slide"
+        });
+
+
+        $("#btnLogin").click(function () {
+            var response = true;
+
+
+            if ($("#txtUserName").val() == "") {
+                $("#txtUserName").css("border-color", "red");
+                response = false;
+            }
+            else {
+                $("#txtUserName").css("border-color", "");
+
+            }
+
+            if ($("#txtPassword").val() == "") {
+                $("#txtPassword").css("border-color", "red");
+                response = false;
+            }
+            else {
+                $("#txtPassword").css("border-color", "");
+
+            }
+
+            return response;
+        });
+
+    });
+
+
+
+
+</script>
+
+<!--
+<div class="flexslider">
+
+    <div class="flex-viewport" style="overflow: hidden; position: relative;">
+        <ul class="slides" style="width: 1200%; transition-duration: 0.6s; transform: translate3d(-2523px, 0px, 0px);">
+            <li class="clone" aria-hidden="true" style="width: 1000px; margin-right: 0px; float: left; display: block;">
+                <img src="~/Images/MainSlider/slider1.jpg" />
+                <p class="flex-caption">...</p>
+            </li>
+            <li class="" data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;">
+                <img src="~/Images/MainSlider/bg_slider_2.jpg" />
+                <p class="flex-caption">...</p>
+
+            </li>
+            <li data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;" class="">
+                <img src="~/Images/MainSlider/slide_3.jpg" />
+                <p class="flex-caption">...</p>
+
+            </li>
+            <li data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;" class="flex-active-slide">
+                <img src="~/Images/MainSlider/bg_slider_11.jpg" />
+                <p class="flex-caption">...</p>
+
+            </li>
+        </ul>
+    </div>
+
+    <ul class="flex-direction-nav">
+        <li class="flex-nav-prev">
+            <a class="flex-prev" href="#">Previous</a>
+        </li>
+        <li class="flex-nav-next">
+            <a class="flex-next" href="#">Next</a>
+        </li>
+    </ul>
+
+</div>
+    -->
+<div class="flexslider home-slider">
+
+    <div class="flex-viewport" style="overflow: hidden; position: relative;">
+        <ul class="slides" style="width: 1200%; transition-duration: 0.6s; transform: translate3d(-2523px, 0px, 0px);">
+            <li class="clone" aria-hidden="true" style="width: 1000px; margin-right: 0px; float: left; display: block;">
+                <div class="slide-images slide01"> </div>
+                <!-- <img src="~/Images/MainSlider/slider1.jpg" />-->
+                <!--<p class="flex-caption">...</p>-->
+            </li>
+            <li class="" data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;">
+                <div class="slide-images slide02"></div>
+                <!--<img src="~/Images/MainSlider/bg_slider_2.jpg" />-->
+                <!--<p class="flex-caption">...</p>-->
+
+            </li>
+            <li data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;" class="">
+                <div class="slide-images slide03"></div>
+                <!--<img src="~/Images/MainSlider/slide_3.jpg" />-->
+                <!--<p class="flex-caption">...</p>-->
+
+            </li>
+            <li data-thumb-alt="" style="width: 1000px; margin-right: 0px; float: left; display: block;" class="flex-active-slide">
+                <div class="slide-images slide04"></div>
+                <!--<img src="~/Images/MainSlider/bg_slider_11.jpg" />-->
+                <!--<p class="flex-caption">...</p>-->
+
+            </li>
+        </ul>
+    </div>
+
+    <ul class="flex-direction-nav">
+        <li class="flex-nav-prev">
+            <a class="flex-prev" href="#">Previous</a>
+        </li>
+        <li class="flex-nav-next">
+            <a class="flex-next" href="#">Next</a>
+        </li>
+    </ul>
+
+</div>
+<!--
+<div class="home-boxes-wraper">
+    <ul class="home-boxes">
+        <li>
+            <div class="icons-div"></div>
+            <h3></h3>
+            <p></p>
+        </li>
+        <li class="div2">
+            <div class="icons-div"></div>
+            <h3></h3>
+            <p></p>
+        </li>
+        <li class="div3">
+            <div class="icons-div"></div>
+            <h3></h3>
+            <p></p>
+        </li>
+        <li class="div4">
+            <div class="icons-div"></div>
+            <h3></h3>
+            <p></p>
+        </li>
+    </ul>
+</div>
+    -->
+<div class="home-boxes-wraper container">
+
+    <!-- Ribbon -->
+    <h1 class="ribbon">
+        <strong class="ribbon-content">Strive for excellence</strong>
+    </h1>
+    <!-- Ribbon -->
+
+    <ul class="home-boxes">
+        <li>
+            <div class="boxdiv">
+                <h4>O Level</h4>
+                <!--
+                                <h3>P1</h3>
+                            <p><span>User Name:</span>  P1Test</p>
+                <p><span>User Password:</span>  ABC123ppp</p>  -->
+            </div>
+        </li>
+        <li>
+            <div class="boxdiv div2">
+                <h4>A Level</h4>
+                <!--<h3>P3</h3>
+                <p><span>User Name:</span>  P3Test</p>
+                <p><span>User Password:</span>  ABC123rrr</p> -->
+            </div>
+        </li>
+        <li>
+            <div class="boxdiv div3">
+                <h4>SAT</h4>
+                <!--<h3>M1</h3>
+                <p><span>User Name:</span>  M1Test</p>
+                <p><span>User Password:</span>  ABC123mmm</p>-->
+            </div>
+        </li>
+        <li>
+            <div class="boxdiv div4">
+                <h4>GRE</h4>
+                <!-- <h3>S1</h3>
+                <p><span>User Name:</span>  S1Test</p>
+                <p><span>User Password:</span>  ABC123sss</p>-->
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<!--
+<div class="module form-module">
+    <div class="toggle">
+    </div>
+
+    <div class="form">
+        <h2>Login to your account</h2>
+
+        <form id="frmLogin" action="@Url.Action("Index","Home")" method="post">
+            <input type="text" name="UserName" id="txtUserName" placeholder="Username" />
+            <input type="password" name="Password" id="txtPassword" placeholder="Password" />
+            <input type="submit" value="Login" id="btnLogin" />
+        </form>
+    </div>
+    <div class="text-center" style="color:red;">
+        @{
+
+            if (Model != null)
+            {
+                @Convert.ToString(modelLogin.LoginStatus);
+            }
+
+        }
+    </div>
+</div>
+-->
+<div id="frmLogin" class="module form-module modal fade" role="dialog" style="max-height: 320px !important;">
+
+    <div class="toggle">
+    </div>
+
+    <div class="form">
+        <div style="float:right"><a href="javascript:void(0);" data-dismiss="modal"><i class="far fa-times-circle"></i> </a></div>
+        <h2>Login to your account</h2>
+
+        <form id="frmLogin" action="@Url.Action("Index","Home")" method="post">
+            <input type="text" name="UserName" id="txtUserName" placeholder="Username" />
+            <input type="password" name="Password" id="txtPassword" placeholder="Password" />
+            <input class="sbmt-btn" type="submit" value="Login" id="btnLogin" />
+        </form>
+    </div>
+    <div class="text-center" style="color:red;">
+        @{
+
+            if (Model != null)
+            {
+                if (modelLogin.LoginStatusCode != null && modelLogin.LoginStatusCode != "1")
+                {
+                    <script type="text/javascript">
+                        $("#frmLogin").modal('show');
+
+                    </script>
+                }
+
+
+                @Convert.ToString(modelLogin.LoginStatus);
+            }
+
+        }
+    </div>
+</div>
+
+
+
+
+
+<div class="container book-solutions">
+
+    <div style="display:inline-block; width:100%; align-self:center; ">
+        @{
+            var lstSubjectTypes = modelSubjectList.Select(item => new { item.SubjectType, item.SubjectTypeDesc }).Distinct().OrderBy(a => a.SubjectType);
+
+            foreach (var subjecttypes in lstSubjectTypes)
+            {
+
+
+                <div class="clearfix"></div>
+                <h1 class="ribbon"><strong>@subjecttypes.SubjectTypeDesc</strong></h1>
+                <div class="clearfix"></div>
+
+                var lstSubjectList = modelSubjectList.Where(item => item.SubjectType == subjecttypes.SubjectType);
+
+                foreach (var itemSubjects in lstSubjectList)
+                {
+                    var imagedatainbase = Convert.ToBase64String(itemSubjects.SubjectImage);
+                    var imgSrc = String.Format("data:image/jpg;base64,{0}", imagedatainbase);
+                    var varAction = @Url.Action("ChapterContent", "Home") + string.Format("?SubID={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //var varAction = @Url.Action("Chapters", "Home") + string.Format("?Sub={0}&IsTopical=0", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //if (subjecttypes.SubjectType == 2)
+                    //    //varAction = @Url.Action("SubjectTopic", "Home") + string.Format("?Sub={0}&IsTopical=1", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //    varAction = @Url.Action("SubjectTopic", "Home") + string.Format("?SubID={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //if (subjecttypes.SubjectType == 6)
+                    //    varAction = @Url.Action("SatTopic", "Home") + string.Format("?subID={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //if (subjecttypes.SubjectType == 7)
+                    //    varAction = @Url.Action("CSSTopic", "Home") + string.Format("?subID={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+                    //if (subjecttypes.SubjectType == 1 || subjecttypes.SubjectType == 4  || subjecttypes.SubjectType == 5 || subjecttypes.SubjectType == 8)
+                    //    varAction = @Url.Action("PastPapers", "Home") + string.Format("?subID={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null));
+
+
+
+    <div class="solutions-images">
+        <div>
+            <a href="@varAction">
+                <img src="@imgSrc" style="width:250px;" />
+            </a>
+        </div>
+        @* <div class="solutions-book-names">*@
+        @*@{var varAction = @Url.Action("Chapters", "Home") + string.Format("?Sub={0}", itemSubjects.GetType().GetProperty("SubjectID").GetValue(itemSubjects, null)); }*@
+        @*<a href="@varAction">*@
+        @*@itemSubjects.SubjectName (@itemSubjects.SubjectCode)*@
+        @*</a>*@
+        @* </div> *@
+    </div>
+                }
+            }
+        }
+    </div>
+</div>
+<div>
+    Total Visitors: @ViewBag.TotalVisitors
+</div>

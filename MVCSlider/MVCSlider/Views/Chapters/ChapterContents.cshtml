@@ -1,0 +1,344 @@
+﻿@{
+    ViewBag.Title = "Chapter Contents Definition";
+    WebGrid mygrid = new WebGrid(source: ViewBag.ChapterContentsList, rowsPerPage: 20, canPage: true, canSort: true);
+
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutWithSummerNoteEditor.cshtml";
+}
+
+
+
+
+<style type="text/css">
+    #frmContent div {
+        padding-bottom: 5px;
+    }
+
+    #frmContent .validate {
+        color: red;
+    }
+
+    /*.div-Table {
+        display: table;
+    }
+
+        .div-Table div {
+            display: table-row;
+        }
+
+            .div-Table div div {
+                display: table-cell;
+                padding-right: 20px;
+            }*/
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnSave").click(function () {
+
+            var response = true;
+            $("#ValidationSummary").html("");
+            $("#ValidationSummary").append("<ul>");
+
+            //if ($("#youTubeUrl").val().trim() == "") {
+            //    $("#ValidationSummary").append("<li>Enter Valid Youtube Url, please check...</li>");
+            //    response = false;
+            //}
+
+            $("#questionText").val($("#questionTextSummerNote").summernote('code'));
+            //if ($("#questionText").val().trim() == "") {
+            //    $("#ValidationSummary").append("<li>Enter Question Text...</li>");
+            //    response = false;
+            //}
+            if ($("#ContentFile")[0].files.length < 1) {
+                $("#ValidationSummary").append("<li>Please select Video...</li>");
+                response = false;
+            }
+            //if ($("#QuestionDiagram")[0].files.length < 1) {
+            //    $("#ValidationSummary").append("<li>Please Select Question Diagram...</li>");
+            //    response = false;
+            //}
+            if ($("#PaperYear") && $("#PaperYear").val().trim() == "") {
+                $("#ValidationSummary").append("<li>Please Enter Paper Year...</li>");
+                response = false;
+            }
+            //if ($("#ContentFile")[0].files.length > 5) {
+            //    $("#ValidationSummary").append("<li>Files count can not exceed 5 at a time, please check...</li>");
+            //    response = false;
+            //}
+
+
+            //if ($("#ContentFile")[0].files.length > 0) {
+            //    var totalFilesSize = 0;
+            //    var isNotjpgfile = false;
+            //    $.each($("#ContentFile")[0].files, function (index, fileObject) {
+
+            //        if (fileObject.type != "image/jpeg") {
+            //            isNotjpgfile = true;
+            //        }
+
+            //        totalFilesSize = totalFilesSize + fileObject.size;
+            //    });
+
+            //    if (totalFilesSize > 0) {
+
+            //        if (isNotjpgfile == true) {
+            //            $("#ValidationSummary").append("<li>One or more file(s) are of invalid types. The only type acceptable is [.jpg], please check...</li>");
+            //            response = false;
+            //        }
+
+            //        if (totalFilesSize > (8 * 1024 * 1024)) {
+            //            $("#ValidationSummary").append("<li>Files size limit is 8 MB, please check...</li>");
+            //            response = false;
+            //        }
+
+            //    }
+            //}
+
+            //if ($("#ContentFile")[0].files.length == 0) {
+            //    $("#ValidationSummary").append("<li>Please select content files to load...</li>");
+            //    response = false;
+            //}
+
+            $("#ValidationSummary").append("</ul>");
+            if (!response)
+            {
+                $(window).scrollTop(0);
+            }
+            return response;
+        });
+
+
+        $('.summernote').summernote({
+            height: 200,
+            //toolbar: [
+            //['style', ['style']],
+            //['font', ['bold', 'italic', 'underline', 'clear']],
+            //['fontname', ['fontname']],
+            //['color', ['color']],
+            //['para', ['ul', 'ol', 'paragraph']],
+            //['height', ['height']],
+            //['table', ['table']],
+            //['insert', ['link', 'picture', 'hr']],
+            //['view', ['fullscreen', 'codeview', 'help']]
+
+            //]
+        });
+
+    });
+
+</script>
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Chapters Contents Definition  </h2>
+</div>
+<hr />
+
+<h3>Chapters Contents Definition</h3>
+
+<div style="color: red; display:inline-block;" id="ValidationSummary">
+    @if (ViewBag.FilesAlreadyLoaded != null)
+    {
+        <ul>
+            @foreach (var item in (List<string>)ViewBag.FilesAlreadyLoaded)
+            {
+                <li> Content file @item already loaded</li>
+            }
+        </ul>
+    }
+</div>
+
+<form id="frmContent" method="post" action="ChapterContents" enctype="multipart/form-data">
+
+    <div>
+        <input type="hidden" name="SubjectChapterID" value="@ViewBag.SubjectsChaptersID" />
+    </div>
+    <div>
+        <input type="hidden" name="ChapterName" value="@ViewBag.ChapterName" />
+    </div>
+
+    <div class="div-Table">
+
+
+        <div>
+            <div>
+                <b> Subject</b>
+            </div>
+            <div>
+                @ViewBag.SubjectName
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <b>Chapter / Exercise</b>
+            </div>
+            <div>
+                @ViewBag.ChapterName
+            </div>
+        </div>
+
+        <div>
+            <div>
+                @*Content(s)*@
+                @*You Tube Url*@
+                <b>Video</b>
+            </div>
+            <div>
+                @*<input type="file" id="ContentFile" name="ContentFile" multiple="multiple" />*@
+                <input type="file" id="ContentFile" name="ContentFile" accept=".mp4" />
+                @*@Html.TextBox("youTubeUrl", "")*@
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <b>Pdf Document</b>
+            </div>
+            <div>
+
+                <input type="file" id="PdfFile" name="PdfFile" accept=".pdf" />
+
+            </div>
+        </div>
+
+
+        <div>
+            <div></div>
+            <div>
+                @*<span style="font-size:11px; color:red">(5 files at a time of size max 8 MB...)</span>*@
+            </div>
+        </div>
+
+
+
+        <div>
+            <div>
+
+                <b> Question Text</b>
+            </div>
+            <div>
+                @*<input type="file" id="ContentFile" name="ContentFile" multiple="multiple" />*@
+
+                @Html.TextArea("questionText", new { @rows = "5", @cols = "60", @class = "hidden" })
+
+                <div id="questionTextSummerNote" class="summernote">
+
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <div>
+                <b>Is Free Downable</b>
+            </div>
+            <div>
+                @Html.RadioButton("Isfree",true) Yes
+                @Html.RadioButton("Isfree",false,isChecked:true) No
+            </div>
+        </div>
+        @if (ViewBag.SubjectType == "1" || ViewBag.SubjectType == "4" || ViewBag.SubjectType == "5" || ViewBag.SubjectType == "8")
+        {
+            <div>
+                <div>
+                    <b>Paper Year</b>
+                </div>
+                <div>
+                    @Html.TextBox("PaperYear")
+                </div>
+            </div>
+            <div>
+                <div>
+                    <b>Variant</b>
+                </div>
+                <div>
+                    @Html.TextBox("QuestionDiagram")
+                </div>
+            </div>
+        }
+        else if (ViewBag.SubjectType == "2")
+        {
+            <div>
+                <div>
+                    <b>Topic Heading</b>
+                </div>
+                <div>
+                    @Html.TextBox("PaperYear")
+                </div>
+            </div>
+        }
+        else if (ViewBag.SubjectType == "6")
+        {
+            <div>
+                <div>
+                    <b>SAT Topic Heading</b>
+                </div>
+                <div>
+                    @Html.TextBox("PaperYear")
+                </div>
+            </div>
+        }
+        else if (ViewBag.SubjectType == "7")
+        {
+            <div>
+                <div>
+                    <b>CSS Topic Heading</b>
+                </div>
+                <div>
+                    @Html.TextBox("PaperYear")
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <div style="float:left; padding-right:5px;">
+        <input type="submit" value="Load Content(s)" id="btnSave" class="btn btn-primary" style="width:140px;" />
+    </div>
+    <div>
+        <input type="button" value="Back" class="btn btn-primary" style="width:140px;" onclick="location.href='@Url.Action("Index","Admin")'" />
+    </div>
+</form>
+
+<div>
+    <hr />
+</div>
+
+<div style="width:80%; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+    @mygrid.GetHtml(
+
+    tableStyle: "webGrid",
+    headerStyle: "header",
+    footerStyle: "",
+    rowStyle: "",
+    alternatingRowStyle: "alt",
+    fillEmptyRows: true,
+    mode: WebGridPagerModes.All,
+    firstText: "First",
+    previousText: "Prev",
+    nextText: "Next",
+    lastText: "Last",
+    columns: mygrid.Columns(
+                        mygrid.Column("RowNumber", "Sr#"),
+                        //mygrid.Column("URL", "Youtube Url"),
+                        //mygrid.Column("OriginalFileName", "File Name"),
+                        mygrid.Column("VideoFileName", "Video File"),
+                        mygrid.Column("ImageFileName", "Image File"),
+                        mygrid.Column("PdfDocFile", "Pdf File"),
+                        mygrid.Column("PaperYear", "Paper Year"),
+                        mygrid.Column(header: "", format: @<text><a href="~/Chapters/ChapterQuetionsDelete?CHID=@item.ContentsHolder&SCID=@item.SubjectsChaptersID"><img alt="" src="~/Images/DeleteRed.png" style="width:32px;" title="Remove record" /></a></text>, style: "ViewEdit"),
+                        mygrid.Column(header: "", format: @<text><a href="~/Chapters/ChapterQuetionsEdit?CHID=@item.ContentsHolder&SCID=@item.SubjectsChaptersID"><img alt="" src="~/Images/edit-button.png" style="width:32px;" title="Edit record" /></a></text>, style: "ViewEdit")
+)
+)
+
+</div>
+@*~/Chapters/ChapterContentDelete/@item.ContentsHolder*@

@@ -1,0 +1,237 @@
+﻿@*@model List<MVCSlider.Models.SubjectChapters>*@
+@model MVCSlider.Models.ChaptersViewModel
+
+@{
+    ViewBag.Title = "Chapters";
+    var lstSubjectInfo = Model.SubjectChapters.FirstOrDefault();
+    var lstChapters = Model.SubjectChapters.Where(item => item.ChapterType == 1);
+    var lstExercises = Model.SubjectChapters.Where(item => item.ChapterType == 2);
+    var lstQuestions = Model.Questions;
+    var subjectid = lstChapters.Select(y => y.SubjectID).FirstOrDefault();
+}
+<style>
+    .table-bordered, .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+        border: 1px solid #ca4141;
+    }
+</style>
+@*<div style="float:left; display:block;">
+        <img src="~/Images/StudentPanel.png" alt="" />
+    </div>
+    <div style="display:block; margin-bottom:100px;">
+        <h2>Student Dashboard</h2>
+    </div>*@
+<hr />
+@*style="display:inline-block; width:100%"*@
+<div>
+
+
+</div>
+<div style="display:inline-block; width:100%">
+    @if (ViewBag.subjecttype == 1 || ViewBag.subjecttype == 4 || ViewBag.subjecttype == 5 || ViewBag.subjecttype == 8)
+    {
+        <div style="float:left;">
+            <text> <b>Load Past Papers Against Variants:</b></text>  @Html.DropDownList("Variants", Model.Variants, "Select One", new { @class = "form-control" })
+        </div>
+    }
+    @if (ViewBag.paymentTransactionId != null)
+    {
+        <div>
+            <text style="font-size:22px;font-weight:bold;color:black;text-align:center;background-color:yellow;margin-left:80px">
+                Please don't leave this page unless you download all solution files.
+            </text>
+        </div>
+    }
+   
+    <div style="float:right;">
+        <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "User")'" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+
+    </div>
+    <div class="col-4">
+
+    </div>
+</div>
+
+<div style="font-size:20px; font-weight:bold;" class="hidden">
+
+    @{
+        if (lstSubjectInfo != null)
+        {
+            var SubjetName = lstSubjectInfo.SubjectName;
+            Write("Subject: " + SubjetName);
+        }
+        else
+        {
+            Write("This subject does not have any chapters attached, please check...");
+
+        }
+    }
+</div>
+
+<div style="display:inline-block; width:100%">
+    <ul class="chapters-list hidden">
+        @foreach (var itemChapters in lstChapters)
+        {
+            <li>
+                @{var varAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID); }
+                <a href="@varAction">@itemChapters.ChapterName</a>
+
+                @if (lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID).Count() > 0)
+                {
+                    <ul>
+                        @foreach (var itemExercise in lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID))
+                        {
+                            <li>
+                                @{var varExAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemExercise.SubjectsChaptersID); }
+                                <a href="@varExAction">@itemExercise.ChapterName</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                }
+            </li>
+        }
+    </ul>
+
+    <table class="table table-bordered common-table" bordercolor="#ff0000">
+        <thead class="thead-light">
+            <tr>
+
+                @{
+                    if (lstSubjectInfo != null)
+                    {
+                        var SubjetName = lstSubjectInfo.SubjectName;
+                        <th colspan="4" style="text-align: center;">
+                            Subject: @SubjetName
+                        </th>
+                    }
+                    else
+                    {
+                        <th colspan="4" style="text-align: center;">
+                            This subject does not have any chapters attached, please check...
+                        </th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+            @{ int @num = 0, @num1 = 0; }
+            @foreach (var itemChapters in lstChapters)
+            {
+                var varAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID);
+                num++;
+                <tr style="display:none;">
+                    <th scope="row">Chapt No @num</th>
+
+                    <th colspan="3" style="text-align: center;">
+                        @itemChapters.ChapterName
+                    </th>
+                </tr>
+
+                var quest1 = lstQuestions.Where(x => x.SubjectsChaptersID == itemChapters.SubjectsChaptersID);
+                var QuestionNo = 0;
+                foreach (var question in quest1)
+                {
+                    num1++;
+                    var imgPath = "../../ContentStorage/ChaptersContents/" + @System.IO.Path.GetFileName(question.ImageFileName);
+                    var videoUrl = @Url.Action("ShowVideoPastPaper", "Home") + string.Format("?subID={0}&questionId={1}&variant={2}&isdwn={3}", lstSubjectInfo.SubjectID, question.QuestionID, ViewBag.selectedVariant, question.isfree);
+                    //var videoUrlPayPal = @Url.Action("PaymentWithPaypal", "PayPal") + string.Format("?subID={0}&questionId={1}&variant={2}&isPastPaper=1", lstSubjectInfo.SubjectID, question.QuestionID, ViewBag.selectedVariant);
+                    //var videoUrlStripe = @Url.Action("PaymentWithStripe", "Stripe") + string.Format("?subID={0}&questionId={1}&variant={2}&isPastPaper=1", lstSubjectInfo.SubjectID, question.QuestionID, ViewBag.selectedVariant);
+                    var videoUrlPayPal = @Url.Action("PaymentWithPaypal", "PayPal") + string.Format("?subID={0}&questionId={1}&variant={2}&isPastPaper=1", lstSubjectInfo.SubjectID, ViewBag.questionYearId, ViewBag.selectedVariant);
+                    var videoUrlStripe = @Url.Action("PaymentWithStripe", "Stripe") + string.Format("?subID={0}&questionId={1}&variant={2}&isPastPaper=1", lstSubjectInfo.SubjectID, ViewBag.questionYearId, ViewBag.selectedVariant);
+                    var pdfUrlDownloadFree = Url.Action("DownloadQuestionPDF", "Home") + string.Format("?questionId={0}", question.QuestionID);
+
+                    var videoName = @System.IO.Path.GetFileName(question.VideoFileName);
+                    @QuestionNo++;
+                    <tr>
+                        <th scope="row">Q# @QuestionNo</th>
+                        <td>
+                            @Html.Raw(@question.QuestionText)
+                        </td>
+
+                        @if (!string.IsNullOrEmpty(question.ImageFileName))
+                        {
+                            <!--<td>-->
+                            @*@videoName*@
+                            <!--<img src="@imgPath" />
+                    </td>-->
+                        }
+                        <td colspan="2">
+                            @if (num1 > 2)
+                            {
+                                if (ViewBag.paymentTransactionId != null)
+                                {
+                                    <a href='@videoUrl' target="_blank">  <img src="~/Images/Vedio.png" alt="@videoName" width="60" height="60" style="margin-bottom:10px;" /> </a>
+                                    <a href='@pdfUrlDownloadFree'>  <img src="~/Images/pdf.jpg" alt="@question.PdfDocFile" width="60" height="60" /> </a>
+                                }
+                                @*<a href="@videoUrlPayPal"><img src="~/Images/paypal.jpg" alt="@videoName" style="margin-bottom:20px;" /> </a>
+                            <a href="@videoUrlStripe"> <img src="~/Images/stripe1.jpg" alt="@videoName" />    </a>*@
+                            }
+                            else
+                            {
+                                <a href='@videoUrl' style="margin-bottom:10px;">  <img src="~/Images/Vedio.png" alt="@videoName" width="60" height="60" style="margin-bottom:10px;" /> </a>
+                                <a href='@pdfUrlDownloadFree'>  <img src="~/Images/pdf.jpg" alt="@question.PdfDocFile" width="60" height="60" /> </a>
+                                <img src="~/Images/free.gif" width="50" height="50" />
+                            }
+
+                            @*<a href="@videoUrlPayPal"><img src="\Images\stripe1.png"/> </a>
+                        <a href="@videoUrlStripe">@videoName (Pay With Stripe) </a>*@
+                        </td>
+                    </tr>
+                    if (num1 == 2)
+                    {
+                        if (ViewBag.paymentTransactionId == null)
+                        {
+                            <tr>
+                                <td colspan="3" style="text-align:center;"><a href="https://wa.link/rmj1ck" target="_blank"><img src="~/Images/Whatsapp.jpg" width="100" height="100" /> </a> <a href="@videoUrlPayPal"><img src="~/Images/PayPal.png" alt="@videoName" /> </a><text style="font-size:18px;background-color:yellow;font-weight:bold;">To download solution of all questions,Please click Stripe or PayPal</text><a href="@videoUrlStripe"> <img src="~/Images/stripe1.jpg" alt="@videoName" />    </a></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+@if (ViewBag.selectedVariant != null)
+{
+
+    <script>
+    $(document).ready(function () {
+        //console.log('clicked');
+        //alert("test");
+        $("#Variants").val('@ViewBag.selectedVariant');
+
+    });
+    </script>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#Variants').change(
+            function () {
+                console.log($(location).attr('href').split('&variant')[0] + '&variant=' + $('#Variants').val() + '&scfp=false');
+
+               window.location = $(location).attr('href').split('&variant')[0] + '&variant=' + $('#Variants').val() + '&scfp=false';
+
+
+
+
+               // window.location = $(location).attr('href').split('&scfp')[0] + '&scfp=false';
+            }
+        );
+    });
+
+</script>

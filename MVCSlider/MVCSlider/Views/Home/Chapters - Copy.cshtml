@@ -1,0 +1,238 @@
+﻿@*@model List<MVCSlider.Models.SubjectChapters>*@
+@model MVCSlider.Models.ChaptersViewModel
+
+@{
+    ViewBag.Title = "Chapters";
+    var lstSubjectInfo = Model.SubjectChapters.FirstOrDefault();
+    var lstChapters = Model.SubjectChapters.Where(item => item.ChapterType == 1);
+    var lstExercises = Model.SubjectChapters.Where(item => item.ChapterType == 2);
+    var lstQuestions = Model.Questions;
+
+}
+<style>
+    .table-bordered, .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+        border: 1px solid #ca4141;
+    }
+</style>
+@*<div style="float:left; display:block;">
+        <img src="~/Images/StudentPanel.png" alt="" />
+    </div>
+    <div style="display:block; margin-bottom:100px;">
+        <h2>Student Dashboard</h2>
+    </div>*@
+<hr />
+
+<div style="display:inline-block; width:100%">
+    <div style="float:right;">
+        <input type="button" value="Back" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "User")'" />
+    </div>
+</div>
+
+<div style="font-size:20px; font-weight:bold;" class="hidden">
+
+    @{
+        if (lstSubjectInfo != null)
+        {
+            var SubjetName = lstSubjectInfo.SubjectName;
+            Write("Subject: " + SubjetName);
+        }
+        else
+        {
+            Write("This subject does not have any chapters attached, please check...");
+
+        }
+    }
+</div>
+
+<div style="display:inline-block; width:100%">
+    <ul class="chapters-list hidden">
+        @foreach (var itemChapters in lstChapters)
+        {
+            <li>
+                @{var varAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID); }
+                <a href="@varAction">@itemChapters.ChapterName</a>
+
+                @if (lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID).Count() > 0)
+                {
+                    <ul>
+                        @foreach (var itemExercise in lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID))
+                        {
+                            <li>
+                                @{var varExAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemExercise.SubjectsChaptersID); }
+                                <a href="@varExAction">@itemExercise.ChapterName</a>
+                            </li>
+                        }
+
+                    </ul>
+
+                }
+            </li>
+        }
+    </ul>
+
+    <table class="table table-bordered chapters-sub" bordercolor="#000">
+        <thead class="thead-light">
+            <tr>
+
+                @{
+                    if (lstSubjectInfo != null)
+                    {
+                        var SubjetName = lstSubjectInfo.SubjectName;
+                        <th colspan="4" style="text-align: center;" class="th-chap">
+                            Subject: @SubjetName
+                        </th>
+                    }
+                    else
+                    {
+                        <th colspan="4" style="text-align: center;">
+                            This subject does not have any chapters attached, please check...
+                        </th>
+                    }
+                }
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @{ int @num = 0,
+                      @num1 = 0;}
+
+            @if (ViewBag.IsTopical == 0)
+            {
+                foreach (var itemChapters in lstChapters)
+                {
+                    var varAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID);
+                    num++;
+
+
+
+                    <tr>
+                        <th scope="row" class="indexno">@num</th>
+                        <td style="text-align: center;" colspan="3"><p class="chapter-title">Chapter Name: </p> <div class="chapter-name">@*<a href="@varAction">*@@itemChapters.ChapterName@*</a>*@</div></td>
+
+
+                    </tr>
+
+                    if (lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID).Count() > 0)
+                    {
+
+                        foreach (var itemExercise in lstExercises.Where(item => item.ParentChapterID == itemChapters.SubjectsChaptersID))
+                        {
+
+                            var varExAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemExercise.SubjectsChaptersID);
+
+                            <tr>
+
+                                <td colspan="4" style="text-align: center;" class="excercise-br">
+                                    @*<a href="@varExAction">*@
+                                    @itemExercise.ChapterName
+                                    @*</a>*@
+                                </td>
+
+                            </tr>
+
+                            if (lstQuestions.Where(item => item.SubjectsChaptersID == itemExercise.SubjectsChaptersID).Count() > 0)
+                            {
+                                var QuestionNo = 0;
+                                foreach (var question in lstQuestions.Where(item => item.SubjectsChaptersID == itemExercise.SubjectsChaptersID))
+                                {
+                                    var imgPath = "../../ContentStorage/ChaptersContents/" + @System.IO.Path.GetFileName(question.ImageFileName);
+                                    //                                    var videoUrl = @Url.Action("ShowVideo", "Home") + string.Format("?SubChapID={0}", itemExercise.ParentChapterID) + string.Format("&questionId={0}", question.QuestionID) + string.Format("&exerciseId={0}", itemExercise.SubjectsChaptersID);
+                                    var videoUrlPayPal = @Url.Action("PaymentWithPaypal", "PayPal") + string.Format("?SubChapID={0}", itemExercise.ParentChapterID) + string.Format("&questionId={0}", question.QuestionID) + string.Format("&exerciseId={0}", itemExercise.SubjectsChaptersID);
+                                    var videoUrlStripe = @Url.Action("PaymentWithStripe", "Stripe") + string.Format("?SubChapID={0}", itemExercise.ParentChapterID) + string.Format("&questionId={0}", question.QuestionID) + string.Format("&exerciseId={0}", itemExercise.SubjectsChaptersID);
+
+
+                                    var videoName = @System.IO.Path.GetFileName(question.VideoFileName);
+                                    @QuestionNo++;
+                                    <tr>
+                                        <th scope="row">@QuestionNo</th>
+                                        <td>
+                                            @Html.Raw(@question.QuestionText)
+                                        </td>
+                                        <td> <img src="@imgPath" /> </td>
+                                        <td>
+                                            <a href="@videoUrlPayPal">@videoName (Pay With PayPal) </a>
+                                            <a href="@videoUrlStripe">@videoName (Pay With Stripe) </a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var itemChapters in lstChapters)
+                {
+                    var varAction = @Url.Action("ChaptersDetails", "Home") + string.Format("?SubChapID={0}", itemChapters.SubjectsChaptersID);
+                    num++;
+
+
+
+                    <tr>
+                        <th scope="row">@num</th>
+                        <th style="text-align: center;" colspan="3">@*<a href="@varAction">*@@itemChapters.ChapterName@*</a>*@</th>
+                        @*<td></td>*@
+
+                    </tr>
+
+
+
+
+                    if (lstQuestions.Where(item => item.SubjectsChaptersID == itemChapters.SubjectsChaptersID).Count() > 0)
+                    {
+                        var QuestionNo = 0;
+                        foreach (var question in lstQuestions.Where(item => item.SubjectsChaptersID == itemChapters.SubjectsChaptersID))
+                        {
+                            var imgPath = "../../ContentStorage/ChaptersContents/" + @System.IO.Path.GetFileName(question.ImageFileName);
+                            var videoUrl = @Url.Action("ShowVideo", "Home") + string.Format("?SubChapID={0}", itemChapters.ParentChapterID) + string.Format("&questionId={0}", question.QuestionID) + string.Format("&exerciseId={0}", itemChapters.SubjectsChaptersID);
+                            //var videoUrl = @Url.Action("ChapterQuestions", "Home") + string.Format("?Sub={0}&questionYearId={1}", itemChapters.SubjectID, question.QuestionID);
+                            // var videoUrl = @Url.Action("ShowVideoPastPaper", "Home") + string.Format("?subID={0}&questionId={1}", lstSubjectInfo.SubjectID, question.QuestionID);
+                            var videoUrlPayPal = @Url.Action("PaymentWithPaypal", "PayPal") + string.Format("?subID={0}&questionId={1}&isPastPaper=1", lstSubjectInfo.SubjectID, question.QuestionID);
+                            var videoUrlStripe = @Url.Action("PaymentWithStripe", "Stripe") + string.Format("?subID={0}&questionId={1}&isPastPaper=1", lstSubjectInfo.SubjectID, question.QuestionID);
+
+
+                            var videoName = @System.IO.Path.GetFileName(question.VideoFileName);
+                            @QuestionNo++;
+                            <tr>
+                                <th scope="row">@QuestionNo</th>
+                                <td>
+                                    @Html.Raw(@question.QuestionText)
+                                </td>
+                                @*<td> <img src="@imgPath" /> </td>*@
+                                <td colspan="2">
+                                    @if (num1 > 2)
+                                    {
+
+                                        <a href="@videoUrlPayPal"><img src="~/Images/paypal.jpg" alt="@videoName" style="margin-bottom:20px;" /> </a>
+                                        <a href="@videoUrlStripe"> <img src="~/Images/stripe1.jpg" alt="@videoName" />    </a>
+                                    }
+                                    else
+                                    {
+
+                                        <a href="@videoUrl">  <img src="~/Images/download.gif" alt="@videoName" width="80" height="80" /> </a>
+                                        <img src="~/Images/free.gif" width="50" height="50" />
+                                    }
+
+                                    @*<a href="@videoUrlPayPal">@videoName (Pay With PayPal) </a>
+        <a href="@videoUrlStripe">@videoName (Pay With Stripe) </a>*@
+                                </td>
+                            </tr>
+
+                        }
+                    }
+
+
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+</div>

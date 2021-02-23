@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+   
+    <link href="~/Styles/styles.css" rel="stylesheet" />
+    
+   
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
+
+    <!-- include summernote css/js-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/lang/summernote-ko-KR.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        //$(document).contextmenu(function () { window.status = "Right click is blocked by site administrator..."; return false; });
+
+    </script>
+
+
+</head>
+<body>
+
+    <div class="logout-bar">
+        <div class="container">
+            <div style="float:right; display:block;">
+                @{
+                    if (Session["UserName"] == null)
+                    {
+                        <span>Please Login...</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Logout","Home")">Logout</a>
+                        <span>@Convert.ToString(Session["UserFirstName"]) @Convert.ToString(Session["UserLastName"]) [@Convert.ToString(Session["UserType"])]</span>
+
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    @{
+
+        var lnkHome = Session["UserID"] == null ? Url.Action("Index", "Home") : (Convert.ToString(Session["UserType"]) == "Admin" ? Url.Action("Index", "Admin") : Url.Action("Index", "User"));
+
+        <div class="index-menu-wraper">
+            <div class="container">
+                <!-- <a class="login-btn" href="">Login</a>-->
+                <a class="cam-logo" href="@lnkHome"> <img src="~/Images/cam-logo.png" /></a>
+                <div id="mainMenuBlack" class="main-menu">
+                    <div>
+                        <ul class="nav nav-pills">
+                            <li role="presentation"><a href="@lnkHome">Home</a> </li>
+                            <li role="presentation"><a href="@Url.Action("AboutUs","Home")">About US</a></li>
+                            <li role="presentation"><a href="@Url.Action("OurConsultants","Home")">Our Consultants</a></li>
+                            <li role="presentation"><a href="@Url.Action("ServicesAndBenefits","Home")">Services &amp; Benefits</a></li>
+                            <li role="presentation"><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+
+                <div id="mainMenuBlack">
+                    <div>
+                        <ul class="nav nav-pills">
+                            <li role="presentation"><a href="@lnkHome">HOME</a> </li>
+                            <li role="presentation"><a href="@Url.Action("AboutUs","Home")">ABOUT US</a></li>
+                            <li role="presentation"><a href="@Url.Action("OurConsultants","Home")">OUR CONSULTANTS</a></li>
+                            <li role="presentation"><a href="@Url.Action("ServicesAndBenefits","Home")">SERVICES &amp; BENEFITS</a></li>
+                            <li role="presentation"><a href="@Url.Action("ContactUs","Home")">CONTACT US</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+        -->
+    }
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div style="height:50px;">
+        &nbsp;
+    </div>
+    <div class="sitefooter">
+        Copyrights ® 2016
+    </div>
+</body>
+</html>

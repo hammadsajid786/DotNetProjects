@@ -1,0 +1,276 @@
+﻿@{
+    ViewBag.Title = "Chapters Defination";
+    var lstSubjectsDropDown = ViewBag.SubjectLookup;
+
+}
+
+<style type="text/css">
+    .validate {
+        color: red;
+    }
+
+    .div-Table {
+        display: table;
+    }
+
+        .div-Table div {
+            display: table-row;
+        }
+
+            .div-Table div div {
+                display: table-cell;
+                padding-right: 20px;
+            }
+</style>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $("#ddlSubjects").change(function () { ddlSubjects_Changed(this) });
+    });
+
+    function editChapter(SubjectChapterID, ChapterCode, ChapterName) {
+
+        $("#SubjectChapterID").val(SubjectChapterID);
+        $("#txtChapterCode").val(ChapterCode);
+        $("#txtChapterName").val(ChapterName);
+        $("#btnSave").val("Modify");
+        return false;
+    }
+
+    function ResetField() {
+
+        $("#SubjectChapterID").val("");
+        $("#txtChapterCode").val("");
+        $("#txtChapterName").val("");
+        $("#btnSave").val("Save");
+    }
+
+
+    function ddlSubjects_Changed(sender) {
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetChaptersBySubjectID", "Chapters")",
+            data: { "SubjectID": sender.options.item(sender.options.selectedIndex).value },
+            contentType: "application/json; charset=utf-8",
+            success: function (result, status, xhr) { GetChaptersBySubject(result, status, xhr); },
+            error: function (xhr, status, error) { $("#progress").hide(); alert(error); }
+        });
+    }
+
+
+    function SaveDelete(SubjectChapterID, SubjectID) {
+
+        if (confirm("Are you sure to remove this chapter from the subject it is currently associated? Click OK to proceed and CANCEL to decline this request.") == 0)
+        { return; }
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveDelete", "Chapters")",
+            data: JSON.stringify({ "SubjectChapterID": SubjectChapterID, "SubjectID": SubjectID }),
+            contentType: "application/json; charset=utf-8",
+            success: function (result, status, xhr) { ResetField(); GetChaptersBySubject(result, status, xhr); },
+            error: function (xhr, status, error) { $("#progress").hide(); alert(error); }
+        });
+
+        return false;
+    }
+
+    function GetChaptersBySubject(result, status, xhr) {
+
+        var strHTML = "";
+        strHTML = strHTML + "<table class=\"webGrid\" >";
+        strHTML = strHTML + "<thead>";
+        strHTML = strHTML + "<tr class=\"header\">";
+        strHTML = strHTML + "<td style='width:20px;'> &nbsp; </td>";
+        strHTML = strHTML + "<td style='width:20px;'> &nbsp; </td>";
+        strHTML = strHTML + "<td style='width:150px;'> Chapter Code </td>";
+        strHTML = strHTML + "<td style='width:250px;'> Chapter Name </td>";
+        strHTML = strHTML + "<td style='width:20px;'> Exercises </td>";
+        strHTML = strHTML + "<td style='width:20px;'> &nbsp; </td>";
+        strHTML = strHTML + "<td style='width:20px;'> &nbsp; </td>";
+        strHTML = strHTML + "</tr> </thead>";
+        strHTML = strHTML + "<tbody>";
+
+        $.each(result, function (i, val) {
+
+            if (i % 2 == 0) {
+                strHTML = strHTML + "<tr>";
+            }
+            else {
+                strHTML = strHTML + "<tr class='alt'>";
+            }
+            strHTML = strHTML + "<td style='width:20px;'>";
+            strHTML = strHTML + "<a href='#' onclick=\"return editChapter(" + String(val.SubjectsChaptersID) + ",'" + val.ChapterCode + "','" + val.ChapterName + "')\"><img alt='' src='../Images/EditRecord.png' style='width:32px;' title='View/Edit Record' /></a>";
+            strHTML = strHTML + "</td>";
+            strHTML = strHTML + "<td style='width:20px;'>";
+            strHTML = strHTML + "<a href='Chapters/ChapterContents?ID=" + String(val.SubjectsChaptersID) + "' & Test=1 ><img alt='' src='../Images/Box_content.png' style='width:32px;' title='Load contents' /></a>";
+            strHTML = strHTML + "</td>";
+            strHTML = strHTML + "<td style='width:150px;'>";
+            strHTML = strHTML + val.ChapterCode;
+            strHTML = strHTML + "</td>";
+            strHTML = strHTML + "<td style='width:250px;'>";
+            strHTML = strHTML + val.ChapterName;
+            strHTML = strHTML + "</td>";
+            strHTML = strHTML + "<td style='width:20px;'> <a href='Chapters/Exercises?ID=" + String(val.SubjectsChaptersID) + "'><img alt'' title='Add Exercises' src='../Images/Exercise-add.png' style='width:32px;'></a> </td>";
+            strHTML = strHTML + "<td style='width:20px;'> &nbsp; </td>";
+            strHTML = strHTML + "<td style='width:20px;'>";
+            strHTML = strHTML + "<a href='#' onclick=\"return SaveDelete(" + String(val.SubjectsChaptersID) + "," + String(val.SubjectID) + ");\"><img alt'' title='Remove Chapter' src='../Images/DeleteRed.png' style='width:32px;'></a>";
+            strHTML = strHTML + "</td>";
+            strHTML = strHTML + "</tr>";
+        });
+
+        strHTML = strHTML + "</tbody>";
+        strHTML = strHTML + "</table>";
+
+        $("#ChaptersList").html(strHTML);
+    }
+
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnSave").click(function () {
+            var response = true;
+
+            if ($("#ddlSubjects option:selected").val() == "0") {
+                alert("Please select subject to proceed...");
+                response = false;
+            }
+
+            if ($("#txtChapterCode").val() == "") {
+                $("#txtChapterCode").css("border-color", "Red");
+                response = false;
+            }
+            else {
+                $("#txtChapterCode").css("border-color", "");
+            }
+
+            if ($("#txtChapterName").val() == "") {
+                $("#txtChapterName").css("border-color", "Red");
+                response = false;
+            }
+            else {
+                $("#txtChapterName").css("border-color", "");
+            }
+
+            if (response) {
+                SaveUpdate();
+            }
+        });
+
+
+        function SaveUpdate() {
+
+            var Chapter = new Object();
+            Chapter.SubjectChapterID = $("#SubjectChapterID").val();
+            Chapter.SubjectID = $("#ddlSubjects option:selected").val();
+            Chapter.ChapterCode = $("#txtChapterCode").val();
+            Chapter.ChapterName = $("#txtChapterName").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SaveUpdate", "Chapters")",
+                data: JSON.stringify({ "Chapter": JSON.stringify(Chapter).toString() }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result, status, xhr) { ResetField(); GetChaptersBySubject(result, status, xhr); },
+                error: function (xhr, status, error) { $("#progress").hide(); alert(error); }
+            });
+        }
+
+
+
+
+    });
+
+</script>
+
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Chapters Definition  </h2>
+</div>
+<hr />
+
+<h3>Chapters</h3>
+
+<div data-toggle="tooltip" data-placement="right" title="Select subject to define new or modify existing chapters for this subject." style="width:200px;">
+    Subject <span class="validate">*</span>
+</div>
+<div>
+    @Html.DropDownList("ddlSubjects", (IEnumerable<SelectListItem>)lstSubjectsDropDown)
+</div>
+
+<div>
+    &nbsp;
+</div>
+
+<hr />
+
+<div style="display:inline-block; border:solid 1px; padding:10px; border-radius:6px 6px;  width:100%; box-shadow:rgb(230, 230, 230) 5px 7px;">
+
+
+    <div class="div-Table">
+        <div>
+            <div>
+                <input type="hidden" id="SubjectChapterID" />
+            </div>
+            <div>
+                Chapter Code: <span class="validate">*</span>
+            </div>
+            <div>
+                <input type="text" maxlength="5" id="txtChapterCode" />
+            </div>
+            <div>
+                Chapter Name: <span class="validate">*</span>
+            </div>
+            <div>
+                <input type="text" maxlength="100" id="txtChapterName" />
+            </div>
+            <div>
+                <input type="button" id="btnSave" value="Save" style="width:70px;" class="btn btn-primary" />
+            </div>
+            <div>
+                <input type="button" value="Reset" style="width:70px;" class="btn btn-primary" onclick="ResetField();" />
+            </div>
+            <div>
+                <input type="button" value="Back" style="width:70px;" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Admin")'" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    &nbsp;
+</div>
+
+<div id="ChaptersList" style="width:70%; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+    <table class="webGrid">
+        <thead>
+            <tr class="header">
+                <td style='width:20px;'> &nbsp; </td>
+                <td style='width:20px;'> &nbsp; </td>
+                <td style='width:150px;'> Chapter Code </td>
+                <td style='width:250px;'> Chapter Name </td>
+                <td style='width:20px;'> Exercises </td>
+                <td style='width:20px;'> &nbsp; </td>
+                <td style='width:20px;'> &nbsp; </td>
+            </tr>
+
+        </thead>
+
+    </table>
+
+</div>

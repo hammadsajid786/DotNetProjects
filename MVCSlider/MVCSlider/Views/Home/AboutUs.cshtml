@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "About Us";
+    WebGrid mygrid = new WebGrid(source: Model, rowsPerPage: 10, canPage: true, canSort: true);
+}
+
+<div id="main">
+    <div class="entry-header clearfix" style="background-color: #37bcb4;">
+        <div class="container">
+            <!--<div class="entry-title-left">
+                <div class="entry-title">
+                    <h1 style="color: #ffffff;">About Us</h1>
+                    <div class="stm_colored_separator">
+                        <div class="triangled_colored_separator" style="background-color:#eab830; ">
+                            <div class="triangle" style="border-bottom-color:#eab830;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="entry-title-right">
+            </div>
+            <style type="text/css">
+                .entry-header .entry-title h1.h2:before {
+                    background: #eab830;
+                }
+            </style>
+        </div>
+    </div>
+
+    <!-- Breads -->
+    <div class="breadcrumbs_holder_empty"></div>
+    <div class="main-body">
+        <h1>About Us</h1>
+        <h2>Welcome to Student Care</h2>
+        <p>We are well known education experts providing services in the field of education from the last 3o years.</p>
+        <p>Our experts are specialist in the following areas:</p>
+        <ul class="experties-list">
+            <li>Mathematics</li>
+            <li>Computer Science</li>
+            <li>Physics</li>
+            <li>Statistics</li>
+        </ul>
+    </div>
+
+
+
+    <div style="width:80%; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+        @mygrid.GetHtml(
+
+    tableStyle: "webGrid",
+    headerStyle: "header",
+    footerStyle: "",
+    rowStyle: "",
+    alternatingRowStyle: "alt",
+    fillEmptyRows: true,
+    mode: WebGridPagerModes.All,
+    firstText: "First",
+    previousText: "Prev",
+    nextText: "Next",
+    lastText: "Last",
+    columns: mygrid.Columns(
+                            mygrid.Column("ID", "ID"),
+                            mygrid.Column("VisitingTime", "Timestamp")
+                               )
+            )
+
+    </div>
+
+
+</div>
+
+
+

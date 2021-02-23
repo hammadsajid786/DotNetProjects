@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/flexslider.css" rel="stylesheet" />
+    <link href="~/Styles/styles.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.flexslider-min.js"></script>
+    <script src="~/Scripts/custom_script.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+
+    <script type="text/javascript">
+
+        //$(document).contextmenu(function () { window.status = "Right click is blocked by site administrator..."; return false; });
+
+    </script>
+
+</head>
+<body>
+    <!--
+    <div style="width:100%; min-height:40px; background-color:black; color:white;">
+        <div style="float:right; display:block;">
+            @{
+                if (Session["UserName"] == null)
+                {
+                    <span>Please Login...</span>
+                }
+                else
+                {
+                    <span>@Convert.ToString(Session["UserFirstName"]) @Convert.ToString(Session["UserLastName"]) [@Convert.ToString(Session["UserType"])]</span>
+                    <br />
+                    <a href="@Url.Action("Logout","Home")">Logout</a>
+                }
+            }
+        </div>
+    </div>
+        -->
+
+    @{
+
+        var lnkHome = Session["UserID"] == null ? Url.Action("Index", "Home") : (Convert.ToString(Session["UserType"]) == "Admin" ? Url.Action("Index", "Admin") : Url.Action("Index", "User"));
+
+        <div class="index-menu-wraper">
+            <div class="container">
+                <a class="login-btn" href="#">Login</a>
+                <a class="cam-logo" href="@lnkHome"> <img src="~/Images/cam-logo.png" /></a>
+                <div id="mainMenu" class="main-menu">
+                    <div>
+                        <a class="mob-menu" href="javascript:void(0);"> <span></span><span></span><span></span></a>       
+                        <ul class="nav nav-pills">
+                            <li role="presentation"><a href="@lnkHome">Home</a> </li>
+                            <li role="presentation"><a href="@Url.Action("AboutUs","Home")">About Us</a></li>
+                            <li role="presentation"><a href="@Url.Action("OurConsultants","Home")">Our Consultants</a></li>
+                            <li role="presentation"><a href="@Url.Action("ServicesAndBenefits","Home")">Services &amp; Benefits</a></li>
+                            <li role="presentation"><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+
+</body>
+</html>

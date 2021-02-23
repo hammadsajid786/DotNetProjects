@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard  </h2>
+</div>
+<hr />
+
+
+<div style="width:20%">
+    <div class="list-group">
+        <div>
+            <a href="@Url.Action("List","Subjects")" class="list-group-item" data-toggle="tooltip" data-placement="right" title="Click here to manage Subjects/Courses definition..."> <img src="~/Images/Subjects.png" style="width:40px;" /> Subjects </a>
+
+        </div>
+        <div style="margin-bottom:2px;">
+            
+        </div>
+        <div>
+            <a href="@Url.Action("Index","Chapters")" class="list-group-item" data-toggle="tooltip" data-placement="right" title="Click here to manage chapters of subjects added in system..."> <img src="~/Images/Chapters.png" style="width:40px;" /> Chapters </a>
+
+        </div>
+        <div style="margin-bottom:2px;">
+
+        </div>
+
+        <div>
+            <a href="@Url.Action("List","Students")" class="list-group-item" data-toggle="tooltip" data-placement="right" title="Click here to manage Students definition..."> <img src="~/Images/StudentPanel.png" style="width:40px;" />  Students</a>
+
+        </div>
+        <div>
+
+                <a href="@Url.Action("PasswordReset","Admin")" class="list-group-item" title="Click here to manage links contents"><img src="~/Images/StudentPanel.png" style="width:40px;" /> Password Reset</a>
+            </div>
+
+
+    </div>
+
+</div>

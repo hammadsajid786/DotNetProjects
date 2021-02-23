@@ -1,0 +1,62 @@
+﻿@model List<MVCSlider.Models.Students>
+
+@{
+    ViewBag.Title = "Students - Listings";
+    WebGrid mygrid = new WebGrid(source: Model, rowsPerPage: 10, canPage: true, canSort: true);
+
+}
+
+<div style="float:left; display:block;">
+    <img src="~/Images/AdminPanel.png" alt="" />
+</div>
+<div style="display:block; margin-bottom:100px;">
+    <h2>Admin Dashboard - Students Definition  </h2>
+</div>
+<hr />
+
+<h3>Students - Listings</h3>
+
+
+<div style="width:100%; display:block;">
+    
+    <div style="float:right; display:block;">
+        <input type="button" value="Add New Student" class="btn btn-primary" onclick="location.href='@Url.Action("CRUD/0","Students")'" />
+    </div>
+    <div style="float:right; display:block; margin-right:5px;">
+        <input type="button" value="Back to Admin Dashboard" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Admin")'" />
+    </div>
+</div>
+
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+
+
+<div style="width:100%; border:1px solid gray; background-color:lightsteelblue; border-radius:8px 8px;">
+
+    @mygrid.GetHtml(
+
+    tableStyle: "webGrid",
+    headerStyle: "header",
+    footerStyle: "",
+    rowStyle: "",
+    alternatingRowStyle: "alt",
+    fillEmptyRows: true,
+    mode: WebGridPagerModes.All,
+    firstText: "First",
+    previousText: "Prev",
+    nextText: "Next",
+    lastText: "Last",
+    columns: mygrid.Columns(
+                            mygrid.Column(header: "", format: @<text><a href="~/Students/CRUD?Mode=Edit&ID=@item.StudentID"><img alt="" src="~/Images/EditRecord.png" style="width:32px;" title="View/Edit Record" /></a></text>, style: "ViewEdit"),
+                            mygrid.Column("StudentNumber", "Roll #"),
+                            mygrid.Column("FirstName", "First Name"),
+                            mygrid.Column("LastName", "Last Name"),
+                            mygrid.Column("DateofBirth", "Date of Birth",@<text>  @Convert.ToDateTime(item.DateofBirth).ToString("MM/dd/yyyy")   </Text>),
+                            mygrid.Column("BatchCode", "Batch"),
+                            mygrid.Column("Zipcode", "Zip code"),
+                            mygrid.Column("StateCode", "State"),
+                            mygrid.Column(header: "", format: @<text><a href="~/Students/Delete/@item.StudentID"><img alt="" src="~/Images/DeleteRed.png" style="width:32px;" title="Remove Record" /></a></text>, style: "ViewEdit")
+                               )
+            )
+
+</div>

@@ -1,0 +1,111 @@
+﻿@model List<object>
+@{
+    ViewBag.Title = "Past Papers";
+
+    var objMain = Model.FirstOrDefault();
+    List<object>
+        lstContents = (List<object>
+            )Model;
+
+
+    var chapterList = new List<string>();
+
+    foreach (var item in Model)
+    {
+        var chapterName = @item.GetType().GetProperty("ChapterName").GetValue(item, null).ToString();
+
+        if (!chapterList.Contains(chapterName))
+            chapterList.Add(chapterName);
+
+
+    }
+
+}
+
+
+
+<style>
+    .table-bordered, .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th 
+    {
+        border: 1px solid #ca4141;
+    }
+</style>
+
+
+
+
+
+
+<table class="table table-bordered common-table" bordercolor="#ff0000">
+    <thead class="thead-light">
+        <tr>
+
+            @{
+
+                <th colspan="4" style="text-align: center;">
+                    Subject: @objMain.GetType().GetProperty("SubjectName").GetValue(objMain, null)
+                </th>
+
+            }
+
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var chapter in chapterList)
+        {
+            <tr>
+
+                <td colspan="4" style="text-align: center;">
+
+                    Paper:  @chapter
+
+                </td>
+
+            </tr>
+            <tr>
+
+                <td colspan="4" style="text-align: center;">
+                    @{List<string> yearList = new List<string>(); }
+                    @foreach (var item in Model)
+                    {
+                        var chapterName = @item.GetType().GetProperty("ChapterName").GetValue(item, null).ToString();
+                        var year = @item.GetType().GetProperty("PaperYear").GetValue(item, null).ToString();
+                        var subJectId = @item.GetType().GetProperty("SubjectID").GetValue(item, null).ToString();
+                        var questionId = @item.GetType().GetProperty("ContentsHolder").GetValue(item, null).ToString();
+                        // var @varAction = @Url.Action("ShowVideoPastPaper", "Home") + string.Format("?subID={0}&questionId={1}", subJectId, questionId);
+                        var @varAction = @Url.Action("ChapterQuestions", "Home") + string.Format("?Sub={0}&questionYearId={1}", subJectId, questionId);
+                        if (chapterName != chapter || string.IsNullOrEmpty(year) || yearList.Contains(year))
+                            continue;
+
+                        <a href="@varAction" target="_blank" style="font-size: 20px">@year</a>@*<text>,</text>*@
+
+                        yearList.Add(year);
+                    }
+
+                </td>
+
+            </tr>
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </tbody>
+</table>
