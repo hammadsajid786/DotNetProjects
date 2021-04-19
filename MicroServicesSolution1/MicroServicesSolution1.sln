@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicesSolution1", "MicroServicesSolution1\MicroServicesSolution1.csproj", "{4B7982A4-EFC8-4323-97E5-820B61F2DFB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGatewayOcelot", "ApiGatewayOcelot\ApiGatewayOcelot.csproj", "{18E61C1F-D13E-4800-BAE7-4E6E6444F4E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B7982A4-EFC8-4323-97E5-820B61F2DFB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7982A4-EFC8-4323-97E5-820B61F2DFB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7982A4-EFC8-4323-97E5-820B61F2DFB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7982A4-EFC8-4323-97E5-820B61F2DFB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E61C1F-D13E-4800-BAE7-4E6E6444F4E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E61C1F-D13E-4800-BAE7-4E6E6444F4E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E61C1F-D13E-4800-BAE7-4E6E6444F4E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E61C1F-D13E-4800-BAE7-4E6E6444F4E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {870121B1-23BF-491C-9205-8B73801C7FBC}
+	EndGlobalSection
+EndGlobal
