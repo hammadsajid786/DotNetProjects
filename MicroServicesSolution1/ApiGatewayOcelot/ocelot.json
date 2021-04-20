@@ -10,10 +10,22 @@
         }
       ],
       "UpstreamPathTemplate": "/WeatherForecast",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "weather"
     }
   ],
-
+  "SwaggerEndPoints": [
+    {
+      "Key": "weather",
+      "Config": [
+        {
+          "Name": "Contacts API",
+          "Version": "v1",
+          "Url": "https://localhost:44337/swagger/v1/swagger.json"
+        }
+      ]
+    },
+  ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:44327"
   }
