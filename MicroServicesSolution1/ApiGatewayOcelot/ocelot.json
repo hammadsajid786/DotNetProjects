@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/WeatherForecast",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,8 +9,9 @@
           "Port": 44337
         }
       ],
-      "UpstreamPathTemplate": "/WeatherForecast",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [ "GET","POST","PUT","DELETE" ],
+      //"ServiceName": "orders",
       "SwaggerKey": "weather"
     }
   ],
