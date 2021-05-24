@@ -152,7 +152,7 @@ namespace FindingNationalityGame
                 else
                     Calculations.TotalScore -= 5; //If it was wrong it will be -5 points.
 
-                labelTotalScore.Text = "Total Score : " + Calculations.TotalScore;
+                SetTotalScoreToLabel();
 
                 var pictureCenterPoint = Calculations.GetCenterPointOfObject(this.pictureBoxInput);
 
@@ -196,11 +196,18 @@ namespace FindingNationalityGame
             this.btnStart.Hide();
             this.labelDisclaimer.Hide();
             Calculations.TotalScore = 0; //Initial Score
+            SetTotalScoreToLabel();
             timerInputImageDrop.Start();
         }
         #endregion
 
         #region Other Functions
+
+        private void SetTotalScoreToLabel()
+        {
+            this.labelTotalScore.Text = "Total Score : " + Calculations.TotalScore;
+        }
+
         private void FindNearestNationalityBox_ChangeBackground()
         {
             ResetBackground_NationalityPanels();
