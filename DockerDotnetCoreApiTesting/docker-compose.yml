@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  
+  backendapis:
+    image: ${DOCKER_REGISTRY-}backendapis
+    build:
+      context: .
+      dockerfile: BackendAPIs\Dockerfile
+
+  dockerdotnetcoreapitesting:
+    image: ${DOCKER_REGISTRY-}dockerdotnetcoreapitesting
+    build:
+      context: .
+      dockerfile: DockerDotnetCoreApiTesting\Dockerfile
