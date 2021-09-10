@@ -1,7 +1,6 @@
 version: '3.4'
 
 services:
-  
   backendapis:
     image: ${DOCKER_REGISTRY-}backendapis
     build:
@@ -13,3 +12,4 @@ services:
     build:
       context: .
       dockerfile: DockerDotnetCoreApiTesting\Dockerfile
+
