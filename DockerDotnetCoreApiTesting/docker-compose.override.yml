@@ -4,20 +4,26 @@ services:
   backendapis:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      #- ASPNETCORE_URLS=https://+:444;http://+:80
+      - ASPNETCORE_URLS=https://+:445;https://+:446;https://+:447;
+
     ports:
-      - "80"
-      - "443"
+      #- "5555:80"
+      #- "5556:443"
+      - "5557:445"
+      - "5558:446"
+      - "5559:447"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:C:\Users\ContainerUser\AppData\Roaming\Microsoft\UserSecrets:ro
       - ${APPDATA}/ASP.NET/Https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https:ro
   dockerdotnetcoreapitesting:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443;
     ports:
-      - "80"
-      - "443"
+      #- "80"
+      #- "6002:80"
+      - "6004:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:C:\Users\ContainerUser\AppData\Roaming\Microsoft\UserSecrets:ro
       - ${APPDATA}/ASP.NET/Https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https:ro
