@@ -51,16 +51,15 @@ namespace BinanceBot
                     if (tupleResults.Item2.Equals("Account has insufficient balance for requested action."))
                     {
                         ordersExecuted = i - 1;
-                        break;
-                        //Thread.Sleep(10000); // Wait 10 seconds
                     }
 
                     if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                     {
                         ordersExecuted = i - 1;
                         MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
-                        break;
                     }
+
+                    break;
                 }
 
                 Thread.Sleep(2000); // Wait for 2 seconds.
