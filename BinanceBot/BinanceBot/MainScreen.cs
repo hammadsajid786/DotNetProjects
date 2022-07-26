@@ -19,9 +19,6 @@ namespace BinanceBot
             cbMaxOrderCountSMBL.SelectedIndex = 0;
         }
 
-        private readonly string binanceApiKey = "laUY2nCE1LfjkqEemjdHzxPre09NoA1FfCfszbDC6fDd6QMoA87bEEEidiWb11UN";
-        private readonly string biancneAPISecret = "7OYzJUEuJwEZIyZGLZfA8XVt4I1GYBTuTSWBLhjMEY6b9rA4GpTURd4kFLRWrABm";
-
         private CancellationTokenSource cts = new CancellationTokenSource();
 
         private async void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
@@ -54,8 +51,8 @@ namespace BinanceBot
                     if (tupleResults.Item2.Equals("Account has insufficient balance for requested action."))
                     {
                         ordersExecuted = i - 1;
-                        //Thread.Sleep(10000); // Wait 10 seconds
                         break;
+                        //Thread.Sleep(10000); // Wait 10 seconds
                     }
 
                     if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
