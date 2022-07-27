@@ -32,9 +32,9 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.nUpDownControlSMBL = new System.Windows.Forms.NumericUpDown();
             this.txtOrdersExecuted = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.cbMaxOrderCountSMBL = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbPairsMSLB = new System.Windows.Forms.ComboBox();
@@ -51,6 +51,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnMarketBuyLimitSell = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,9 +85,9 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.nUpDownControlSMBL);
             this.panel1.Controls.Add(this.txtOrdersExecuted);
             this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.cbMaxOrderCountSMBL);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.cbPairsMSLB);
@@ -100,6 +101,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(307, 236);
             this.panel1.TabIndex = 3;
+            // 
+            // nUpDownControlSMBL
+            // 
+            this.nUpDownControlSMBL.Location = new System.Drawing.Point(177, 114);
+            this.nUpDownControlSMBL.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nUpDownControlSMBL.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nUpDownControlSMBL.Name = "nUpDownControlSMBL";
+            this.nUpDownControlSMBL.Size = new System.Drawing.Size(100, 23);
+            this.nUpDownControlSMBL.TabIndex = 6;
+            this.nUpDownControlSMBL.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // txtOrdersExecuted
             // 
@@ -118,20 +141,6 @@
             this.label11.Size = new System.Drawing.Size(91, 15);
             this.label11.TabIndex = 13;
             this.label11.Text = "Order Executed:";
-            // 
-            // cbMaxOrderCountSMBL
-            // 
-            this.cbMaxOrderCountSMBL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMaxOrderCountSMBL.FormattingEnabled = true;
-            this.cbMaxOrderCountSMBL.Items.AddRange(new object[] {
-            "10",
-            "7",
-            "5",
-            "2"});
-            this.cbMaxOrderCountSMBL.Location = new System.Drawing.Point(177, 113);
-            this.cbMaxOrderCountSMBL.Name = "cbMaxOrderCountSMBL";
-            this.cbMaxOrderCountSMBL.Size = new System.Drawing.Size(100, 23);
-            this.cbMaxOrderCountSMBL.TabIndex = 10;
             // 
             // label9
             // 
@@ -284,13 +293,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 271);
+            this.ClientSize = new System.Drawing.Size(684, 415);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "MainScreen";
             this.Text = "Binance Bot";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -317,9 +327,9 @@
         private TextBox textBox2;
         private Label label8;
         private Button btnMarketBuyLimitSell;
-        private ComboBox cbMaxOrderCountSMBL;
         private Label label9;
         private TextBox txtOrdersExecuted;
         private Label label11;
+        private NumericUpDown nUpDownControlSMBL;
     }
 }

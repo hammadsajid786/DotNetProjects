@@ -16,7 +16,7 @@ namespace BinanceBot
         {
             InitializeComponent();
             cbPairsMSLB.SelectedIndex = 0;
-            cbMaxOrderCountSMBL.SelectedIndex = 0;
+            //cbMaxOrderCountSMBL.SelectedIndex = 0;
         }
 
         private CancellationTokenSource cts = new CancellationTokenSource();
@@ -31,11 +31,11 @@ namespace BinanceBot
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
 
-            int maxOrderCount = int.Parse(cbMaxOrderCountSMBL.SelectedItem.ToString());
+            int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
 
             if (!ValidateSellPrice(out sellPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(false);
+                EnableDisableFields(true);
                 return;
             }
 
@@ -122,7 +122,7 @@ namespace BinanceBot
             cbPairsMSLB.Enabled = enable;
             txtBUSDSellMSLB.Enabled = enable;
             txtPurchaseMarginMSLB.Enabled = enable;
-            cbMaxOrderCountSMBL.Enabled = enable;
+            nUpDownControlSMBL.Enabled = enable;
 
             btnMarketBuyLimitSell.Enabled = enable;
         }
