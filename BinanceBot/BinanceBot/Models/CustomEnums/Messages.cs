@@ -9,5 +9,7 @@ namespace BinanceBot.Models.CustomEnums
     internal class Messages
     {
         public static readonly string PurchaseOrderNotCreated = "Purchase order not created.";
+        public static readonly string SellOrderNotCreated = "Sell order not created.";
+
     }
 }

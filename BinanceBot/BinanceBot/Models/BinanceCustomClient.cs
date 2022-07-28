@@ -64,5 +64,45 @@ namespace BinanceBot.Models
 
             return new Tuple<bool, string>(isSuccess, message);
         }
+
+        public async Task<Tuple<bool, string>> BuyMarketThenSellLimitOrder(string tradePair, decimal buyPriceBUSD, decimal purchaseMargin)
+        {
+            bool isSuccess = false;
+            string message = string.Empty;
+
+            WebCallResult<BinancePlacedOrder> orderMarketBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
+               (tradePair, OrderSide.Buy, SpotOrderType.Market, null, buyPriceBUSD);
+
+            if (orderMarketBuyDetails.Success)
+            {
+                decimal quantiyFilled = orderMarketBuyDetails.Data.QuantityFilled;
+                decimal priceSell = orderMarketBuyDetails.Data.AverageFillPrice.Value;
+
+                decimal pricePurchased = Math.Round(priceSell + purchaseMargin);
+
+                WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
+                (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled);
+
+                if (orderLimitSellDetails.Success)
+                {
+                    isSuccess = true;
+
+                    //MessageBox.Show("Order filled of Quanity: " + quantiyFilled + "BTC"
+                    //    + Environment.NewLine + "BUSD: " + Math.Round(priceSell,2)
+                    //    + Environment.NewLine + "Bought BTC at: " + pricePurchased);
+                }
+                else
+                {
+                    message = CustomEnums.Messages.SellOrderNotCreated;
+                }
+            }
+            else
+            {
+                message = orderMarketBuyDetails.Error.Message;
+            }
+
+            return new Tuple<bool, string>(isSuccess, message);
+        }
+
     }
 }
