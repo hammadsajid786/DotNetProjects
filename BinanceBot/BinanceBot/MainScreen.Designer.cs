@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.nUpDownControlSMBL = new System.Windows.Forms.NumericUpDown();
-            this.txtOrdersExecuted = new System.Windows.Forms.TextBox();
+            this.txtOrdersExecutedSMBL = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -42,17 +42,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtOrdersExecutedBMSL = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.nUpDownControlBMSL = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbPairsBMSL = new System.Windows.Forms.ComboBox();
+            this.txtSellMarginBMSL = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnMarketBuyLimitSell = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlBMSL)).BeginInit();
             this.SuspendLayout();
             // 
             // btnPlaceMarketOrderMSLB
@@ -86,7 +91,7 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.nUpDownControlSMBL);
-            this.panel1.Controls.Add(this.txtOrdersExecuted);
+            this.panel1.Controls.Add(this.txtOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label4);
@@ -99,7 +104,7 @@
             this.panel1.Controls.Add(this.btnPlaceMarketOrderMSLB);
             this.panel1.Location = new System.Drawing.Point(32, 23);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(307, 236);
+            this.panel1.Size = new System.Drawing.Size(307, 223);
             this.panel1.TabIndex = 3;
             // 
             // nUpDownControlSMBL
@@ -124,14 +129,14 @@
             0,
             0});
             // 
-            // txtOrdersExecuted
+            // txtOrdersExecutedSMBL
             // 
-            this.txtOrdersExecuted.Enabled = false;
-            this.txtOrdersExecuted.Location = new System.Drawing.Point(177, 180);
-            this.txtOrdersExecuted.Name = "txtOrdersExecuted";
-            this.txtOrdersExecuted.Size = new System.Drawing.Size(100, 23);
-            this.txtOrdersExecuted.TabIndex = 12;
-            this.txtOrdersExecuted.Text = "0";
+            this.txtOrdersExecutedSMBL.Enabled = false;
+            this.txtOrdersExecutedSMBL.Location = new System.Drawing.Point(177, 180);
+            this.txtOrdersExecutedSMBL.Name = "txtOrdersExecutedSMBL";
+            this.txtOrdersExecutedSMBL.Size = new System.Drawing.Size(100, 23);
+            this.txtOrdersExecutedSMBL.TabIndex = 12;
+            this.txtOrdersExecutedSMBL.Text = "0";
             // 
             // label11
             // 
@@ -166,7 +171,8 @@
             this.cbPairsMSLB.FormattingEnabled = true;
             this.cbPairsMSLB.Items.AddRange(new object[] {
             "BTCBUSD",
-            "ETHBUSD"});
+            "ETHBUSD",
+            "BNBBUSD"});
             this.cbPairsMSLB.Location = new System.Drawing.Point(177, 26);
             this.cbPairsMSLB.Name = "cbPairsMSLB";
             this.cbPairsMSLB.Size = new System.Drawing.Size(100, 23);
@@ -202,18 +208,71 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.txtOrdersExecutedBMSL);
+            this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.nUpDownControlBMSL);
+            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.comboBox1);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.cbPairsBMSL);
+            this.panel2.Controls.Add(this.txtSellMarginBMSL);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.textBox2);
+            this.panel2.Controls.Add(this.txtBUSDBuyBMSL);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.btnMarketBuyLimitSell);
             this.panel2.Location = new System.Drawing.Point(368, 23);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(281, 195);
+            this.panel2.Size = new System.Drawing.Size(281, 223);
             this.panel2.TabIndex = 4;
+            // 
+            // txtOrdersExecutedBMSL
+            // 
+            this.txtOrdersExecutedBMSL.Enabled = false;
+            this.txtOrdersExecutedBMSL.Location = new System.Drawing.Point(155, 180);
+            this.txtOrdersExecutedBMSL.Name = "txtOrdersExecutedBMSL";
+            this.txtOrdersExecutedBMSL.Size = new System.Drawing.Size(100, 23);
+            this.txtOrdersExecutedBMSL.TabIndex = 14;
+            this.txtOrdersExecutedBMSL.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(58, 183);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(91, 15);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "Order Executed:";
+            // 
+            // nUpDownControlBMSL
+            // 
+            this.nUpDownControlBMSL.Location = new System.Drawing.Point(155, 112);
+            this.nUpDownControlBMSL.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nUpDownControlBMSL.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nUpDownControlBMSL.Name = "nUpDownControlBMSL";
+            this.nUpDownControlBMSL.Size = new System.Drawing.Size(100, 23);
+            this.nUpDownControlBMSL.TabIndex = 10;
+            this.nUpDownControlBMSL.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(32, 114);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(117, 15);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "Max Order executed:";
             // 
             // label5
             // 
@@ -224,25 +283,26 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Pair:";
             // 
-            // comboBox1
+            // cbPairsBMSL
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbPairsBMSL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPairsBMSL.FormattingEnabled = true;
+            this.cbPairsBMSL.Items.AddRange(new object[] {
             "BTCBUSD",
-            "ETHBUSD"});
-            this.comboBox1.Location = new System.Drawing.Point(155, 23);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 23);
-            this.comboBox1.TabIndex = 6;
+            "ETHBUSD",
+            "BNBBUSD"});
+            this.cbPairsBMSL.Location = new System.Drawing.Point(155, 23);
+            this.cbPairsBMSL.Name = "cbPairsBMSL";
+            this.cbPairsBMSL.Size = new System.Drawing.Size(100, 23);
+            this.cbPairsBMSL.TabIndex = 6;
             // 
-            // textBox1
+            // txtSellMarginBMSL
             // 
-            this.textBox1.Location = new System.Drawing.Point(155, 79);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.Text = "5";
+            this.txtSellMarginBMSL.Location = new System.Drawing.Point(155, 79);
+            this.txtSellMarginBMSL.Name = "txtSellMarginBMSL";
+            this.txtSellMarginBMSL.Size = new System.Drawing.Size(100, 23);
+            this.txtSellMarginBMSL.TabIndex = 4;
+            this.txtSellMarginBMSL.Text = "5";
             // 
             // label6
             // 
@@ -263,13 +323,13 @@
             this.label7.TabIndex = 3;
             this.label7.Text = "Buy at market and Sell with Limit";
             // 
-            // textBox2
+            // txtBUSDBuyBMSL
             // 
-            this.textBox2.Location = new System.Drawing.Point(155, 52);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "50";
+            this.txtBUSDBuyBMSL.Location = new System.Drawing.Point(155, 52);
+            this.txtBUSDBuyBMSL.Name = "txtBUSDBuyBMSL";
+            this.txtBUSDBuyBMSL.Size = new System.Drawing.Size(100, 23);
+            this.txtBUSDBuyBMSL.TabIndex = 1;
+            this.txtBUSDBuyBMSL.Text = "50";
             // 
             // label8
             // 
@@ -288,12 +348,13 @@
             this.btnMarketBuyLimitSell.TabIndex = 0;
             this.btnMarketBuyLimitSell.Text = "Place Market Buy - Limit Sell";
             this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
+            this.btnMarketBuyLimitSell.Click += new System.EventHandler(this.btnMarketBuyLimitSell_Click);
             // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 415);
+            this.ClientSize = new System.Drawing.Size(684, 465);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "MainScreen";
@@ -303,6 +364,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlBMSL)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -320,16 +382,20 @@
         private ComboBox cbPairsMSLB;
         private Panel panel2;
         private Label label5;
-        private ComboBox comboBox1;
-        private TextBox textBox1;
+        private ComboBox cbPairsBMSL;
+        private TextBox txtSellMarginBMSL;
         private Label label6;
         private Label label7;
-        private TextBox textBox2;
+        private TextBox txtBUSDBuyBMSL;
         private Label label8;
         private Button btnMarketBuyLimitSell;
         private Label label9;
-        private TextBox txtOrdersExecuted;
+        private TextBox txtOrdersExecutedSMBL;
         private Label label11;
         private NumericUpDown nUpDownControlSMBL;
+        private TextBox txtOrdersExecutedBMSL;
+        private Label label12;
+        private NumericUpDown nUpDownControlBMSL;
+        private Label label10;
     }
 }
