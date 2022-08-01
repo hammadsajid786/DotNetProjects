@@ -354,7 +354,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 465);
+            this.ClientSize = new System.Drawing.Size(684, 273);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "MainScreen";
