@@ -124,7 +124,7 @@
             this.nUpDownControlSMBL.Size = new System.Drawing.Size(100, 23);
             this.nUpDownControlSMBL.TabIndex = 6;
             this.nUpDownControlSMBL.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});

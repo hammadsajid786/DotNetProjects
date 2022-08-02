@@ -17,7 +17,7 @@ namespace BinanceBot
         public MainScreen()
         {
             InitializeComponent();
-            
+
             cbPairsMSLB.SelectedIndex = 0;
             cbPairsBMSL.SelectedIndex = 0;
 
@@ -44,7 +44,7 @@ namespace BinanceBot
                 return;
             }
 
-            int ordersExecuted = maxOrderCount;
+            int ordersExecuted = 0;
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
@@ -52,21 +52,25 @@ namespace BinanceBot
 
                 if (!tupleResults.Item1)
                 {
-                    if (tupleResults.Item2.Equals("Account has insufficient balance for requested action."))
+                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
                     {
-                        ordersExecuted = i - 1;
                     }
-
-                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
+                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                     {
-                        ordersExecuted = i - 1;
                         MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
+                    }
+                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
+                    {
+                        MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
                     }
 
                     break;
                 }
+                else
+                    ordersExecuted++;
 
-                Thread.Sleep(2000); // Wait for 2 seconds.
+
+                //Thread.Sleep(2000); // Wait for 2 seconds.
             }
 
             txtOrdersExecutedSMBL.Text = ordersExecuted.ToString();
@@ -107,7 +111,7 @@ namespace BinanceBot
                 return;
             }
 
-            int ordersExecuted = maxOrderCount;
+            int ordersExecuted = 0;
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
@@ -115,21 +119,24 @@ namespace BinanceBot
 
                 if (!tupleResults.Item1)
                 {
-                    if (tupleResults.Item2.Equals("Account has insufficient balance for requested action."))
+                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
                     {
-                        ordersExecuted = i - 1;
                     }
-
-                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
+                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
                     {
-                        ordersExecuted = i - 1;
                         MessageBox.Show(Models.CustomEnums.Messages.SellOrderNotCreated);
+                    }
+                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
+                    {
+                        MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
                     }
 
                     break;
                 }
+                else
+                    ordersExecuted++;
 
-                Thread.Sleep(500); // Wait for 2 seconds.
+                //Thread.Sleep(500); // Wait for 2 seconds.
             }
 
             txtOrdersExecutedBMSL.Text = ordersExecuted.ToString();
