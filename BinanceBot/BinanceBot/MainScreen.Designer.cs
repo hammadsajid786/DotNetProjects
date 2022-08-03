@@ -330,6 +330,7 @@
             this.txtBUSDBuyBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtBUSDBuyBMSL.TabIndex = 1;
             this.txtBUSDBuyBMSL.Text = "50";
+            this.txtBUSDBuyBMSL.Leave += new System.EventHandler(this.txtBUSDBuyBMSL_Leave);
             // 
             // label8
             // 
