@@ -212,12 +212,6 @@ namespace BinanceBot
                 return false;
             }
 
-            if (buyBUSDPrice < 1 || buyBUSDPrice > 100)
-            {
-                MessageBox.Show("Buy Qty Must be in between 1-100 for safety.");
-                return false;
-            }
-
             if (string.IsNullOrEmpty(txtSellMarginBMSL.Text))
             {
                 MessageBox.Show("Sell Margin required.");
@@ -238,6 +232,17 @@ namespace BinanceBot
             }
 
             return true;
+        }
+
+        private void txtBUSDBuyBMSL_Leave(object sender, EventArgs e)
+        {
+            var dialogResult = MessageBox.Show("Are you sure you want to make Buy value :" + txtBUSDBuyBMSL.Text, "Are you sure?", MessageBoxButtons.YesNo);
+
+            if (dialogResult != DialogResult.Yes)
+            {
+                txtBUSDBuyBMSL.Focus();
+            }
+
         }
     }
 }
