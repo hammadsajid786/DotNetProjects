@@ -124,7 +124,7 @@
             this.nUpDownControlSMBL.Size = new System.Drawing.Size(100, 23);
             this.nUpDownControlSMBL.TabIndex = 6;
             this.nUpDownControlSMBL.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             0});
@@ -184,7 +184,7 @@
             this.txtPurchaseMarginMSLB.Name = "txtPurchaseMarginMSLB";
             this.txtPurchaseMarginMSLB.Size = new System.Drawing.Size(100, 23);
             this.txtPurchaseMarginMSLB.TabIndex = 4;
-            this.txtPurchaseMarginMSLB.Text = "5";
+            this.txtPurchaseMarginMSLB.Text = "2";
             // 
             // label3
             // 
@@ -302,7 +302,7 @@
             this.txtSellMarginBMSL.Name = "txtSellMarginBMSL";
             this.txtSellMarginBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtSellMarginBMSL.TabIndex = 4;
-            this.txtSellMarginBMSL.Text = "5";
+            this.txtSellMarginBMSL.Text = "2";
             // 
             // label6
             // 

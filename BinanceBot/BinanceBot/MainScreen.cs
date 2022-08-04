@@ -14,12 +14,16 @@ namespace BinanceBot
     {
         private BinanceCustomClient _binanceCustomClient;
 
+        private decimal totalBUSDBuyBMSL = 0;
+
         public MainScreen()
         {
             InitializeComponent();
 
             cbPairsMSLB.SelectedIndex = 0;
             cbPairsBMSL.SelectedIndex = 0;
+
+            totalBUSDBuyBMSL = decimal.Parse(txtBUSDBuyBMSL.Text);
 
             _binanceCustomClient = new BinanceCustomClient();
         }
@@ -234,13 +238,23 @@ namespace BinanceBot
             return true;
         }
 
+
         private void txtBUSDBuyBMSL_Leave(object sender, EventArgs e)
         {
-            var dialogResult = MessageBox.Show("Are you sure you want to make Buy value :" + txtBUSDBuyBMSL.Text, "Are you sure?", MessageBoxButtons.YesNo);
+            decimal totalBUSDBuyBMSLNew = decimal.Parse(txtBUSDBuyBMSL.Text);
 
-            if (dialogResult != DialogResult.Yes)
+            if (totalBUSDBuyBMSL != totalBUSDBuyBMSLNew)
             {
-                txtBUSDBuyBMSL.Focus();
+                var dialogResult = MessageBox.Show("Are you sure you want to make Buy value :" + txtBUSDBuyBMSL.Text, "Are you sure?", MessageBoxButtons.YesNo);
+
+                if (dialogResult != DialogResult.Yes)
+                {
+                    txtBUSDBuyBMSL.Focus();
+                }
+                else
+                {
+                    totalBUSDBuyBMSL = totalBUSDBuyBMSLNew; // Updating Cache value
+                }
             }
 
         }
