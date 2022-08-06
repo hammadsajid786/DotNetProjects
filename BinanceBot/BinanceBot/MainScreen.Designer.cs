@@ -111,7 +111,7 @@
             // 
             this.nUpDownControlSMBL.Location = new System.Drawing.Point(177, 114);
             this.nUpDownControlSMBL.Maximum = new decimal(new int[] {
-            30,
+            50,
             0,
             0,
             0});
@@ -247,7 +247,7 @@
             // 
             this.nUpDownControlBMSL.Location = new System.Drawing.Point(155, 112);
             this.nUpDownControlBMSL.Maximum = new decimal(new int[] {
-            30,
+            50,
             0,
             0,
             0});
