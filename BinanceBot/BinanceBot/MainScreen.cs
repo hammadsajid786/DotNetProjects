@@ -71,7 +71,9 @@ namespace BinanceBot
                     break;
                 }
                 else
-                    ordersExecuted++;
+                {
+                    txtOrdersExecutedSMBL.Text = (++ordersExecuted).ToString();
+                }
 
 
                 //Thread.Sleep(2000); // Wait for 2 seconds.
@@ -138,7 +140,9 @@ namespace BinanceBot
                     break;
                 }
                 else
-                    ordersExecuted++;
+                {
+                    txtOrdersExecutedBMSL.Text = (++ordersExecuted).ToString();
+                }
 
                 //Thread.Sleep(500); // Wait for 2 seconds.
             }
