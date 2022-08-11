@@ -360,6 +360,8 @@
             this.ClientSize = new System.Drawing.Size(684, 273);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "MainScreen";
             this.Text = "Binance Bot";
             this.panel1.ResumeLayout(false);
