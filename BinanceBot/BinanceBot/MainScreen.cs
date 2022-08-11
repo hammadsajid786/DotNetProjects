@@ -7,12 +7,14 @@ using CryptoExchange.Net.Authentication;
 using Binance.Net.Objects.Models.Spot;
 using CryptoExchange.Net.Objects;
 using BinanceBot.Models;
+using BinanceBot.Models.CustomEnums;
 
 namespace BinanceBot
 {
     public partial class MainScreen : Form
     {
         private BinanceCustomClient _binanceCustomClient;
+        private CancellationTokenSource cancellationtoken;
 
         private decimal totalBUSDBuyBMSL = 0;
 
@@ -28,13 +30,13 @@ namespace BinanceBot
             _binanceCustomClient = new BinanceCustomClient();
         }
 
-        private CancellationTokenSource cts = new CancellationTokenSource();
-
         private async void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
         {
+            cancellationtoken = new CancellationTokenSource();
+
             txtOrdersExecutedSMBL.Text = "0";
 
-            EnableDisableFields(false);
+            EnableDisableFields(false, OrderType.MarketSellLimitBuy);
 
             string tradePair = cbPairsMSLB.SelectedItem.ToString();
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
@@ -44,7 +46,7 @@ namespace BinanceBot
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true);
+                EnableDisableFields(true, OrderType.MarketSellLimitBuy);
                 return;
             }
 
@@ -52,6 +54,11 @@ namespace BinanceBot
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
+                if (cancellationtoken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
 
                 if (!tupleResults.Item1)
@@ -81,10 +88,10 @@ namespace BinanceBot
 
             txtOrdersExecutedSMBL.Text = ordersExecuted.ToString();
 
-            EnableDisableFields(true);
+            EnableDisableFields(true, OrderType.MarketSellLimitBuy);
         }
 
-        private void EnableDisableFields(bool enableFlag)
+        private void EnableDisableFields(bool enableFlag, OrderType orderType)
         {
             btnPlaceMarketOrderMSLB.Enabled = enableFlag;
             cbPairsMSLB.Enabled = enableFlag;
@@ -97,13 +104,26 @@ namespace BinanceBot
             txtBUSDBuyBMSL.Enabled = enableFlag;
             txtSellMarginBMSL.Enabled = enableFlag;
             nUpDownControlBMSL.Enabled = enableFlag;
+
+            if (orderType == OrderType.MarketSellLimitBuy)
+            {
+                btnStopMBLS.Enabled = enableFlag;
+                btnStopMSLB.Enabled = !enableFlag;
+            }
+            else
+            {
+                btnStopMBLS.Enabled = !enableFlag;
+                btnStopMSLB.Enabled = enableFlag;
+            }
         }
 
         private async void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
         {
+            cancellationtoken = new CancellationTokenSource();
+
             txtOrdersExecutedBMSL.Text = "0";
 
-            EnableDisableFields(false);
+            EnableDisableFields(false, OrderType.MarketBuyLimitSell);
 
             string tradePair = cbPairsBMSL.SelectedItem.ToString();
             decimal buyPriceBUSD = 50; // Override in ValidateSellPrice method
@@ -113,7 +133,7 @@ namespace BinanceBot
 
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true);
+                EnableDisableFields(true, OrderType.MarketBuyLimitSell);
                 return;
             }
 
@@ -121,6 +141,11 @@ namespace BinanceBot
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
+                if (cancellationtoken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
 
                 if (!tupleResults.Item1)
@@ -149,7 +174,7 @@ namespace BinanceBot
 
             txtOrdersExecutedBMSL.Text = ordersExecuted.ToString();
 
-            EnableDisableFields(true);
+            EnableDisableFields(true, OrderType.MarketBuyLimitSell);
         }
 
         private bool ValidateSMBL(
@@ -242,7 +267,6 @@ namespace BinanceBot
             return true;
         }
 
-
         private void txtBUSDBuyBMSL_Leave(object sender, EventArgs e)
         {
             decimal totalBUSDBuyBMSLNew = decimal.Parse(txtBUSDBuyBMSL.Text);
@@ -260,7 +284,16 @@ namespace BinanceBot
                     totalBUSDBuyBMSL = totalBUSDBuyBMSLNew; // Updating Cache value
                 }
             }
+        }
 
+        private void btnStopMarketOrderMSLB_Click(object sender, EventArgs e)
+        {
+            cancellationtoken.Cancel();
+        }
+
+        private void btnStopMBLS_Click(object sender, EventArgs e)
+        {
+            cancellationtoken.Cancel();
         }
     }
 }
