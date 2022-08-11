@@ -32,6 +32,8 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnStopMSLB = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.nUpDownControlSMBL = new System.Windows.Forms.NumericUpDown();
             this.txtOrdersExecutedSMBL = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -42,6 +44,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnStopMBLS = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtOrdersExecutedBMSL = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.nUpDownControlBMSL = new System.Windows.Forms.NumericUpDown();
@@ -62,11 +66,11 @@
             // 
             // btnPlaceMarketOrderMSLB
             // 
-            this.btnPlaceMarketOrderMSLB.Location = new System.Drawing.Point(43, 151);
+            this.btnPlaceMarketOrderMSLB.Location = new System.Drawing.Point(71, 175);
             this.btnPlaceMarketOrderMSLB.Name = "btnPlaceMarketOrderMSLB";
-            this.btnPlaceMarketOrderMSLB.Size = new System.Drawing.Size(234, 23);
+            this.btnPlaceMarketOrderMSLB.Size = new System.Drawing.Size(100, 23);
             this.btnPlaceMarketOrderMSLB.TabIndex = 0;
-            this.btnPlaceMarketOrderMSLB.Text = "Place Market Sell - Limit Buy Order";
+            this.btnPlaceMarketOrderMSLB.Text = "Start";
             this.btnPlaceMarketOrderMSLB.UseVisualStyleBackColor = true;
             this.btnPlaceMarketOrderMSLB.Click += new System.EventHandler(this.btnPlaceMarketOrderMSLB_Click);
             // 
@@ -76,7 +80,7 @@
             this.txtBUSDSellMSLB.Name = "txtBUSDSellMSLB";
             this.txtBUSDSellMSLB.Size = new System.Drawing.Size(100, 23);
             this.txtBUSDSellMSLB.TabIndex = 1;
-            this.txtBUSDSellMSLB.Text = "100";
+            this.txtBUSDSellMSLB.Text = "20";
             // 
             // label1
             // 
@@ -90,6 +94,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnStopMSLB);
+            this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.nUpDownControlSMBL);
             this.panel1.Controls.Add(this.txtOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.label11);
@@ -104,8 +110,27 @@
             this.panel1.Controls.Add(this.btnPlaceMarketOrderMSLB);
             this.panel1.Location = new System.Drawing.Point(32, 23);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(307, 223);
+            this.panel1.Size = new System.Drawing.Size(307, 247);
             this.panel1.TabIndex = 3;
+            // 
+            // btnStopMSLB
+            // 
+            this.btnStopMSLB.Location = new System.Drawing.Point(177, 175);
+            this.btnStopMSLB.Name = "btnStopMSLB";
+            this.btnStopMSLB.Size = new System.Drawing.Size(100, 23);
+            this.btnStopMSLB.TabIndex = 15;
+            this.btnStopMSLB.Text = "Stop";
+            this.btnStopMSLB.UseVisualStyleBackColor = true;
+            this.btnStopMSLB.Click += new System.EventHandler(this.btnStopMarketOrderMSLB_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(80, 151);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(190, 15);
+            this.label13.TabIndex = 14;
+            this.label13.Text = "Place Market Sell - Limit Buy Order";
             // 
             // nUpDownControlSMBL
             // 
@@ -132,7 +157,7 @@
             // txtOrdersExecutedSMBL
             // 
             this.txtOrdersExecutedSMBL.Enabled = false;
-            this.txtOrdersExecutedSMBL.Location = new System.Drawing.Point(177, 180);
+            this.txtOrdersExecutedSMBL.Location = new System.Drawing.Point(177, 209);
             this.txtOrdersExecutedSMBL.Name = "txtOrdersExecutedSMBL";
             this.txtOrdersExecutedSMBL.Size = new System.Drawing.Size(100, 23);
             this.txtOrdersExecutedSMBL.TabIndex = 12;
@@ -141,7 +166,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(80, 183);
+            this.label11.Location = new System.Drawing.Point(80, 212);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(91, 15);
             this.label11.TabIndex = 13;
@@ -184,7 +209,7 @@
             this.txtPurchaseMarginMSLB.Name = "txtPurchaseMarginMSLB";
             this.txtPurchaseMarginMSLB.Size = new System.Drawing.Size(100, 23);
             this.txtPurchaseMarginMSLB.TabIndex = 4;
-            this.txtPurchaseMarginMSLB.Text = "2";
+            this.txtPurchaseMarginMSLB.Text = "1";
             // 
             // label3
             // 
@@ -209,6 +234,8 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnStopMBLS);
+            this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.txtOrdersExecutedBMSL);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.nUpDownControlBMSL);
@@ -223,13 +250,32 @@
             this.panel2.Controls.Add(this.btnMarketBuyLimitSell);
             this.panel2.Location = new System.Drawing.Point(368, 23);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(281, 223);
+            this.panel2.Size = new System.Drawing.Size(281, 247);
             this.panel2.TabIndex = 4;
+            // 
+            // btnStopMBLS
+            // 
+            this.btnStopMBLS.Location = new System.Drawing.Point(155, 175);
+            this.btnStopMBLS.Name = "btnStopMBLS";
+            this.btnStopMBLS.Size = new System.Drawing.Size(100, 23);
+            this.btnStopMBLS.TabIndex = 17;
+            this.btnStopMBLS.Text = "Stop";
+            this.btnStopMBLS.UseVisualStyleBackColor = true;
+            this.btnStopMBLS.Click += new System.EventHandler(this.btnStopMBLS_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(79, 151);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(157, 15);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Place Market Buy - Limit Sell";
             // 
             // txtOrdersExecutedBMSL
             // 
             this.txtOrdersExecutedBMSL.Enabled = false;
-            this.txtOrdersExecutedBMSL.Location = new System.Drawing.Point(155, 180);
+            this.txtOrdersExecutedBMSL.Location = new System.Drawing.Point(155, 204);
             this.txtOrdersExecutedBMSL.Name = "txtOrdersExecutedBMSL";
             this.txtOrdersExecutedBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtOrdersExecutedBMSL.TabIndex = 14;
@@ -238,7 +284,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(58, 183);
+            this.label12.Location = new System.Drawing.Point(58, 207);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(91, 15);
             this.label12.TabIndex = 15;
@@ -303,7 +349,7 @@
             this.txtSellMarginBMSL.Name = "txtSellMarginBMSL";
             this.txtSellMarginBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtSellMarginBMSL.TabIndex = 4;
-            this.txtSellMarginBMSL.Text = "2";
+            this.txtSellMarginBMSL.Text = "1";
             // 
             // label6
             // 
@@ -331,7 +377,7 @@
             this.txtBUSDBuyBMSL.Name = "txtBUSDBuyBMSL";
             this.txtBUSDBuyBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtBUSDBuyBMSL.TabIndex = 1;
-            this.txtBUSDBuyBMSL.Text = "50";
+            this.txtBUSDBuyBMSL.Text = "20";
             this.txtBUSDBuyBMSL.Leave += new System.EventHandler(this.txtBUSDBuyBMSL_Leave);
             // 
             // label8
@@ -345,11 +391,11 @@
             // 
             // btnMarketBuyLimitSell
             // 
-            this.btnMarketBuyLimitSell.Location = new System.Drawing.Point(21, 151);
+            this.btnMarketBuyLimitSell.Location = new System.Drawing.Point(51, 175);
             this.btnMarketBuyLimitSell.Name = "btnMarketBuyLimitSell";
-            this.btnMarketBuyLimitSell.Size = new System.Drawing.Size(234, 23);
+            this.btnMarketBuyLimitSell.Size = new System.Drawing.Size(100, 23);
             this.btnMarketBuyLimitSell.TabIndex = 0;
-            this.btnMarketBuyLimitSell.Text = "Place Market Buy - Limit Sell";
+            this.btnMarketBuyLimitSell.Text = "Start";
             this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
             this.btnMarketBuyLimitSell.Click += new System.EventHandler(this.btnMarketBuyLimitSell_Click);
             // 
@@ -357,7 +403,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 273);
+            this.ClientSize = new System.Drawing.Size(684, 282);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -402,5 +448,9 @@
         private Label label12;
         private NumericUpDown nUpDownControlBMSL;
         private Label label10;
+        private Button btnStopMSLB;
+        private Label label13;
+        private Button btnStopMBLS;
+        private Label label14;
     }
 }
