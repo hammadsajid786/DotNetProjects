@@ -22,8 +22,7 @@ namespace BinanceBot
         {
             InitializeComponent();
 
-            cbPairsMSLB.SelectedIndex = 0;
-            cbPairsBMSL.SelectedIndex = 0;
+            cbOrderPairs.SelectedIndex = 0;
 
             totalBUSDBuyBMSL = decimal.Parse(txtBUSDBuyBMSL.Text);
 
@@ -38,7 +37,7 @@ namespace BinanceBot
 
             EnableDisableFields(false, OrderType.MarketSellLimitBuy);
 
-            string tradePair = cbPairsMSLB.SelectedItem.ToString();
+            string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
 
@@ -94,13 +93,12 @@ namespace BinanceBot
         private void EnableDisableFields(bool enableFlag, OrderType orderType)
         {
             btnPlaceMarketOrderMSLB.Enabled = enableFlag;
-            cbPairsMSLB.Enabled = enableFlag;
+            cbOrderPairs.Enabled = enableFlag;
             txtBUSDSellMSLB.Enabled = enableFlag;
             txtPurchaseMarginMSLB.Enabled = enableFlag;
             nUpDownControlSMBL.Enabled = enableFlag;
 
             btnMarketBuyLimitSell.Enabled = enableFlag;
-            cbPairsBMSL.Enabled = enableFlag;
             txtBUSDBuyBMSL.Enabled = enableFlag;
             txtSellMarginBMSL.Enabled = enableFlag;
             nUpDownControlBMSL.Enabled = enableFlag;
@@ -125,7 +123,7 @@ namespace BinanceBot
 
             EnableDisableFields(false, OrderType.MarketBuyLimitSell);
 
-            string tradePair = cbPairsBMSL.SelectedItem.ToString();
+            string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal buyPriceBUSD = 50; // Override in ValidateSellPrice method
             decimal purchaseMargin = 5; // Override in ValidateSellPrice method
 
