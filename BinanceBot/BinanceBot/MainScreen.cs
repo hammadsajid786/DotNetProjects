@@ -167,7 +167,10 @@ namespace BinanceBot
                     txtOrdersExecutedBMSL.Text = (++ordersExecuted).ToString();
                 }
 
-                //Thread.Sleep(500); // Wait for 2 seconds.
+                if (ordersExecuted % 5 == 0)
+                {
+                    Thread.Sleep(5000); // Wait for 5 seconds after every 5 orders.
+                }
             }
 
             txtOrdersExecutedBMSL.Text = ordersExecuted.ToString();
