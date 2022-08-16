@@ -82,7 +82,10 @@ namespace BinanceBot
                 }
 
 
-                //Thread.Sleep(2000); // Wait for 2 seconds.
+                if (ordersExecuted % 5 == 0)
+                {
+                    Thread.Sleep(Convert.ToInt32(nUDSleepSMBL.Value)); // Wait for * seconds after every 5 orders.
+                }
             }
 
             txtOrdersExecutedSMBL.Text = ordersExecuted.ToString();
@@ -102,6 +105,9 @@ namespace BinanceBot
             txtBUSDBuyBMSL.Enabled = enableFlag;
             txtSellMarginBMSL.Enabled = enableFlag;
             nUpDownControlBMSL.Enabled = enableFlag;
+
+            nUDSleepBMSL.Enabled = enableFlag;
+            nUDSleepSMBL.Enabled = enableFlag;
 
             if (orderType == OrderType.MarketSellLimitBuy)
             {
@@ -169,7 +175,7 @@ namespace BinanceBot
 
                 if (ordersExecuted % 5 == 0)
                 {
-                    Thread.Sleep(5000); // Wait for 5 seconds after every 5 orders.
+                    Thread.Sleep(Convert.ToInt32(nUDSleepBMSL.Value)); // Wait for * seconds after every 5 orders.
                 }
             }
 
