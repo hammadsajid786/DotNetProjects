@@ -1,6 +1,6 @@
 ﻿namespace BinanceBot
 {
-    partial class MainScreen
+    partial class PlaceOrders
     {
         /// <summary>
         ///  Required designer variable.
@@ -456,6 +456,7 @@
             this.MaximizeBox = false;
             this.Name = "MainScreen";
             this.Text = "Binance Bot";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDSleepSMBL)).EndInit();
