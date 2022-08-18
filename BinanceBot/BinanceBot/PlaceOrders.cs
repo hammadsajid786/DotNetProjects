@@ -11,14 +11,14 @@ using BinanceBot.Models.CustomEnums;
 
 namespace BinanceBot
 {
-    public partial class MainScreen : Form
+    public partial class PlaceOrders : Form
     {
         private BinanceCustomClient _binanceCustomClient;
         private CancellationTokenSource cancellationtoken;
 
         private decimal totalBUSDBuyBMSL = 0;
 
-        public MainScreen()
+        public PlaceOrders()
         {
             InitializeComponent();
 
