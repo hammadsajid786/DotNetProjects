@@ -50,6 +50,7 @@ namespace BinanceBot
             }
 
             int ordersExecuted = 0;
+            int secondOrderNotExecuted = 0;
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
@@ -67,7 +68,9 @@ namespace BinanceBot
                     }
                     else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                     {
-                        MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
+                        secondOrderNotExecuted++;
+                        //MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
+                        continue;
                     }
                     else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
                     {
@@ -142,6 +145,7 @@ namespace BinanceBot
             }
 
             int ordersExecuted = 0;
+            int secondOrderNotExecuted = 0;
 
             for (int i = 1; i <= maxOrderCount; i++)
             {
@@ -159,7 +163,9 @@ namespace BinanceBot
                     }
                     else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
                     {
-                        MessageBox.Show(Models.CustomEnums.Messages.SellOrderNotCreated);
+                        //MessageBox.Show(Models.CustomEnums.Messages.SellOrderNotCreated);
+                        secondOrderNotExecuted++;
+                        continue;
                     }
                     else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
                     {
@@ -302,5 +308,6 @@ namespace BinanceBot
         {
             cancellationtoken.Cancel();
         }
+
     }
 }
