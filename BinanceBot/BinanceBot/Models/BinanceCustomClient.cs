@@ -67,6 +67,7 @@ namespace BinanceBot.Models
                                          + "2nd Order Order Side      : " + OrderSide.Buy.ToString() + Environment.NewLine
                                          + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
                                          + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
+                                         + "Not fulfilled Reason      : " + orderMarketSellDetails.Error.Message + Environment.NewLine
                                          ;
 
                     fileLogging.WriteToFile(textToWrite);
@@ -118,6 +119,7 @@ namespace BinanceBot.Models
                                          + "2nd Order Order Side      : " + OrderSide.Sell.ToString() + Environment.NewLine
                                          + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
                                          + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
+                                         + "Not fulfilled Reason      : " + orderLimitSellDetails.Error.Message + Environment.NewLine
                                          ;
 
                     fileLogging.WriteToFile(textToWrite);
