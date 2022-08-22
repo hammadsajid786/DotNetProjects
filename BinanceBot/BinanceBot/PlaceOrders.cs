@@ -8,6 +8,7 @@ using Binance.Net.Objects.Models.Spot;
 using CryptoExchange.Net.Objects;
 using BinanceBot.Models;
 using BinanceBot.Models.CustomEnums;
+using System.Windows.Forms;
 
 namespace BinanceBot
 {
@@ -29,7 +30,7 @@ namespace BinanceBot
             _binanceCustomClient = new BinanceCustomClient();
         }
 
-        private async void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
+        private void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
         {
             cancellationtoken = new CancellationTokenSource();
 
@@ -42,6 +43,7 @@ namespace BinanceBot
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
 
             int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
+            int threadSleepValue = Convert.ToInt32(nUDSleepSMBL.Value);
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
@@ -49,82 +51,113 @@ namespace BinanceBot
                 return;
             }
 
-            int ordersExecuted = 0;
-            int secondOrderNotExecuted = 0;
-
-            for (int i = 1; i <= maxOrderCount; i++)
+            _ = Task.Run(() =>
             {
-                if (cancellationtoken.IsCancellationRequested)
-                {
-                    break;
-                }
+                int ordersExecuted = 0;
+                int secondOrderNotExecuted = 0;
 
-                Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
+                var tasksList = new List<Task>();
 
-                if (!tupleResults.Item1)
+                for (int i = 1; i <= maxOrderCount; i++)
                 {
-                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                    if (cancellationtoken.IsCancellationRequested)
                     {
-                    }
-                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
-                    {
-                        secondOrderNotExecuted++;
-                        //MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
-                        continue;
-                    }
-                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
-                    {
-                        MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
+                        break;
                     }
 
-                    break;
+                    tasksList.Add(Task.Run(async () =>
+                    {
+                        if (cancellationtoken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
+
+                        if (!tupleResults.Item1)
+                        {
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
+                            {
+                                Interlocked.Increment(ref secondOrderNotExecuted);
+                                return;
+                            }
+
+                            cancellationtoken.Cancel();
+
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            {
+                            }
+                            else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
+                            {
+                                MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
+                            }
+                        }
+                        else
+                        {
+                            Interlocked.Increment(ref ordersExecuted);
+
+                            txtOrdersExecutedSMBL.Invoke((MethodInvoker)delegate
+                            {
+                                txtOrdersExecutedSMBL.Text = (ordersExecuted).ToString();
+                            });
+                        }
+                    }));
+
+                    if (i % 5 == 0 && i != maxOrderCount)
+                    {
+                        Thread.Sleep(threadSleepValue); // Wait for * seconds after every 5 orders.
+                    }
                 }
-                else
+
+                try
                 {
-                    txtOrdersExecutedSMBL.Text = (++ordersExecuted).ToString();
+                    Task.WaitAll(tasksList.ToArray());
                 }
-
-
-                if (ordersExecuted % 5 == 0)
+                catch (AggregateException agExc)
                 {
-                    Thread.Sleep(Convert.ToInt32(nUDSleepSMBL.Value)); // Wait for * seconds after every 5 orders.
+                    string exceptionMessage = agExc.Message;
+                    for (int j = 0; j < agExc.InnerExceptions.Count; j++)
+                        exceptionMessage += Environment.NewLine + agExc.InnerExceptions[j].ToString();
+
+                    MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
-            }
 
-            txtOrdersExecutedSMBL.Text = ordersExecuted.ToString();
-
-            EnableDisableFields(true, OrderType.MarketSellLimitBuy);
+                EnableDisableFields(true, OrderType.MarketSellLimitBuy);
+            });
         }
 
         private void EnableDisableFields(bool enableFlag, OrderType orderType)
         {
-            btnPlaceMarketOrderMSLB.Enabled = enableFlag;
-            cbOrderPairs.Enabled = enableFlag;
-            txtBUSDSellMSLB.Enabled = enableFlag;
-            txtPurchaseMarginMSLB.Enabled = enableFlag;
-            nUpDownControlSMBL.Enabled = enableFlag;
-
-            btnMarketBuyLimitSell.Enabled = enableFlag;
-            txtBUSDBuyBMSL.Enabled = enableFlag;
-            txtSellMarginBMSL.Enabled = enableFlag;
-            nUpDownControlBMSL.Enabled = enableFlag;
-
-            nUDSleepBMSL.Enabled = enableFlag;
-            nUDSleepSMBL.Enabled = enableFlag;
-
-            if (orderType == OrderType.MarketSellLimitBuy)
+            this.Invoke((MethodInvoker)delegate
             {
-                btnStopMBLS.Enabled = enableFlag;
-                btnStopMSLB.Enabled = !enableFlag;
-            }
-            else
-            {
-                btnStopMBLS.Enabled = !enableFlag;
-                btnStopMSLB.Enabled = enableFlag;
-            }
+                btnPlaceMarketOrderMSLB.Enabled = enableFlag;
+                cbOrderPairs.Enabled = enableFlag;
+                txtBUSDSellMSLB.Enabled = enableFlag;
+                txtPurchaseMarginMSLB.Enabled = enableFlag;
+                nUpDownControlSMBL.Enabled = enableFlag;
+
+                btnMarketBuyLimitSell.Enabled = enableFlag;
+                txtBUSDBuyBMSL.Enabled = enableFlag;
+                txtSellMarginBMSL.Enabled = enableFlag;
+                nUpDownControlBMSL.Enabled = enableFlag;
+
+                nUDSleepBMSL.Enabled = enableFlag;
+                nUDSleepSMBL.Enabled = enableFlag;
+
+                if (orderType == OrderType.MarketSellLimitBuy)
+                {
+                    btnStopMBLS.Enabled = enableFlag;
+                    btnStopMSLB.Enabled = !enableFlag;
+                }
+                else
+                {
+                    btnStopMBLS.Enabled = !enableFlag;
+                    btnStopMSLB.Enabled = enableFlag;
+                }
+            });
         }
 
-        private async void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
+        private void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
         {
             cancellationtoken = new CancellationTokenSource();
 
@@ -138,56 +171,87 @@ namespace BinanceBot
 
             int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
 
+            int threadSleepValue = Convert.ToInt32(nUDSleepBMSL.Value);
+
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
                 EnableDisableFields(true, OrderType.MarketBuyLimitSell);
                 return;
             }
 
-            int ordersExecuted = 0;
-            int secondOrderNotExecuted = 0;
-
-            for (int i = 1; i <= maxOrderCount; i++)
+            _ = Task.Run(() =>
             {
-                if (cancellationtoken.IsCancellationRequested)
-                {
-                    break;
-                }
+                int ordersExecuted = 0;
+                int secondOrderNotExecuted = 0;
 
-                Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
+                var tasksList = new List<Task>();
 
-                if (!tupleResults.Item1)
+                for (int i = 1; i <= maxOrderCount; i++)
                 {
-                    if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                    if (cancellationtoken.IsCancellationRequested)
                     {
-                    }
-                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
-                    {
-                        //MessageBox.Show(Models.CustomEnums.Messages.SellOrderNotCreated);
-                        secondOrderNotExecuted++;
-                        continue;
-                    }
-                    else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
-                    {
-                        MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
+                        break;
                     }
 
-                    break;
+                    tasksList.Add(Task.Run(async () =>
+                    {
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
+
+                        if (!tupleResults.Item1)
+                        {
+                            if (cancellationtoken.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
+                            {
+                                Interlocked.Increment(ref secondOrderNotExecuted);
+                                return;
+                            }
+
+                            cancellationtoken.Cancel();
+
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            {
+                            }
+                            else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
+                            {
+                                MessageBox.Show(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions);
+                            }
+                        }
+                        else
+                        {
+                            Interlocked.Increment(ref ordersExecuted);
+
+                            txtOrdersExecutedBMSL.Invoke((MethodInvoker)delegate
+                            {
+                                txtOrdersExecutedBMSL.Text = (ordersExecuted).ToString();
+                            });
+                        }
+                    }));
+
+                    if (i % 5 == 0 && i != maxOrderCount)
+                    {
+                        Thread.Sleep(threadSleepValue); // Wait for * seconds after every 5 orders.
+                    }
                 }
-                else
+
+                try
                 {
-                    txtOrdersExecutedBMSL.Text = (++ordersExecuted).ToString();
+                    Task.WaitAll(tasksList.ToArray());
                 }
-
-                if (ordersExecuted % 5 == 0)
+                catch (AggregateException agExc)
                 {
-                    Thread.Sleep(Convert.ToInt32(nUDSleepBMSL.Value)); // Wait for * seconds after every 5 orders.
+                    string exceptionMessage = agExc.Message;
+                    for (int j = 0; j < agExc.InnerExceptions.Count; j++)
+                        exceptionMessage += Environment.NewLine + agExc.InnerExceptions[j].ToString();
+
+                    MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
-            }
 
-            txtOrdersExecutedBMSL.Text = ordersExecuted.ToString();
-
-            EnableDisableFields(true, OrderType.MarketBuyLimitSell);
+                EnableDisableFields(true, OrderType.MarketBuyLimitSell);
+            });
         }
 
         private bool ValidateSMBL(
@@ -301,11 +365,13 @@ namespace BinanceBot
 
         private void btnStopMarketOrderMSLB_Click(object sender, EventArgs e)
         {
+            btnStopMSLB.Enabled = false;
             cancellationtoken.Cancel();
         }
 
         private void btnStopMBLS_Click(object sender, EventArgs e)
         {
+            btnStopMBLS.Enabled = false;
             cancellationtoken.Cancel();
         }
 
