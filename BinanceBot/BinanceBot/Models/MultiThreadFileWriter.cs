@@ -19,11 +19,6 @@ namespace BinanceBot.Models
             _filePath = _filePath.Replace("{timestamp}", DateTime.Now.ToString("yyyyMMdd"));
         }
 
-        public MultiThreadFileWriter(string filePath)
-        {
-            _filePath = filePath;
-        }
-
         public async void WriteToFile(string textToWrite)
         {
             Monitor.Enter(lockToWritingFile);
