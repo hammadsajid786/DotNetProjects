@@ -443,7 +443,7 @@
             this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
             this.btnMarketBuyLimitSell.Click += new System.EventHandler(this.btnMarketBuyLimitSell_Click);
             // 
-            // MainScreen
+            // PlaceOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -454,7 +454,7 @@
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.Name = "MainScreen";
+            this.Name = "PlaceOrders";
             this.Text = "Binance Bot";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);

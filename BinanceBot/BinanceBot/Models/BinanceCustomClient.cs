@@ -16,7 +16,10 @@ namespace BinanceBot.Models
         private readonly string _binanceApiKey;
         private readonly string _binanceAPISecret;
 
+
         private BinanceClient _client;
+        private MultiThreadFileWriter fileLogging;
+
         public BinanceCustomClient()
         {
             _binanceApiKey = System.Configuration.ConfigurationManager.AppSettings["binanceApiKey"];
@@ -24,6 +27,8 @@ namespace BinanceBot.Models
 
             _client = new BinanceClient();
             _client.SetApiCredentials(new ApiCredentials(_binanceApiKey, _binanceAPISecret));
+
+            fileLogging = new MultiThreadFileWriter();
         }
 
         public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin)
@@ -54,6 +59,18 @@ namespace BinanceBot.Models
                 }
                 else
                 {
+                    string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "1st Order Created Time    : " + orderMarketSellDetails.Data.CreateTime + Environment.NewLine
+                                         + "1st Order Price Sell      : " + priceSell + Environment.NewLine
+                                         + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
+                                         + "2nd Order Type            : " + SpotOrderType.Limit.ToString() + Environment.NewLine
+                                         + "2nd Order Order Side      : " + OrderSide.Buy.ToString() + Environment.NewLine
+                                         + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
+                                         + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
+                                         ;
+
+                    fileLogging.WriteToFile(textToWrite);
+
                     message = CustomEnums.Messages.PurchaseOrderNotCreated;
                 }
             }
@@ -93,6 +110,18 @@ namespace BinanceBot.Models
                 }
                 else
                 {
+                    string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "1st Order Created Time    : " + orderLimitSellDetails.Data.CreateTime + Environment.NewLine
+                                         + "1st Order Price Sell      : " + priceSell + Environment.NewLine
+                                         + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
+                                         + "2nd Order Type            : " + SpotOrderType.Limit.ToString() + Environment.NewLine
+                                         + "2nd Order Order Side      : " + OrderSide.Sell.ToString() + Environment.NewLine
+                                         + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
+                                         + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
+                                         ;
+
+                    fileLogging.WriteToFile(textToWrite);
+
                     message = CustomEnums.Messages.SellOrderNotCreated;
                 }
             }
