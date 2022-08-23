@@ -19,6 +19,7 @@ namespace BinanceBot.Models
 
         private BinanceClient _client;
         private MultiThreadFileWriter fileLogging;
+        private MultiThreadFileWriter fileLoggingNonSuccessOrders;
 
         public BinanceCustomClient()
         {
@@ -29,6 +30,7 @@ namespace BinanceBot.Models
             _client.SetApiCredentials(new ApiCredentials(_binanceApiKey, _binanceAPISecret));
 
             fileLogging = new MultiThreadFileWriter();
+            fileLoggingNonSuccessOrders = new MultiThreadFileWriter("FileLoggingPathNotSuccessOrders");
         }
 
         public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin)
@@ -67,7 +69,7 @@ namespace BinanceBot.Models
                                          + "2nd Order Order Side      : " + OrderSide.Buy.ToString() + Environment.NewLine
                                          + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
                                          + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
-                                         + "Not fulfilled Reason      : " + orderMarketSellDetails.Error.Message + Environment.NewLine
+                                         + "Not fulfilled Reason      : " + orderLimitBuyDetails.Error.Message + Environment.NewLine
                                          ;
 
                     fileLogging.WriteToFile(textToWrite);
@@ -78,6 +80,14 @@ namespace BinanceBot.Models
             else
             {
                 message = orderMarketSellDetails.Error.Message;
+
+                string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
+                                         + "2nd Order Order Side : " + OrderSide.Sell.ToString() + Environment.NewLine
+                                         + "Not fulfilled Reason : " + orderMarketSellDetails.Error.Message + Environment.NewLine
+                                         ;
+
+                fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
             }
 
             return new Tuple<bool, string>(isSuccess, message);
@@ -112,7 +122,7 @@ namespace BinanceBot.Models
                 else
                 {
                     string textToWrite = DateTime.Now + Environment.NewLine
-                                         + "1st Order Created Time    : " + orderLimitSellDetails.Data.CreateTime + Environment.NewLine
+                                         + "1st Order Created Time    : " + orderMarketBuyDetails.Data.CreateTime + Environment.NewLine
                                          + "1st Order Price Sell      : " + priceSell + Environment.NewLine
                                          + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
                                          + "2nd Order Type            : " + SpotOrderType.Limit.ToString() + Environment.NewLine
@@ -130,6 +140,15 @@ namespace BinanceBot.Models
             else
             {
                 message = orderMarketBuyDetails.Error.Message;
+
+                string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
+                                         + "Order Order Side     : " + OrderSide.Buy.ToString() + Environment.NewLine
+                                         + "Not fulfilled Reason : " + orderMarketBuyDetails.Error.Message + Environment.NewLine
+                                         ;
+
+                fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
+
             }
 
             return new Tuple<bool, string>(isSuccess, message);
