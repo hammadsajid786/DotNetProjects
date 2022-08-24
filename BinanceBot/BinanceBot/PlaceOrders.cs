@@ -9,13 +9,17 @@ using CryptoExchange.Net.Objects;
 using BinanceBot.Models;
 using BinanceBot.Models.CustomEnums;
 using System.Windows.Forms;
+using System.Threading;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace BinanceBot
 {
     public partial class PlaceOrders : Form
     {
         private BinanceCustomClient _binanceCustomClient;
-        private CancellationTokenSource cancellationtoken;
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationToken cancellationToken;
 
         private decimal totalBUSDBuyBMSL = 0;
 
@@ -32,7 +36,8 @@ namespace BinanceBot
 
         private void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
         {
-            cancellationtoken = new CancellationTokenSource();
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
 
             txtOrdersExecutedSMBL.Text = "0";
 
@@ -51,23 +56,26 @@ namespace BinanceBot
                 return;
             }
 
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
                 int ordersExecuted = 0;
                 int secondOrderNotExecuted = 0;
 
                 var tasksList = new List<Task>();
 
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
-                    if (cancellationtoken.IsCancellationRequested)
+                    if (cancellationTokenSource.IsCancellationRequested)
                     {
                         break;
                     }
 
                     tasksList.Add(Task.Run(async () =>
                     {
-                        if (cancellationtoken.IsCancellationRequested)
+                        if (cancellationTokenSource.IsCancellationRequested)
                         {
                             return;
                         }
@@ -82,7 +90,7 @@ namespace BinanceBot
                                 return;
                             }
 
-                            cancellationtoken.Cancel();
+                            cancellationTokenSource.Cancel();
 
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
                             {
@@ -105,7 +113,15 @@ namespace BinanceBot
 
                     if (i % 5 == 0 && i != maxOrderCount)
                     {
-                        Thread.Sleep(threadSleepValue); // Wait for * seconds after every 5 orders.
+                        cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
+                    }
+
+                    if (i % 25 == 0)
+                    {
+                        stopWatch.Stop();
+                        cancellationToken.WaitHandle.WaitOne((10 - stopWatch.Elapsed.Seconds) * 1000);
+                        stopWatch.Reset();
+                        stopWatch.Start();
                     }
                 }
 
@@ -159,7 +175,7 @@ namespace BinanceBot
 
         private void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
         {
-            cancellationtoken = new CancellationTokenSource();
+            cancellationTokenSource = new CancellationTokenSource();
 
             txtOrdersExecutedBMSL.Text = "0";
 
@@ -186,9 +202,12 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
-                    if (cancellationtoken.IsCancellationRequested)
+                    if (cancellationTokenSource.IsCancellationRequested)
                     {
                         break;
                     }
@@ -199,7 +218,7 @@ namespace BinanceBot
 
                         if (!tupleResults.Item1)
                         {
-                            if (cancellationtoken.IsCancellationRequested)
+                            if (cancellationTokenSource.IsCancellationRequested)
                             {
                                 return;
                             }
@@ -210,7 +229,7 @@ namespace BinanceBot
                                 return;
                             }
 
-                            cancellationtoken.Cancel();
+                            cancellationTokenSource.Cancel();
 
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
                             {
@@ -233,7 +252,15 @@ namespace BinanceBot
 
                     if (i % 5 == 0 && i != maxOrderCount)
                     {
-                        Thread.Sleep(threadSleepValue); // Wait for * seconds after every 5 orders.
+                        cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
+                    }
+
+                    if (i % 25 == 0)
+                    {
+                        stopWatch.Stop();
+                        cancellationToken.WaitHandle.WaitOne((10 - stopWatch.Elapsed.Seconds) * 1000);
+                        stopWatch.Reset();
+                        stopWatch.Start();
                     }
                 }
 
@@ -366,13 +393,13 @@ namespace BinanceBot
         private void btnStopMarketOrderMSLB_Click(object sender, EventArgs e)
         {
             btnStopMSLB.Enabled = false;
-            cancellationtoken.Cancel();
+            cancellationTokenSource.Cancel();
         }
 
         private void btnStopMBLS_Click(object sender, EventArgs e)
         {
             btnStopMBLS.Enabled = false;
-            cancellationtoken.Cancel();
+            cancellationTokenSource.Cancel();
         }
 
     }
