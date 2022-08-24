@@ -83,7 +83,7 @@ namespace BinanceBot.Models
 
                 string textToWrite = DateTime.Now + Environment.NewLine
                                          + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
-                                         + "Order Side : " + OrderSide.Sell.ToString() + Environment.NewLine
+                                         + "Order Side           : " + OrderSide.Sell.ToString() + Environment.NewLine
                                          + "Not fulfilled Reason : " + orderMarketSellDetails.Error.Message + Environment.NewLine
                                          ;
 
