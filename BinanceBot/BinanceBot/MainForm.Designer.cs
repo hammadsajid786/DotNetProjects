@@ -55,7 +55,7 @@
             // mIPlaceOrder
             // 
             this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(180, 22);
+            this.mIPlaceOrder.Size = new System.Drawing.Size(135, 22);
             this.mIPlaceOrder.Text = "Place Order";
             this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
             // 
@@ -68,7 +68,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Binance Bot - v 2.13";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

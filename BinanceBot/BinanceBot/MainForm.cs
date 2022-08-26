@@ -16,8 +16,6 @@ namespace BinanceBot
         {
             InitializeComponent();
 
-            this.Text = "Binance Bot - v 2.12";
-
             mIPlaceOrder.PerformClick();
         }
 
