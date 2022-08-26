@@ -41,7 +41,7 @@ namespace BinanceBot.Models
             WebCallResult<BinancePlacedOrder> orderMarketSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                (tradePair, OrderSide.Sell, SpotOrderType.Market, null, sellPriceBUSD);
 
-            if (orderMarketSellDetails.Success)
+            if (orderMarketSellDetails.Success) // 1st Order
             {
                 decimal quantiyFilled = orderMarketSellDetails.Data.QuantityFilled;
                 decimal priceSell = orderMarketSellDetails.Data.AverageFillPrice.Value;
@@ -51,13 +51,9 @@ namespace BinanceBot.Models
                 WebCallResult<BinancePlacedOrder> orderLimitBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled);
 
-                if (orderLimitBuyDetails.Success)
+                if (orderLimitBuyDetails.Success) // 2nd Order
                 {
                     isSuccess = true;
-
-                    //MessageBox.Show("Order filled of Quanity: " + quantiyFilled + "BTC"
-                    //    + Environment.NewLine + "BUSD: " + Math.Round(priceSell,2)
-                    //    + Environment.NewLine + "Bought BTC at: " + pricePurchased);
                 }
                 else
                 {
@@ -81,13 +77,16 @@ namespace BinanceBot.Models
             {
                 message = orderMarketSellDetails.Error.Message;
 
-                string textToWrite = DateTime.Now + Environment.NewLine
-                                         + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
-                                         + "Order Side           : " + OrderSide.Sell.ToString() + Environment.NewLine
-                                         + "Not fulfilled Reason : " + orderMarketSellDetails.Error.Message + Environment.NewLine
-                                         ;
+                if (message != Models.CustomEnums.Messages.InsufficientBalance)
+                {
+                    string textToWrite = DateTime.Now + Environment.NewLine
+                                             + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
+                                             + "Order Side           : " + OrderSide.Sell.ToString() + Environment.NewLine
+                                             + "Not fulfilled Reason : " + orderMarketSellDetails.Error.Message + Environment.NewLine
+                                             ;
 
-                fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
+                    fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
+                }
             }
 
             return new Tuple<bool, string>(isSuccess, message);
@@ -101,7 +100,7 @@ namespace BinanceBot.Models
             WebCallResult<BinancePlacedOrder> orderMarketBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                (tradePair, OrderSide.Buy, SpotOrderType.Market, null, buyPriceBUSD);
 
-            if (orderMarketBuyDetails.Success)
+            if (orderMarketBuyDetails.Success) // 1st Order
             {
                 decimal quantiyFilled = orderMarketBuyDetails.Data.QuantityFilled;
                 decimal priceSell = orderMarketBuyDetails.Data.AverageFillPrice.Value;
@@ -111,13 +110,9 @@ namespace BinanceBot.Models
                 WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled);
 
-                if (orderLimitSellDetails.Success)
+                if (orderLimitSellDetails.Success) // 2nd Order
                 {
                     isSuccess = true;
-
-                    //MessageBox.Show("Order filled of Quanity: " + quantiyFilled + "BTC"
-                    //    + Environment.NewLine + "BUSD: " + Math.Round(priceSell,2)
-                    //    + Environment.NewLine + "Bought BTC at: " + pricePurchased);
                 }
                 else
                 {
@@ -141,14 +136,17 @@ namespace BinanceBot.Models
             {
                 message = orderMarketBuyDetails.Error.Message;
 
-                string textToWrite = DateTime.Now + Environment.NewLine
+                if (message != Models.CustomEnums.Messages.InsufficientBalance)
+                {
+
+                    string textToWrite = DateTime.Now + Environment.NewLine
                                          + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
                                          + "Order Order Side     : " + OrderSide.Buy.ToString() + Environment.NewLine
                                          + "Not fulfilled Reason : " + orderMarketBuyDetails.Error.Message + Environment.NewLine
                                          ;
 
-                fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
-
+                    fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
+                }
             }
 
             return new Tuple<bool, string>(isSuccess, message);
