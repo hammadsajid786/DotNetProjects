@@ -118,8 +118,15 @@ namespace BinanceBot
 
                     if (i % 25 == 0)
                     {
+                        Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
-                        cancellationToken.WaitHandle.WaitOne((10 - stopWatch.Elapsed.Seconds) * 1000);
+
+                        int waitFor50RequestsToCompleteMilliSeconds = (10 - stopWatch.Elapsed.Seconds) * 1000;
+                        if (waitFor50RequestsToCompleteMilliSeconds > 0)
+                        {
+                            cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
+                        }
+
                         stopWatch.Reset();
                         stopWatch.Start();
                     }
@@ -257,8 +264,15 @@ namespace BinanceBot
 
                     if (i % 25 == 0)
                     {
+                        Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
-                        cancellationToken.WaitHandle.WaitOne((10 - stopWatch.Elapsed.Seconds) * 1000);
+
+                        int waitFor50RequestsToCompleteMilliSeconds = (10 - stopWatch.Elapsed.Seconds) * 1000;
+                        if (waitFor50RequestsToCompleteMilliSeconds > 0)
+                        {
+                            cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
+                        }
+
                         stopWatch.Reset();
                         stopWatch.Start();
                     }
