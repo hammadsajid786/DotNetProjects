@@ -40,6 +40,8 @@ namespace BinanceBot
             cancellationToken = cancellationTokenSource.Token;
 
             txtOrdersExecutedSMBL.Text = "0";
+            txtU2OSMBL.Text = "0";
+            txtU2OSMBL.ForeColor = Color.Black;
 
             EnableDisableFields(false, OrderType.MarketSellLimitBuy);
 
@@ -87,6 +89,13 @@ namespace BinanceBot
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                             {
                                 Interlocked.Increment(ref secondOrderNotExecuted);
+
+                                txtU2OSMBL.Invoke((MethodInvoker)delegate
+                                {
+                                    txtU2OSMBL.Text = secondOrderNotExecuted.ToString();
+                                    txtU2OSMBL.ForeColor = Color.Red;
+                                });
+
                                 return;
                             }
 
@@ -185,6 +194,9 @@ namespace BinanceBot
             cancellationTokenSource = new CancellationTokenSource();
 
             txtOrdersExecutedBMSL.Text = "0";
+            txtU2OBMSL.Text = "0";
+            txtU2OBMSL.ForeColor = Color.Black;
+
 
             EnableDisableFields(false, OrderType.MarketBuyLimitSell);
 
@@ -221,18 +233,26 @@ namespace BinanceBot
 
                     tasksList.Add(Task.Run(async () =>
                     {
+                        if (cancellationTokenSource.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
                         Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
 
                         if (!tupleResults.Item1)
                         {
-                            if (cancellationTokenSource.IsCancellationRequested)
-                            {
-                                return;
-                            }
-
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
                             {
                                 Interlocked.Increment(ref secondOrderNotExecuted);
+
+                                txtU2OBMSL.Invoke((MethodInvoker)delegate
+                                {
+                                    txtU2OBMSL.Text = secondOrderNotExecuted.ToString();
+                                    txtU2OBMSL.ForeColor = Color.Red;
+                                });
+
+
                                 return;
                             }
 
