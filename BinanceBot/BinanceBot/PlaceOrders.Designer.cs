@@ -32,12 +32,14 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelOrdersExecutedSMBL = new System.Windows.Forms.Label();
+            this.labelU2OSMBL = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.nUDSleepSMBL = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.btnStopMSLB = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.nUpDownControlSMBL = new System.Windows.Forms.NumericUpDown();
-            this.txtOrdersExecutedSMBL = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtPurchaseMarginMSLB = new System.Windows.Forms.TextBox();
@@ -46,11 +48,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbOrderPairs = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.labelU2OBMSL = new System.Windows.Forms.Label();
+            this.labelOrdersExecutedBMSL = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.nUDSleepBMSL = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.btnStopMBLS = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtOrdersExecutedBMSL = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.nUpDownControlBMSL = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
@@ -98,12 +102,14 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.labelOrdersExecutedSMBL);
+            this.panel1.Controls.Add(this.labelU2OSMBL);
+            this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.nUDSleepSMBL);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btnStopMSLB);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.nUpDownControlSMBL);
-            this.panel1.Controls.Add(this.txtOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.txtPurchaseMarginMSLB);
@@ -114,8 +120,36 @@
             this.panel1.Controls.Add(this.btnPlaceMarketOrderMSLB);
             this.panel1.Location = new System.Drawing.Point(29, 52);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(307, 268);
+            this.panel1.Size = new System.Drawing.Size(287, 297);
             this.panel1.TabIndex = 3;
+            // 
+            // labelOrdersExecutedSMBL
+            // 
+            this.labelOrdersExecutedSMBL.AutoSize = true;
+            this.labelOrdersExecutedSMBL.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelOrdersExecutedSMBL.Location = new System.Drawing.Point(162, 229);
+            this.labelOrdersExecutedSMBL.Name = "labelOrdersExecutedSMBL";
+            this.labelOrdersExecutedSMBL.Size = new System.Drawing.Size(13, 15);
+            this.labelOrdersExecutedSMBL.TabIndex = 21;
+            this.labelOrdersExecutedSMBL.Text = "0";
+            // 
+            // labelU2OSMBL
+            // 
+            this.labelU2OSMBL.AutoSize = true;
+            this.labelU2OSMBL.Location = new System.Drawing.Point(162, 255);
+            this.labelU2OSMBL.Name = "labelU2OSMBL";
+            this.labelU2OSMBL.Size = new System.Drawing.Size(13, 15);
+            this.labelU2OSMBL.TabIndex = 20;
+            this.labelU2OSMBL.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 255);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(140, 15);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "Unsuccessful 2nd Orders:";
             // 
             // nUDSleepSMBL
             // 
@@ -134,7 +168,7 @@
             this.nUDSleepSMBL.Size = new System.Drawing.Size(100, 23);
             this.nUDSleepSMBL.TabIndex = 16;
             this.nUDSleepSMBL.Value = new decimal(new int[] {
-            3000,
+            500,
             0,
             0,
             0});
@@ -184,28 +218,19 @@
             this.nUpDownControlSMBL.Size = new System.Drawing.Size(100, 23);
             this.nUpDownControlSMBL.TabIndex = 6;
             this.nUpDownControlSMBL.Value = new decimal(new int[] {
-            2,
+            5,
             0,
             0,
             0});
             // 
-            // txtOrdersExecutedSMBL
-            // 
-            this.txtOrdersExecutedSMBL.Enabled = false;
-            this.txtOrdersExecutedSMBL.Location = new System.Drawing.Point(162, 226);
-            this.txtOrdersExecutedSMBL.Name = "txtOrdersExecutedSMBL";
-            this.txtOrdersExecutedSMBL.Size = new System.Drawing.Size(100, 23);
-            this.txtOrdersExecutedSMBL.TabIndex = 12;
-            this.txtOrdersExecutedSMBL.Text = "0";
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(65, 229);
+            this.label11.Location = new System.Drawing.Point(7, 229);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 15);
+            this.label11.Size = new System.Drawing.Size(149, 15);
             this.label11.TabIndex = 13;
-            this.label11.Text = "Order Executed:";
+            this.label11.Text = "Successful Order Executed:";
             // 
             // label9
             // 
@@ -238,7 +263,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(14, 0);
+            this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(272, 20);
             this.label2.TabIndex = 3;
@@ -269,11 +294,13 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.labelU2OBMSL);
+            this.panel2.Controls.Add(this.labelOrdersExecutedBMSL);
+            this.panel2.Controls.Add(this.label17);
             this.panel2.Controls.Add(this.nUDSleepBMSL);
             this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.btnStopMBLS);
             this.panel2.Controls.Add(this.label14);
-            this.panel2.Controls.Add(this.txtOrdersExecutedBMSL);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.nUpDownControlBMSL);
             this.panel2.Controls.Add(this.label10);
@@ -285,12 +312,41 @@
             this.panel2.Controls.Add(this.btnMarketBuyLimitSell);
             this.panel2.Location = new System.Drawing.Point(365, 52);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(281, 268);
+            this.panel2.Size = new System.Drawing.Size(284, 297);
             this.panel2.TabIndex = 4;
+            // 
+            // labelU2OBMSL
+            // 
+            this.labelU2OBMSL.AutoSize = true;
+            this.labelU2OBMSL.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelU2OBMSL.Location = new System.Drawing.Point(161, 255);
+            this.labelU2OBMSL.Name = "labelU2OBMSL";
+            this.labelU2OBMSL.Size = new System.Drawing.Size(13, 15);
+            this.labelU2OBMSL.TabIndex = 23;
+            this.labelU2OBMSL.Text = "0";
+            // 
+            // labelOrdersExecutedBMSL
+            // 
+            this.labelOrdersExecutedBMSL.AutoSize = true;
+            this.labelOrdersExecutedBMSL.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelOrdersExecutedBMSL.Location = new System.Drawing.Point(161, 224);
+            this.labelOrdersExecutedBMSL.Name = "labelOrdersExecutedBMSL";
+            this.labelOrdersExecutedBMSL.Size = new System.Drawing.Size(13, 15);
+            this.labelOrdersExecutedBMSL.TabIndex = 22;
+            this.labelOrdersExecutedBMSL.Text = "0";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(14, 255);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(140, 15);
+            this.label17.TabIndex = 21;
+            this.label17.Text = "Unsuccessful 2nd Orders:";
             // 
             // nUDSleepBMSL
             // 
-            this.nUDSleepBMSL.Location = new System.Drawing.Point(155, 159);
+            this.nUDSleepBMSL.Location = new System.Drawing.Point(161, 159);
             this.nUDSleepBMSL.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -305,7 +361,7 @@
             this.nUDSleepBMSL.Size = new System.Drawing.Size(100, 23);
             this.nUDSleepBMSL.TabIndex = 18;
             this.nUDSleepBMSL.Value = new decimal(new int[] {
-            3000,
+            500,
             0,
             0,
             0});
@@ -313,7 +369,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(45, 161);
+            this.label15.Location = new System.Drawing.Point(51, 161);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(104, 15);
             this.label15.TabIndex = 19;
@@ -321,7 +377,7 @@
             // 
             // btnStopMBLS
             // 
-            this.btnStopMBLS.Location = new System.Drawing.Point(155, 192);
+            this.btnStopMBLS.Location = new System.Drawing.Point(161, 192);
             this.btnStopMBLS.Name = "btnStopMBLS";
             this.btnStopMBLS.Size = new System.Drawing.Size(100, 23);
             this.btnStopMBLS.TabIndex = 17;
@@ -332,33 +388,24 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(79, 136);
+            this.label14.Location = new System.Drawing.Point(85, 136);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(157, 15);
             this.label14.TabIndex = 16;
             this.label14.Text = "Place Market Buy - Limit Sell";
             // 
-            // txtOrdersExecutedBMSL
-            // 
-            this.txtOrdersExecutedBMSL.Enabled = false;
-            this.txtOrdersExecutedBMSL.Location = new System.Drawing.Point(155, 221);
-            this.txtOrdersExecutedBMSL.Name = "txtOrdersExecutedBMSL";
-            this.txtOrdersExecutedBMSL.Size = new System.Drawing.Size(100, 23);
-            this.txtOrdersExecutedBMSL.TabIndex = 14;
-            this.txtOrdersExecutedBMSL.Text = "0";
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(58, 224);
+            this.label12.Location = new System.Drawing.Point(5, 224);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(91, 15);
+            this.label12.Size = new System.Drawing.Size(149, 15);
             this.label12.TabIndex = 15;
-            this.label12.Text = "Order Executed:";
+            this.label12.Text = "Successful Order Executed:";
             // 
             // nUpDownControlBMSL
             // 
-            this.nUpDownControlBMSL.Location = new System.Drawing.Point(155, 97);
+            this.nUpDownControlBMSL.Location = new System.Drawing.Point(161, 97);
             this.nUpDownControlBMSL.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -373,7 +420,7 @@
             this.nUpDownControlBMSL.Size = new System.Drawing.Size(100, 23);
             this.nUpDownControlBMSL.TabIndex = 10;
             this.nUpDownControlBMSL.Value = new decimal(new int[] {
-            2,
+            5,
             0,
             0,
             0});
@@ -381,7 +428,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(32, 99);
+            this.label10.Location = new System.Drawing.Point(38, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(117, 15);
             this.label10.TabIndex = 11;
@@ -389,7 +436,7 @@
             // 
             // txtSellMarginBMSL
             // 
-            this.txtSellMarginBMSL.Location = new System.Drawing.Point(155, 64);
+            this.txtSellMarginBMSL.Location = new System.Drawing.Point(161, 64);
             this.txtSellMarginBMSL.Name = "txtSellMarginBMSL";
             this.txtSellMarginBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtSellMarginBMSL.TabIndex = 4;
@@ -398,7 +445,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 67);
+            this.label6.Location = new System.Drawing.Point(27, 67);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 15);
             this.label6.TabIndex = 5;
@@ -409,7 +456,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.Color.Green;
-            this.label7.Location = new System.Drawing.Point(23, 0);
+            this.label7.Location = new System.Drawing.Point(22, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(241, 20);
             this.label7.TabIndex = 3;
@@ -417,7 +464,7 @@
             // 
             // txtBUSDBuyBMSL
             // 
-            this.txtBUSDBuyBMSL.Location = new System.Drawing.Point(155, 37);
+            this.txtBUSDBuyBMSL.Location = new System.Drawing.Point(161, 37);
             this.txtBUSDBuyBMSL.Name = "txtBUSDBuyBMSL";
             this.txtBUSDBuyBMSL.Size = new System.Drawing.Size(100, 23);
             this.txtBUSDBuyBMSL.TabIndex = 1;
@@ -427,7 +474,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(61, 40);
+            this.label8.Location = new System.Drawing.Point(67, 40);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(90, 15);
             this.label8.TabIndex = 2;
@@ -435,7 +482,7 @@
             // 
             // btnMarketBuyLimitSell
             // 
-            this.btnMarketBuyLimitSell.Location = new System.Drawing.Point(51, 192);
+            this.btnMarketBuyLimitSell.Location = new System.Drawing.Point(57, 192);
             this.btnMarketBuyLimitSell.Name = "btnMarketBuyLimitSell";
             this.btnMarketBuyLimitSell.Size = new System.Drawing.Size(100, 23);
             this.btnMarketBuyLimitSell.TabIndex = 0;
@@ -447,7 +494,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 363);
+            this.ClientSize = new System.Drawing.Size(679, 377);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbOrderPairs);
@@ -489,10 +536,8 @@
         private Label label8;
         private Button btnMarketBuyLimitSell;
         private Label label9;
-        private TextBox txtOrdersExecutedSMBL;
         private Label label11;
         private NumericUpDown nUpDownControlSMBL;
-        private TextBox txtOrdersExecutedBMSL;
         private Label label12;
         private NumericUpDown nUpDownControlBMSL;
         private Label label10;
@@ -504,5 +549,11 @@
         private Label label5;
         private NumericUpDown nUDSleepBMSL;
         private Label label15;
+        private Label label16;
+        private Label label17;
+        private Label labelU2OSMBL;
+        private Label labelOrdersExecutedSMBL;
+        private Label labelOrdersExecutedBMSL;
+        private Label labelU2OBMSL;
     }
 }

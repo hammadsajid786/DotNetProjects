@@ -39,7 +39,10 @@ namespace BinanceBot
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
 
-            txtOrdersExecutedSMBL.Text = "0";
+            labelOrdersExecutedSMBL.Text = "0";
+
+            labelU2OSMBL.Text = "0";
+            labelU2OSMBL.ForeColor = Color.Black;
 
             EnableDisableFields(false, OrderType.MarketSellLimitBuy);
 
@@ -87,6 +90,13 @@ namespace BinanceBot
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                             {
                                 Interlocked.Increment(ref secondOrderNotExecuted);
+
+                                labelU2OSMBL.Invoke((MethodInvoker)delegate
+                                {
+                                    labelU2OSMBL.Text = secondOrderNotExecuted.ToString();
+                                    labelU2OSMBL.ForeColor = Color.Red;
+                                });
+
                                 return;
                             }
 
@@ -104,9 +114,9 @@ namespace BinanceBot
                         {
                             Interlocked.Increment(ref ordersExecuted);
 
-                            txtOrdersExecutedSMBL.Invoke((MethodInvoker)delegate
+                            labelOrdersExecutedSMBL.Invoke((MethodInvoker)delegate
                             {
-                                txtOrdersExecutedSMBL.Text = (ordersExecuted).ToString();
+                                labelOrdersExecutedSMBL.Text = (ordersExecuted).ToString();
                             });
                         }
                     }));
@@ -184,7 +194,10 @@ namespace BinanceBot
         {
             cancellationTokenSource = new CancellationTokenSource();
 
-            txtOrdersExecutedBMSL.Text = "0";
+            labelOrdersExecutedBMSL.Text = "0";
+
+            labelU2OBMSL.Text = "0";
+            labelU2OBMSL.ForeColor = Color.Black;
 
             EnableDisableFields(false, OrderType.MarketBuyLimitSell);
 
@@ -221,18 +234,26 @@ namespace BinanceBot
 
                     tasksList.Add(Task.Run(async () =>
                     {
+                        if (cancellationTokenSource.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
                         Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
 
                         if (!tupleResults.Item1)
                         {
-                            if (cancellationTokenSource.IsCancellationRequested)
-                            {
-                                return;
-                            }
-
                             if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.SellOrderNotCreated))
                             {
                                 Interlocked.Increment(ref secondOrderNotExecuted);
+
+                                labelU2OBMSL.Invoke((MethodInvoker)delegate
+                                {
+                                    labelU2OBMSL.Text = secondOrderNotExecuted.ToString();
+                                    labelU2OBMSL.ForeColor = Color.Red;
+                                });
+
+
                                 return;
                             }
 
@@ -250,9 +271,9 @@ namespace BinanceBot
                         {
                             Interlocked.Increment(ref ordersExecuted);
 
-                            txtOrdersExecutedBMSL.Invoke((MethodInvoker)delegate
+                            labelOrdersExecutedBMSL.Invoke((MethodInvoker)delegate
                             {
-                                txtOrdersExecutedBMSL.Text = (ordersExecuted).ToString();
+                                labelOrdersExecutedBMSL.Text = (ordersExecuted).ToString();
                             });
                         }
                     }));
