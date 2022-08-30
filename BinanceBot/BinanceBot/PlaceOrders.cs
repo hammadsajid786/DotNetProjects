@@ -102,7 +102,10 @@ namespace BinanceBot
 
                             cancellationTokenSource.Cancel();
 
-                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance)
+                                ||
+                                tupleResults.Item2.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                                )
                             {
                             }
                             else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
@@ -259,7 +262,10 @@ namespace BinanceBot
 
                             cancellationTokenSource.Cancel();
 
-                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance)
+                                ||
+                                tupleResults.Item2.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                                )
                             {
                             }
                             else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))

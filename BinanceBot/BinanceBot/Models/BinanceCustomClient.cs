@@ -77,7 +77,10 @@ namespace BinanceBot.Models
             {
                 message = orderMarketSellDetails.Error.Message;
 
-                if (message != Models.CustomEnums.Messages.InsufficientBalance)
+                if (message != Models.CustomEnums.Messages.InsufficientBalance
+                    &&
+                    !message.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                    )
                 {
                     string textToWrite = DateTime.Now + Environment.NewLine
                                              + "Order Type           : " + SpotOrderType.Market.ToString() + Environment.NewLine
@@ -136,7 +139,10 @@ namespace BinanceBot.Models
             {
                 message = orderMarketBuyDetails.Error.Message;
 
-                if (message != Models.CustomEnums.Messages.InsufficientBalance)
+                if (message != Models.CustomEnums.Messages.InsufficientBalance
+                    &&
+                    !message.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                    )
                 {
 
                     string textToWrite = DateTime.Now + Environment.NewLine
