@@ -39,7 +39,7 @@ namespace BinanceBot.Models
             string message = string.Empty;
 
             WebCallResult<BinancePlacedOrder> orderMarketSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
-               (tradePair, OrderSide.Sell, SpotOrderType.Market, null, sellPriceBUSD);
+               (tradePair, OrderSide.Sell, SpotOrderType.Market, null, sellPriceBUSD, null, null, null, null, null, null, null, 10000);
 
             if (orderMarketSellDetails.Success) // 1st Order
             {
@@ -49,7 +49,7 @@ namespace BinanceBot.Models
                 decimal pricePurchased = Math.Round(priceSell - purchaseMargin);
 
                 WebCallResult<BinancePlacedOrder> orderLimitBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
-                (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled);
+                (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
 
                 if (orderLimitBuyDetails.Success) // 2nd Order
                 {
@@ -101,7 +101,7 @@ namespace BinanceBot.Models
             string message = string.Empty;
 
             WebCallResult<BinancePlacedOrder> orderMarketBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
-               (tradePair, OrderSide.Buy, SpotOrderType.Market, null, buyPriceBUSD);
+               (tradePair, OrderSide.Buy, SpotOrderType.Market, null, buyPriceBUSD, null, null, null, null, null, null, null, 10000);
 
             if (orderMarketBuyDetails.Success) // 1st Order
             {
@@ -111,7 +111,7 @@ namespace BinanceBot.Models
                 decimal pricePurchased = Math.Round(priceSell + purchaseMargin);
 
                 WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
-                (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled);
+                (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
 
                 if (orderLimitSellDetails.Success) // 2nd Order
                 {
