@@ -102,7 +102,10 @@ namespace BinanceBot
 
                             cancellationTokenSource.Cancel();
 
-                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance)
+                                ||
+                                tupleResults.Item2.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                                )
                             {
                             }
                             else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
@@ -131,7 +134,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
 
-                        int waitFor50RequestsToCompleteMilliSeconds = (10 - stopWatch.Elapsed.Seconds) * 1000;
+                        int waitFor50RequestsToCompleteMilliSeconds = (10000 - stopWatch.Elapsed.Milliseconds);
                         if (waitFor50RequestsToCompleteMilliSeconds > 0)
                         {
                             cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
@@ -253,13 +256,15 @@ namespace BinanceBot
                                     labelU2OBMSL.ForeColor = Color.Red;
                                 });
 
-
                                 return;
                             }
 
                             cancellationTokenSource.Cancel();
 
-                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance))
+                            if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InsufficientBalance)
+                                ||
+                                tupleResults.Item2.Contains(Models.CustomEnums.Messages.InternetConnectionIssue)
+                                )
                             {
                             }
                             else if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.InvalidAPIKeyIPOrPermissions))
@@ -288,7 +293,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
 
-                        int waitFor50RequestsToCompleteMilliSeconds = (10 - stopWatch.Elapsed.Seconds) * 1000;
+                        int waitFor50RequestsToCompleteMilliSeconds = (10000 - stopWatch.Elapsed.Milliseconds);
                         if (waitFor50RequestsToCompleteMilliSeconds > 0)
                         {
                             cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
