@@ -36,8 +36,7 @@ namespace BinanceBot
 
         private void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
         {
-            cancellationTokenSource = new CancellationTokenSource();
-            cancellationToken = cancellationTokenSource.Token;
+            InitializeCancellationToken();
 
             labelOrdersExecutedSMBL.Text = "0";
 
@@ -195,7 +194,7 @@ namespace BinanceBot
 
         private void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
         {
-            cancellationTokenSource = new CancellationTokenSource();
+            InitializeCancellationToken();
 
             labelOrdersExecutedBMSL.Text = "0";
 
@@ -442,5 +441,10 @@ namespace BinanceBot
             cancellationTokenSource.Cancel();
         }
 
+        private void InitializeCancellationToken()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
+        }
     }
 }
