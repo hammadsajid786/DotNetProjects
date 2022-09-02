@@ -184,6 +184,7 @@
             // 
             // btnStopMSLB
             // 
+            this.btnStopMSLB.Enabled = false;
             this.btnStopMSLB.Location = new System.Drawing.Point(162, 192);
             this.btnStopMSLB.Name = "btnStopMSLB";
             this.btnStopMSLB.Size = new System.Drawing.Size(100, 23);
@@ -377,6 +378,7 @@
             // 
             // btnStopMBLS
             // 
+            this.btnStopMBLS.Enabled = false;
             this.btnStopMBLS.Location = new System.Drawing.Point(161, 192);
             this.btnStopMBLS.Name = "btnStopMBLS";
             this.btnStopMBLS.Size = new System.Drawing.Size(100, 23);

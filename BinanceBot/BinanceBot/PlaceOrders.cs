@@ -179,15 +179,23 @@ namespace BinanceBot
                 nUDSleepBMSL.Enabled = enableFlag;
                 nUDSleepSMBL.Enabled = enableFlag;
 
-                if (orderType == OrderType.MarketSellLimitBuy)
+                if (!enableFlag)
                 {
-                    btnStopMBLS.Enabled = enableFlag;
-                    btnStopMSLB.Enabled = !enableFlag;
+                    if (orderType == OrderType.MarketSellLimitBuy)
+                    {
+                        btnStopMBLS.Enabled = enableFlag;
+                        btnStopMSLB.Enabled = !enableFlag;
+                    }
+                    else
+                    {
+                        btnStopMBLS.Enabled = !enableFlag;
+                        btnStopMSLB.Enabled = enableFlag;
+                    }
                 }
-                else
+                else if (enableFlag)
                 {
-                    btnStopMBLS.Enabled = !enableFlag;
-                    btnStopMSLB.Enabled = enableFlag;
+                    btnStopMBLS.Enabled = false;
+                    btnStopMSLB.Enabled = false;
                 }
             });
         }
