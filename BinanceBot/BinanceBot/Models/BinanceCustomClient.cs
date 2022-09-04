@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace BinanceBot.Models
 {
@@ -23,8 +24,8 @@ namespace BinanceBot.Models
 
         public BinanceCustomClient()
         {
-            _binanceApiKey = System.Configuration.ConfigurationManager.AppSettings["binanceApiKey"];
-            _binanceAPISecret = System.Configuration.ConfigurationManager.AppSettings["biancneAPISecret"];
+            _binanceApiKey = Program.binanceAPIKey;
+            _binanceAPISecret = Program.binanceAPISecret;
 
             _client = new BinanceClient();
             _client.SetApiCredentials(new ApiCredentials(_binanceApiKey, _binanceAPISecret));
