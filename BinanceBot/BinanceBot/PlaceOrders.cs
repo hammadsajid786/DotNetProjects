@@ -185,17 +185,24 @@ namespace BinanceBot
                     {
                         btnStopMBLS.Enabled = enableFlag;
                         btnStopMSLB.Enabled = !enableFlag;
+
+                        pBMSBL.Visible = true;
                     }
                     else
                     {
                         btnStopMBLS.Enabled = !enableFlag;
                         btnStopMSLB.Enabled = enableFlag;
+
+                        pBBMSL.Visible = true;
                     }
                 }
                 else if (enableFlag)
                 {
                     btnStopMBLS.Enabled = false;
                     btnStopMSLB.Enabled = false;
+
+                    pBMSBL.Visible = false;
+                    pBBMSL.Visible = false;
                 }
             });
         }
