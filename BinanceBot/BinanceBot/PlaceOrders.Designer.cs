@@ -32,6 +32,7 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pBMSBL = new System.Windows.Forms.ProgressBar();
             this.labelOrdersExecutedSMBL = new System.Windows.Forms.Label();
             this.labelU2OSMBL = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -64,6 +65,7 @@
             this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnMarketBuyLimitSell = new System.Windows.Forms.Button();
+            this.pBBMSL = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDSleepSMBL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
@@ -102,6 +104,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pBMSBL);
             this.panel1.Controls.Add(this.labelOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.labelU2OSMBL);
             this.panel1.Controls.Add(this.label16);
@@ -122,6 +125,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(287, 297);
             this.panel1.TabIndex = 3;
+            // 
+            // pBMSBL
+            // 
+            this.pBMSBL.Location = new System.Drawing.Point(14, 269);
+            this.pBMSBL.Name = "pBMSBL";
+            this.pBMSBL.Size = new System.Drawing.Size(248, 23);
+            this.pBMSBL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pBMSBL.TabIndex = 8;
+            this.pBMSBL.Visible = false;
             // 
             // labelOrdersExecutedSMBL
             // 
@@ -295,6 +307,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.pBBMSL);
             this.panel2.Controls.Add(this.labelU2OBMSL);
             this.panel2.Controls.Add(this.labelOrdersExecutedBMSL);
             this.panel2.Controls.Add(this.label17);
@@ -492,6 +505,15 @@
             this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
             this.btnMarketBuyLimitSell.Click += new System.EventHandler(this.btnMarketBuyLimitSell_Click);
             // 
+            // pBBMSL
+            // 
+            this.pBBMSL.Location = new System.Drawing.Point(15, 269);
+            this.pBBMSL.Name = "pBBMSL";
+            this.pBBMSL.Size = new System.Drawing.Size(248, 23);
+            this.pBBMSL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pBBMSL.TabIndex = 24;
+            this.pBBMSL.Visible = false;
+            // 
             // PlaceOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -557,5 +579,7 @@
         private Label labelOrdersExecutedSMBL;
         private Label labelOrdersExecutedBMSL;
         private Label labelU2OBMSL;
+        private ProgressBar pBMSBL;
+        private ProgressBar pBBMSL;
     }
 }
