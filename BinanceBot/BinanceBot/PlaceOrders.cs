@@ -51,6 +51,10 @@ namespace BinanceBot
 
             int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
             int threadSleepValue = Convert.ToInt32(nUDSleepSMBL.Value);
+            if (!cBMSBL.Checked)
+            {
+                threadSleepValue = 0;
+            }
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
@@ -123,7 +127,7 @@ namespace BinanceBot
                         }
                     }));
 
-                    if (i % 5 == 0 && i != maxOrderCount)
+                    if (i % 5 == 0 && i != maxOrderCount && threadSleepValue > 0)
                     {
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
@@ -176,33 +180,43 @@ namespace BinanceBot
                 txtSellMarginBMSL.Enabled = enableFlag;
                 nUpDownControlBMSL.Enabled = enableFlag;
 
-                nUDSleepBMSL.Enabled = enableFlag;
-                nUDSleepSMBL.Enabled = enableFlag;
+                cBMBSL.Enabled = enableFlag;
+                cBMSBL.Enabled = enableFlag;
 
-                if (!enableFlag)
+                if (!enableFlag) // Disable fields flag
                 {
                     if (orderType == OrderType.MarketSellLimitBuy)
                     {
-                        btnStopMBLS.Enabled = enableFlag;
+                        btnStopBMSL.Enabled = enableFlag;
                         btnStopMSLB.Enabled = !enableFlag;
 
                         pBMSBL.Visible = true;
                     }
                     else
                     {
-                        btnStopMBLS.Enabled = !enableFlag;
+                        btnStopBMSL.Enabled = !enableFlag;
                         btnStopMSLB.Enabled = enableFlag;
 
-                        pBBMSL.Visible = true;
+                        pbBMSL.Visible = true;
                     }
+
+                    nUDSleepBMSL.Enabled = false;
+                    nUDSleepSMBL.Enabled = false;
+              
                 }
-                else if (enableFlag)
+                else if (enableFlag) // Enable fields flag
                 {
-                    btnStopMBLS.Enabled = false;
+                    btnStopBMSL.Enabled = false;
                     btnStopMSLB.Enabled = false;
 
                     pBMSBL.Visible = false;
-                    pBBMSL.Visible = false;
+                    pbBMSL.Visible = false;
+
+                    nUDSleepBMSL.Enabled = false;
+                    nUDSleepSMBL.Enabled = false;
+
+                    nUDSleepBMSL.Enabled = cBMBSL.Checked;
+                    nUDSleepSMBL.Enabled = cBMSBL.Checked;
                 }
             });
         }
@@ -225,6 +239,10 @@ namespace BinanceBot
             int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
 
             int threadSleepValue = Convert.ToInt32(nUDSleepBMSL.Value);
+            if (!cBMBSL.Checked)
+            {
+                threadSleepValue = 0;
+            }
 
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
@@ -297,7 +315,7 @@ namespace BinanceBot
                         }
                     }));
 
-                    if (i % 5 == 0 && i != maxOrderCount)
+                    if (i % 5 == 0 && i != maxOrderCount && threadSleepValue > 0)
                     {
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
@@ -452,7 +470,7 @@ namespace BinanceBot
 
         private void btnStopMBLS_Click(object sender, EventArgs e)
         {
-            btnStopMBLS.Enabled = false;
+            btnStopBMSL.Enabled = false;
             cancellationTokenSource.Cancel();
         }
 
@@ -460,6 +478,16 @@ namespace BinanceBot
         {
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
+        }
+
+        private void cBMSBL_CheckedChanged(object sender, EventArgs e)
+        {
+            nUDSleepSMBL.Enabled = cBMSBL.Checked;
+        }
+
+        private void cBMBSL_CheckedChanged(object sender, EventArgs e)
+        {
+            nUDSleepBMSL.Enabled = cBMBSL.Checked;
         }
     }
 }

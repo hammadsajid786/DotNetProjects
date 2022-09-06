@@ -32,6 +32,7 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cBMSBL = new System.Windows.Forms.CheckBox();
             this.pBMSBL = new System.Windows.Forms.ProgressBar();
             this.labelOrdersExecutedSMBL = new System.Windows.Forms.Label();
             this.labelU2OSMBL = new System.Windows.Forms.Label();
@@ -49,12 +50,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbOrderPairs = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cBMBSL = new System.Windows.Forms.CheckBox();
+            this.pbBMSL = new System.Windows.Forms.ProgressBar();
             this.labelU2OBMSL = new System.Windows.Forms.Label();
             this.labelOrdersExecutedBMSL = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.nUDSleepBMSL = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
-            this.btnStopMBLS = new System.Windows.Forms.Button();
+            this.btnStopBMSL = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.nUpDownControlBMSL = new System.Windows.Forms.NumericUpDown();
@@ -65,7 +68,6 @@
             this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnMarketBuyLimitSell = new System.Windows.Forms.Button();
-            this.pBBMSL = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUDSleepSMBL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
@@ -104,6 +106,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.cBMSBL);
             this.panel1.Controls.Add(this.pBMSBL);
             this.panel1.Controls.Add(this.labelOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.labelU2OSMBL);
@@ -125,6 +128,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(287, 297);
             this.panel1.TabIndex = 3;
+            // 
+            // cBMSBL
+            // 
+            this.cBMSBL.AutoSize = true;
+            this.cBMSBL.Checked = true;
+            this.cBMSBL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBMSBL.Location = new System.Drawing.Point(141, 163);
+            this.cBMSBL.Name = "cBMSBL";
+            this.cBMSBL.Size = new System.Drawing.Size(15, 14);
+            this.cBMSBL.TabIndex = 22;
+            this.cBMSBL.UseVisualStyleBackColor = true;
+            this.cBMSBL.CheckedChanged += new System.EventHandler(this.cBMSBL_CheckedChanged);
             // 
             // pBMSBL
             // 
@@ -165,14 +180,14 @@
             // 
             // nUDSleepSMBL
             // 
-            this.nUDSleepSMBL.Location = new System.Drawing.Point(162, 153);
+            this.nUDSleepSMBL.Location = new System.Drawing.Point(162, 159);
             this.nUDSleepSMBL.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.nUDSleepSMBL.Minimum = new decimal(new int[] {
-            500,
+            200,
             0,
             0,
             0});
@@ -180,7 +195,7 @@
             this.nUDSleepSMBL.Size = new System.Drawing.Size(100, 23);
             this.nUDSleepSMBL.TabIndex = 16;
             this.nUDSleepSMBL.Value = new decimal(new int[] {
-            500,
+            200,
             0,
             0,
             0});
@@ -188,7 +203,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(52, 155);
+            this.label5.Location = new System.Drawing.Point(28, 161);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 15);
             this.label5.TabIndex = 17;
@@ -307,13 +322,14 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.pBBMSL);
+            this.panel2.Controls.Add(this.cBMBSL);
+            this.panel2.Controls.Add(this.pbBMSL);
             this.panel2.Controls.Add(this.labelU2OBMSL);
             this.panel2.Controls.Add(this.labelOrdersExecutedBMSL);
             this.panel2.Controls.Add(this.label17);
             this.panel2.Controls.Add(this.nUDSleepBMSL);
             this.panel2.Controls.Add(this.label15);
-            this.panel2.Controls.Add(this.btnStopMBLS);
+            this.panel2.Controls.Add(this.btnStopBMSL);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.nUpDownControlBMSL);
@@ -328,6 +344,27 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(284, 297);
             this.panel2.TabIndex = 4;
+            // 
+            // cBMBSL
+            // 
+            this.cBMBSL.AutoSize = true;
+            this.cBMBSL.Checked = true;
+            this.cBMBSL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBMBSL.Location = new System.Drawing.Point(139, 163);
+            this.cBMBSL.Name = "cBMBSL";
+            this.cBMBSL.Size = new System.Drawing.Size(15, 14);
+            this.cBMBSL.TabIndex = 25;
+            this.cBMBSL.UseVisualStyleBackColor = true;
+            this.cBMBSL.CheckedChanged += new System.EventHandler(this.cBMBSL_CheckedChanged);
+            // 
+            // pBBMSL
+            // 
+            this.pbBMSL.Location = new System.Drawing.Point(15, 269);
+            this.pbBMSL.Name = "pBBMSL";
+            this.pbBMSL.Size = new System.Drawing.Size(248, 23);
+            this.pbBMSL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pbBMSL.TabIndex = 24;
+            this.pbBMSL.Visible = false;
             // 
             // labelU2OBMSL
             // 
@@ -367,7 +404,7 @@
             0,
             0});
             this.nUDSleepBMSL.Minimum = new decimal(new int[] {
-            500,
+            200,
             0,
             0,
             0});
@@ -375,7 +412,7 @@
             this.nUDSleepBMSL.Size = new System.Drawing.Size(100, 23);
             this.nUDSleepBMSL.TabIndex = 18;
             this.nUDSleepBMSL.Value = new decimal(new int[] {
-            500,
+            200,
             0,
             0,
             0});
@@ -383,7 +420,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(51, 161);
+            this.label15.Location = new System.Drawing.Point(29, 162);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(104, 15);
             this.label15.TabIndex = 19;
@@ -391,14 +428,14 @@
             // 
             // btnStopMBLS
             // 
-            this.btnStopMBLS.Enabled = false;
-            this.btnStopMBLS.Location = new System.Drawing.Point(161, 192);
-            this.btnStopMBLS.Name = "btnStopMBLS";
-            this.btnStopMBLS.Size = new System.Drawing.Size(100, 23);
-            this.btnStopMBLS.TabIndex = 17;
-            this.btnStopMBLS.Text = "Stop";
-            this.btnStopMBLS.UseVisualStyleBackColor = true;
-            this.btnStopMBLS.Click += new System.EventHandler(this.btnStopMBLS_Click);
+            this.btnStopBMSL.Enabled = false;
+            this.btnStopBMSL.Location = new System.Drawing.Point(161, 192);
+            this.btnStopBMSL.Name = "btnStopMBLS";
+            this.btnStopBMSL.Size = new System.Drawing.Size(100, 23);
+            this.btnStopBMSL.TabIndex = 17;
+            this.btnStopBMSL.Text = "Stop";
+            this.btnStopBMSL.UseVisualStyleBackColor = true;
+            this.btnStopBMSL.Click += new System.EventHandler(this.btnStopMBLS_Click);
             // 
             // label14
             // 
@@ -505,15 +542,6 @@
             this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
             this.btnMarketBuyLimitSell.Click += new System.EventHandler(this.btnMarketBuyLimitSell_Click);
             // 
-            // pBBMSL
-            // 
-            this.pBBMSL.Location = new System.Drawing.Point(15, 269);
-            this.pBBMSL.Name = "pBBMSL";
-            this.pBBMSL.Size = new System.Drawing.Size(248, 23);
-            this.pBBMSL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.pBBMSL.TabIndex = 24;
-            this.pBBMSL.Visible = false;
-            // 
             // PlaceOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -567,7 +595,7 @@
         private Label label10;
         private Button btnStopMSLB;
         private Label label13;
-        private Button btnStopMBLS;
+        private Button btnStopBMSL;
         private Label label14;
         private NumericUpDown nUDSleepSMBL;
         private Label label5;
@@ -580,6 +608,8 @@
         private Label labelOrdersExecutedBMSL;
         private Label labelU2OBMSL;
         private ProgressBar pBMSBL;
-        private ProgressBar pBBMSL;
+        private ProgressBar pbBMSL;
+        private CheckBox cBMSBL;
+        private CheckBox cBMBSL;
     }
 }
