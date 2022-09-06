@@ -34,7 +34,7 @@ namespace BinanceBot
             _binanceCustomClient = new BinanceCustomClient();
         }
 
-        private void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
+        private void btnPlaceSellMarketBuyLimit_SMBL_Click(object sender, EventArgs e)
         {
             InitializeCancellationToken();
 
@@ -43,22 +43,22 @@ namespace BinanceBot
             labelU2OSMBL.Text = "0";
             labelU2OSMBL.ForeColor = Color.Black;
 
-            EnableDisableFields(false, OrderType.MarketSellLimitBuy);
+            EnableDisableFields(false, OrderType.SellMarketBuyLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
 
             int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
-            int threadSleepValue = Convert.ToInt32(nUDSleepSMBL.Value);
-            if (!cBMSBL.Checked)
+            int threadSleepValue = Convert.ToInt32(ndlSleepSMBL.Value);
+            if (!cbSMBL.Checked)
             {
                 threadSleepValue = 0;
             }
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true, OrderType.MarketSellLimitBuy);
+                EnableDisableFields(true, OrderType.SellMarketBuyLimit);
                 return;
             }
 
@@ -161,67 +161,11 @@ namespace BinanceBot
                     MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
 
-                EnableDisableFields(true, OrderType.MarketSellLimitBuy);
+                EnableDisableFields(true, OrderType.SellMarketBuyLimit);
             });
         }
 
-        private void EnableDisableFields(bool enableFlag, OrderType orderType)
-        {
-            this.Invoke((MethodInvoker)delegate
-            {
-                btnPlaceMarketOrderMSLB.Enabled = enableFlag;
-                cbOrderPairs.Enabled = enableFlag;
-                txtBUSDSellMSLB.Enabled = enableFlag;
-                txtPurchaseMarginMSLB.Enabled = enableFlag;
-                nUpDownControlSMBL.Enabled = enableFlag;
-
-                btnMarketBuyLimitSell.Enabled = enableFlag;
-                txtBUSDBuyBMSL.Enabled = enableFlag;
-                txtSellMarginBMSL.Enabled = enableFlag;
-                nUpDownControlBMSL.Enabled = enableFlag;
-
-                cBMBSL.Enabled = enableFlag;
-                cBMSBL.Enabled = enableFlag;
-
-                if (!enableFlag) // Disable fields flag
-                {
-                    if (orderType == OrderType.MarketSellLimitBuy)
-                    {
-                        btnStopBMSL.Enabled = enableFlag;
-                        btnStopMSLB.Enabled = !enableFlag;
-
-                        pBMSBL.Visible = true;
-                    }
-                    else
-                    {
-                        btnStopBMSL.Enabled = !enableFlag;
-                        btnStopMSLB.Enabled = enableFlag;
-
-                        pbBMSL.Visible = true;
-                    }
-
-                    nUDSleepBMSL.Enabled = false;
-                    nUDSleepSMBL.Enabled = false;
-              
-                }
-                else if (enableFlag) // Enable fields flag
-                {
-                    btnStopBMSL.Enabled = false;
-                    btnStopMSLB.Enabled = false;
-
-                    pBMSBL.Visible = false;
-                    pbBMSL.Visible = false;
-
-                    nUDSleepBMSL.Enabled = false;
-                    nUDSleepSMBL.Enabled = false;
-
-                    nUDSleepBMSL.Enabled = cBMBSL.Checked;
-                    nUDSleepSMBL.Enabled = cBMSBL.Checked;
-                }
-            });
-        }
-
-        private void btnMarketBuyLimitSell_Click(object sender, EventArgs e)
+        private void btnPlaceBuyMarketSellLimit_BMSL_Click(object sender, EventArgs e)
         {
             InitializeCancellationToken();
 
@@ -230,7 +174,7 @@ namespace BinanceBot
             labelU2OBMSL.Text = "0";
             labelU2OBMSL.ForeColor = Color.Black;
 
-            EnableDisableFields(false, OrderType.MarketBuyLimitSell);
+            EnableDisableFields(false, OrderType.BuyMarketSellLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal buyPriceBUSD = 50; // Override in ValidateSellPrice method
@@ -238,15 +182,15 @@ namespace BinanceBot
 
             int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
 
-            int threadSleepValue = Convert.ToInt32(nUDSleepBMSL.Value);
-            if (!cBMBSL.Checked)
+            int threadSleepValue = Convert.ToInt32(nudSleepBMSL.Value);
+            if (!cbBMSL.Checked)
             {
                 threadSleepValue = 0;
             }
 
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true, OrderType.MarketBuyLimitSell);
+                EnableDisableFields(true, OrderType.BuyMarketSellLimit);
                 return;
             }
 
@@ -349,7 +293,63 @@ namespace BinanceBot
                     MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
 
-                EnableDisableFields(true, OrderType.MarketBuyLimitSell);
+                EnableDisableFields(true, OrderType.BuyMarketSellLimit);
+            });
+        }
+
+        private void EnableDisableFields(bool enableFlag, OrderType orderType)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                btnPlaceOrderSMBL.Enabled = enableFlag;
+                cbOrderPairs.Enabled = enableFlag;
+                txtBUSDSellSMBL.Enabled = enableFlag;
+                txtPurchaseMarginSMBL.Enabled = enableFlag;
+                nUpDownControlSMBL.Enabled = enableFlag;
+
+                btnPlaceOrderBMSL.Enabled = enableFlag;
+                txtBUSDBuyBMSL.Enabled = enableFlag;
+                txtSellMarginBMSL.Enabled = enableFlag;
+                nUpDownControlBMSL.Enabled = enableFlag;
+
+                cbBMSL.Enabled = enableFlag;
+                cbSMBL.Enabled = enableFlag;
+
+                if (!enableFlag) // Disable fields flag
+                {
+                    if (orderType == OrderType.SellMarketBuyLimit)
+                    {
+                        btnStopBMSL.Enabled = enableFlag;
+                        btnStopSMBL.Enabled = !enableFlag;
+
+                        pbMSBL.Visible = true;
+                    }
+                    else
+                    {
+                        btnStopBMSL.Enabled = !enableFlag;
+                        btnStopSMBL.Enabled = enableFlag;
+
+                        pbBMSL.Visible = true;
+                    }
+
+                    nudSleepBMSL.Enabled = false;
+                    ndlSleepSMBL.Enabled = false;
+
+                }
+                else if (enableFlag) // Enable fields flag
+                {
+                    btnStopBMSL.Enabled = false;
+                    btnStopSMBL.Enabled = false;
+
+                    pbMSBL.Visible = false;
+                    pbBMSL.Visible = false;
+
+                    nudSleepBMSL.Enabled = false;
+                    ndlSleepSMBL.Enabled = false;
+
+                    nudSleepBMSL.Enabled = cbBMSL.Checked;
+                    ndlSleepSMBL.Enabled = cbSMBL.Checked;
+                }
             });
         }
 
@@ -361,13 +361,13 @@ namespace BinanceBot
             purchasePriceMargin = 0m;
 
             // Sell Validations
-            if (string.IsNullOrEmpty(txtBUSDSellMSLB.Text))
+            if (string.IsNullOrEmpty(txtBUSDSellSMBL.Text))
             {
                 MessageBox.Show("Sell Qty required.");
                 return false;
             }
 
-            if (!decimal.TryParse(txtBUSDSellMSLB.Text, out parsedSellPrice))
+            if (!decimal.TryParse(txtBUSDSellSMBL.Text, out parsedSellPrice))
             {
                 MessageBox.Show("Sell Qty Invalid.");
                 return false;
@@ -379,14 +379,14 @@ namespace BinanceBot
                 return false;
             }
 
-            if (string.IsNullOrEmpty(txtPurchaseMarginMSLB.Text))
+            if (string.IsNullOrEmpty(txtPurchaseMarginSMBL.Text))
             {
                 MessageBox.Show("Purchase Margin required.");
                 return false;
             }
 
             // Purchase Validations
-            if (!decimal.TryParse(txtPurchaseMarginMSLB.Text, out purchasePriceMargin))
+            if (!decimal.TryParse(txtPurchaseMarginSMBL.Text, out purchasePriceMargin))
             {
                 MessageBox.Show("Purchase Margin Invalid.");
                 return false;
@@ -462,13 +462,13 @@ namespace BinanceBot
             }
         }
 
-        private void btnStopMarketOrderMSLB_Click(object sender, EventArgs e)
+        private void btnStopOrder_SMBL_Click(object sender, EventArgs e)
         {
-            btnStopMSLB.Enabled = false;
+            btnStopSMBL.Enabled = false;
             cancellationTokenSource.Cancel();
         }
 
-        private void btnStopMBLS_Click(object sender, EventArgs e)
+        private void btnStopOrder_BMSL_Click(object sender, EventArgs e)
         {
             btnStopBMSL.Enabled = false;
             cancellationTokenSource.Cancel();
@@ -480,14 +480,15 @@ namespace BinanceBot
             cancellationToken = cancellationTokenSource.Token;
         }
 
-        private void cBMSBL_CheckedChanged(object sender, EventArgs e)
+        private void cbSMBL_CheckedChanged(object sender, EventArgs e)
         {
-            nUDSleepSMBL.Enabled = cBMSBL.Checked;
+            ndlSleepSMBL.Enabled = cbSMBL.Checked;
         }
 
-        private void cBMBSL_CheckedChanged(object sender, EventArgs e)
+        private void cbBMSL_CheckedChanged(object sender, EventArgs e)
         {
-            nUDSleepBMSL.Enabled = cBMBSL.Checked;
+            nudSleepBMSL.Enabled = cbBMSL.Checked;
         }
+
     }
 }
