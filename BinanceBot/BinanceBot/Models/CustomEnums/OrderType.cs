@@ -8,7 +8,7 @@ namespace BinanceBot.Models.CustomEnums
 {
     internal enum OrderType
     {
-        MarketSellLimitBuy = 0,
-        MarketBuyLimitSell = 1
+        SellMarketBuyLimit = 0,
+        BuyMarketSellLimit = 1
     }
 }
