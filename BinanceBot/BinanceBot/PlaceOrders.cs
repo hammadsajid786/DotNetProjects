@@ -23,6 +23,8 @@ namespace BinanceBot
 
         private decimal totalBUSDBuyBMSL = 0;
 
+        private int _binanceRequestOrdersLimit;
+
         public PlaceOrders()
         {
             InitializeComponent();
@@ -32,6 +34,7 @@ namespace BinanceBot
             totalBUSDBuyBMSL = decimal.Parse(txtBUSDBuyBMSL.Text);
 
             _binanceCustomClient = new BinanceCustomClient();
+            _binanceRequestOrdersLimit = int.Parse(System.Configuration.ConfigurationManager.AppSettings["BinanceRequestOrdersLimit"]);
         }
 
         private void btnPlaceSellMarketBuyLimit_SMBL_Click(object sender, EventArgs e)
@@ -132,7 +135,7 @@ namespace BinanceBot
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
 
-                    if (i % 25 == 0)
+                    if (i % _binanceRequestOrdersLimit == 0)
                     {
                         Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
@@ -264,7 +267,7 @@ namespace BinanceBot
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
 
-                    if (i % 25 == 0)
+                    if (i % _binanceRequestOrdersLimit == 0)
                     {
                         Task.WaitAll(tasksList.ToArray());
                         stopWatch.Stop();
