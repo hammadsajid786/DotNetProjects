@@ -53,11 +53,8 @@ namespace BinanceBot
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
 
             int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
-            int threadSleepValue = Convert.ToInt32(ndlSleepSMBL.Value);
-            if (!cbSMBL.Checked)
-            {
-                threadSleepValue = 0;
-            }
+
+            int threadSleepValue = cbSMBL.Checked ? Convert.ToInt32(ndlSleepSMBL.Value) : 0;
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
@@ -130,7 +127,7 @@ namespace BinanceBot
                         }
                     }));
 
-                    if (i % 5 == 0 && i != maxOrderCount && threadSleepValue > 0)
+                    if (threadSleepValue > 0 && i % 5 == 0 && i != maxOrderCount)
                     {
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
@@ -185,11 +182,7 @@ namespace BinanceBot
 
             int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
 
-            int threadSleepValue = Convert.ToInt32(nudSleepBMSL.Value);
-            if (!cbBMSL.Checked)
-            {
-                threadSleepValue = 0;
-            }
+            int threadSleepValue = cbBMSL.Checked ? Convert.ToInt32(nudSleepBMSL.Value) : 0;
 
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
@@ -262,7 +255,7 @@ namespace BinanceBot
                         }
                     }));
 
-                    if (i % 5 == 0 && i != maxOrderCount && threadSleepValue > 0)
+                    if (threadSleepValue > 0 && i % 5 == 0 && i != maxOrderCount)
                     {
                         cancellationToken.WaitHandle.WaitOne(threadSleepValue); // Wait for * seconds after every 5 orders.
                     }
