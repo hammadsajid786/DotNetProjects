@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.operationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mIPlaceOrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.openOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,8 @@
             // operationsToolStripMenuItem
             // 
             this.operationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mIPlaceOrder});
+            this.mIPlaceOrder,
+            this.openOrdersToolStripMenuItem});
             this.operationsToolStripMenuItem.Name = "operationsToolStripMenuItem";
             this.operationsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.operationsToolStripMenuItem.Text = "Operations";
@@ -56,9 +58,16 @@
             // mIPlaceOrder
             // 
             this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(135, 22);
-            this.mIPlaceOrder.Text = "Place Order";
+            this.mIPlaceOrder.Size = new System.Drawing.Size(180, 22);
+            this.mIPlaceOrder.Text = "Place Orders";
             this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
+            // 
+            // openOrdersToolStripMenuItem
+            // 
+            this.openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
+            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openOrdersToolStripMenuItem.Text = "Open Orders";
+            this.openOrdersToolStripMenuItem.Click += new System.EventHandler(this.openOrdersToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -70,7 +79,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Binance Bot - v 7.1.3";
+            this.Text = "Binance Bot - v 8.1.3";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -83,5 +92,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem operationsToolStripMenuItem;
         private ToolStripMenuItem mIPlaceOrder;
+        private ToolStripMenuItem openOrdersToolStripMenuItem;
     }
 }
