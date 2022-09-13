@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using BinanceBot.Models.CustomEnums;
 
 namespace BinanceBot.Models
 {
@@ -159,5 +160,32 @@ namespace BinanceBot.Models
             return new Tuple<bool, string>(isSuccess, message);
         }
 
+        public async Task<List<OpenOrderCustomModel>> FetchOpenOrders(string tradePair)
+        {
+            WebCallResult<IEnumerable<BinanceOrder>> openOrders = await _client.SpotApi.Trading.GetOpenOrdersAsync(tradePair, 60000);
+
+            List<OpenOrderCustomModel> ordersList = new List<OpenOrderCustomModel>();
+
+            if (openOrders.Success)
+            {
+                foreach (var openOrder in openOrders.Data)
+                {
+                    ordersList.Add(new OpenOrderCustomModel()
+                    {
+                        Symbol = openOrder.Symbol,
+                        OrderId = openOrder.Id,
+                        ClientOrderId = openOrder.Id,
+                        Price = openOrder.Price,
+                        Quantity = openOrder.Quantity,
+                        OrderType = openOrder.Type.ToString() == "Limit" ? SpotOrderType.Limit : SpotOrderType.Market,
+                        OrderSide = openOrder.Side == OrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
+                        CreatedTime = openOrder.CreateTime,
+                        UpdatedTime = openOrder.UpdateTime
+                    });
+                }
+            }
+
+            return ordersList.OrderBy(x=>x.Price).ToList();
+        }
     }
 }

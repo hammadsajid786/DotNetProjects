@@ -21,10 +21,17 @@ namespace BinanceBot
 
         private void mIPlaceOrder_Click(object sender, EventArgs e)
         {
-            PlaceOrders mainScreen = new PlaceOrders();
-            mainScreen.MdiParent = this;
-            mainScreen.MaximizeBox = true;
-            mainScreen.Show();
+            PlaceOrders placeOrders = new PlaceOrders();
+            placeOrders.MdiParent = this;
+            placeOrders.MaximizeBox = true;
+            placeOrders.Show();
+        }
+
+        private void openOrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenOrders openOrders = new OpenOrders();
+            openOrders.MdiParent = this;
+            openOrders.Show();
         }
     }
 }
