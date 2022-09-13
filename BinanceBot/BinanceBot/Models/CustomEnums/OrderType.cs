@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BinanceBot.Models.CustomEnums
 {
-    internal enum OrderType
+    internal enum OrderTypeCustomEnum
     {
         SellMarketBuyLimit = 0,
         BuyMarketSellLimit = 1

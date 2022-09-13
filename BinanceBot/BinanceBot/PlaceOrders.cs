@@ -46,7 +46,7 @@ namespace BinanceBot
             labelU2OSMBL.Text = "0";
             labelU2OSMBL.ForeColor = Color.Black;
 
-            EnableDisableFields(false, OrderType.SellMarketBuyLimit);
+            EnableDisableFields(false, OrderTypeCustomEnum.SellMarketBuyLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
@@ -58,7 +58,7 @@ namespace BinanceBot
 
             if (!ValidateSMBL(out sellPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true, OrderType.SellMarketBuyLimit);
+                EnableDisableFields(true, OrderTypeCustomEnum.SellMarketBuyLimit);
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace BinanceBot
                     MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
 
-                EnableDisableFields(true, OrderType.SellMarketBuyLimit);
+                EnableDisableFields(true, OrderTypeCustomEnum.SellMarketBuyLimit);
             });
         }
 
@@ -174,7 +174,7 @@ namespace BinanceBot
             labelU2OBMSL.Text = "0";
             labelU2OBMSL.ForeColor = Color.Black;
 
-            EnableDisableFields(false, OrderType.BuyMarketSellLimit);
+            EnableDisableFields(false, OrderTypeCustomEnum.BuyMarketSellLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
             decimal buyPriceBUSD = 50; // Override in ValidateSellPrice method
@@ -186,7 +186,7 @@ namespace BinanceBot
 
             if (!ValidateBMSL(out buyPriceBUSD, out purchaseMargin))
             {
-                EnableDisableFields(true, OrderType.BuyMarketSellLimit);
+                EnableDisableFields(true, OrderTypeCustomEnum.BuyMarketSellLimit);
                 return;
             }
 
@@ -289,11 +289,11 @@ namespace BinanceBot
                     MessageBox.Show("Exceptions occured in waiting: " + exceptionMessage);
                 }
 
-                EnableDisableFields(true, OrderType.BuyMarketSellLimit);
+                EnableDisableFields(true, OrderTypeCustomEnum.BuyMarketSellLimit);
             });
         }
 
-        private void EnableDisableFields(bool enableFlag, OrderType orderType)
+        private void EnableDisableFields(bool enableFlag, OrderTypeCustomEnum orderType)
         {
             this.Invoke((MethodInvoker)delegate
             {
@@ -313,7 +313,7 @@ namespace BinanceBot
 
                 if (!enableFlag) // Disable fields flag
                 {
-                    if (orderType == OrderType.SellMarketBuyLimit)
+                    if (orderType == OrderTypeCustomEnum.SellMarketBuyLimit)
                     {
                         btnStopBMSL.Enabled = enableFlag;
                         btnStopSMBL.Enabled = !enableFlag;

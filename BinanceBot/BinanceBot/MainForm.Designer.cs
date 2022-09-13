@@ -58,14 +58,14 @@
             // mIPlaceOrder
             // 
             this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(180, 22);
+            this.mIPlaceOrder.Size = new System.Drawing.Size(141, 22);
             this.mIPlaceOrder.Text = "Place Orders";
             this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
             // 
             // openOrdersToolStripMenuItem
             // 
             this.openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
-            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.openOrdersToolStripMenuItem.Text = "Open Orders";
             this.openOrdersToolStripMenuItem.Click += new System.EventHandler(this.openOrdersToolStripMenuItem_Click);
             // 
@@ -79,7 +79,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Binance Bot - v 8.1.3";
+            this.Text = "Binance Bot - v 9.1.3";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
