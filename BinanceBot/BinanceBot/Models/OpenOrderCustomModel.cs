@@ -12,13 +12,12 @@ namespace BinanceBot.Models
     {
         public string Symbol { get; set; }
         public long OrderId { get; set; }
-        public long ClientOrderId { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
-        public decimal QuantityFilled { get; set; }
         public Binance.Net.Enums.SpotOrderType OrderType { get; set; }
         public Binance.Net.Enums.OrderSide OrderSide { get; set; }
         public DateTime CreatedTime { get; set; }
-        public DateTime? UpdatedTime { get; set; }
+        public long ClientOrderId { get; set; }
+        public decimal QuantityFilled { get; set; }
     }
 }

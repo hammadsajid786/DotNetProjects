@@ -10,6 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using BinanceBot.Models.CustomEnums;
+using BinanceBot.Db;
+using Binance.Net.Objects.Models;
+using CryptoExchange.Net.CommonObjects;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Windows.Forms.VisualStyles;
 
 namespace BinanceBot.Models
 {
@@ -23,6 +29,8 @@ namespace BinanceBot.Models
         private MultiThreadFileWriter fileLogging;
         private MultiThreadFileWriter fileLoggingNonSuccessOrders;
 
+        private BinanceDbContext _binanceDbContext;
+
         public BinanceCustomClient()
         {
             _binanceApiKey = Program.binanceAPIKey;
@@ -33,6 +41,8 @@ namespace BinanceBot.Models
 
             fileLogging = new MultiThreadFileWriter();
             fileLoggingNonSuccessOrders = new MultiThreadFileWriter("FileLoggingPathNotSuccessOrders");
+
+            _binanceDbContext = new BinanceDbContext();
         }
 
         public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin)
@@ -179,13 +189,56 @@ namespace BinanceBot.Models
                         Quantity = openOrder.Quantity,
                         OrderType = openOrder.Type.ToString() == "Limit" ? SpotOrderType.Limit : SpotOrderType.Market,
                         OrderSide = openOrder.Side == OrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
-                        CreatedTime = openOrder.CreateTime,
-                        UpdatedTime = openOrder.UpdateTime
+                        CreatedTime = openOrder.CreateTime
                     });
                 }
             }
 
-            return ordersList.OrderBy(x=>x.Price).ToList();
+            return ordersList.OrderBy(x => x.Price).ToList();
+        }
+
+        public async Task<bool> CancelOpenOrder(string symbol, long orderId)
+        {
+            WebCallResult<BinanceOrderBase> cancelledOrder = await _client.SpotApi.Trading.CancelOrderAsync(symbol, orderId, null, null, 60000);
+
+            if (cancelledOrder.Success)
+            {
+                try
+                {
+                    _binanceDbContext.OrdersToBeExecuteds.Add(new Db.OrdersToBeExecuted()
+                    {
+                        Symbol = cancelledOrder.Data.Symbol,
+                        Price = cancelledOrder.Data.Price,
+                        Quantity = cancelledOrder.Data.Quantity,
+                        OrderType = cancelledOrder.Data.Type.ToString(),
+                        OrderSide =cancelledOrder.Data.Side.ToString(),
+                        CreatedTime = DateTime.Now,
+                        QuantityFilled = cancelledOrder.Data.QuantityFilled,
+                        Reason = Messages.OpenOrderCancelReasonByBot
+                    });
+
+                    _binanceDbContext.SaveChanges();
+                }
+                catch (Exception exc)
+                {
+                    string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "Order Trade Pair          : " + cancelledOrder.Data.Symbol + Environment.NewLine
+                                         + "Order Type                : " + cancelledOrder.Data.Type.ToString() + Environment.NewLine
+                                         + "Order Order Side          : " + cancelledOrder.Data.Side.ToString() + Environment.NewLine
+                                         + "Price                     : " + cancelledOrder.Data.Price + Environment.NewLine
+                                         + "Quantity                  : " + cancelledOrder.Data.Quantity + Environment.NewLine
+                                         + "Not Logged to database err: " + exc.Message + Environment.NewLine
+                                         ;
+
+                    fileLogging.WriteToFile(textToWrite);
+                }
+            }
+            else
+            {
+                MessageBox.Show(cancelledOrder.Error.Message);
+            }
+
+            return true;
         }
     }
 }
