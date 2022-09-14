@@ -179,8 +179,7 @@ namespace BinanceBot.Models
                         Quantity = openOrder.Quantity,
                         OrderType = openOrder.Type.ToString() == "Limit" ? SpotOrderType.Limit : SpotOrderType.Market,
                         OrderSide = openOrder.Side == OrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
-                        CreatedTime = openOrder.CreateTime,
-                        UpdatedTime = openOrder.UpdateTime
+                        CreatedTime = openOrder.CreateTime
                     });
                 }
             }
