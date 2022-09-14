@@ -39,6 +39,7 @@
             this.lblRecordsCount = new System.Windows.Forms.Label();
             this.nuPRFrom = new System.Windows.Forms.NumericUpDown();
             this.nuPRTo = new System.Windows.Forms.NumericUpDown();
+            this.btnCancelOpenOrders = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).BeginInit();
@@ -160,11 +161,23 @@
             this.nuPRTo.Size = new System.Drawing.Size(100, 23);
             this.nuPRTo.TabIndex = 18;
             // 
+            // btnCancelOpenOrders
+            // 
+            this.btnCancelOpenOrders.Location = new System.Drawing.Point(544, 357);
+            this.btnCancelOpenOrders.Name = "btnCancelOpenOrders";
+            this.btnCancelOpenOrders.Size = new System.Drawing.Size(182, 23);
+            this.btnCancelOpenOrders.TabIndex = 19;
+            this.btnCancelOpenOrders.Text = "Cancel Open Orders";
+            this.btnCancelOpenOrders.UseVisualStyleBackColor = true;
+            this.btnCancelOpenOrders.Visible = false;
+            this.btnCancelOpenOrders.Click += new System.EventHandler(this.btnCancelOpenOrders_Click);
+            // 
             // OpenOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 363);
+            this.ClientSize = new System.Drawing.Size(738, 417);
+            this.Controls.Add(this.btnCancelOpenOrders);
             this.Controls.Add(this.nuPRTo);
             this.Controls.Add(this.nuPRFrom);
             this.Controls.Add(this.label2);
@@ -199,5 +212,6 @@
         private Label lblRecordsCount;
         private NumericUpDown nuPRFrom;
         private NumericUpDown nuPRTo;
+        private Button btnCancelOpenOrders;
     }
 }

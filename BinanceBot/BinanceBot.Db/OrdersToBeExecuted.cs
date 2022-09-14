@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceBot.Models.Db
+namespace BinanceBot.Db
 {
     public class OrdersToBeExecuted
     {

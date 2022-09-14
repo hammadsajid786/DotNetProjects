@@ -66,6 +66,14 @@ namespace BinanceBot
                     openOrderGV.DataSource = orders;
                 });
 
+                btnCancelOpenOrders.Invoke(() =>
+                {
+                    if (orders.Count > 0)
+                        btnCancelOpenOrders.Visible = true;
+                    else
+                        btnCancelOpenOrders.Visible = false;
+                });
+
                 EnableDisableFields(true);
 
             });
@@ -80,6 +88,8 @@ namespace BinanceBot
                 cbPriceRange.Enabled = enableFlag;
 
                 openOrderGV.Enabled = enableFlag;
+
+                btnCancelOpenOrders.Enabled = enableFlag;
 
                 if (cbPriceRange.Checked)
                 {
@@ -99,6 +109,13 @@ namespace BinanceBot
         {
             nuPRFrom.Enabled = cbPriceRange.Checked;
             nuPRTo.Enabled = cbPriceRange.Checked;
+        }
+
+        private void btnCancelOpenOrders_Click(object sender, EventArgs e)
+        {
+            foreach (var sRow in openOrderGV.Rows)
+            {
+            }
         }
     }
 }
