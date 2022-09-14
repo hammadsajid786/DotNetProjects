@@ -78,8 +78,20 @@ namespace BinanceBot
                 cbOrderPairs.Enabled = enableFlag;
                 btnFetchOpenOrders.Enabled = enableFlag;
                 cbPriceRange.Enabled = enableFlag;
-                nuPRFrom.Enabled = enableFlag;
-                nuPRTo.Enabled = enableFlag;
+
+                openOrderGV.Enabled = enableFlag;
+
+                if (cbPriceRange.Checked)
+                {
+                    nuPRFrom.Enabled = enableFlag;
+                    nuPRTo.Enabled = enableFlag;
+                }
+                else
+                {
+                    nuPRFrom.Enabled = false;
+                    nuPRTo.Enabled = false;
+                }
+
             });
         }
 
