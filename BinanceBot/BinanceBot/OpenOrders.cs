@@ -1,16 +1,5 @@
-﻿using BinanceBot.Db;
-using BinanceBot.Models;
-using BinanceBot.Models.CustomEnums;
-using CryptoExchange.Net.CommonObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using BinanceBot.Models;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace BinanceBot
 {
