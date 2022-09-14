@@ -49,16 +49,16 @@
             // 
             this.openOrderGV.AllowUserToOrderColumns = true;
             this.openOrderGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.openOrderGV.Location = new System.Drawing.Point(12, 157);
+            this.openOrderGV.Location = new System.Drawing.Point(14, 85);
             this.openOrderGV.Name = "openOrderGV";
             this.openOrderGV.ReadOnly = true;
             this.openOrderGV.RowTemplate.Height = 25;
-            this.openOrderGV.Size = new System.Drawing.Size(714, 194);
+            this.openOrderGV.Size = new System.Drawing.Size(714, 266);
             this.openOrderGV.TabIndex = 0;
             // 
             // btnFetchOpenOrders
             // 
-            this.btnFetchOpenOrders.Location = new System.Drawing.Point(544, 128);
+            this.btnFetchOpenOrders.Location = new System.Drawing.Point(546, 56);
             this.btnFetchOpenOrders.Name = "btnFetchOpenOrders";
             this.btnFetchOpenOrders.Size = new System.Drawing.Size(182, 23);
             this.btnFetchOpenOrders.TabIndex = 1;
@@ -91,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(168, 132);
+            this.label1.Location = new System.Drawing.Point(170, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 10;
@@ -100,7 +100,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(317, 131);
+            this.label2.Location = new System.Drawing.Point(319, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(22, 15);
             this.label2.TabIndex = 12;
@@ -109,7 +109,7 @@
             // cbPriceRange
             // 
             this.cbPriceRange.AutoSize = true;
-            this.cbPriceRange.Location = new System.Drawing.Point(14, 131);
+            this.cbPriceRange.Location = new System.Drawing.Point(16, 59);
             this.cbPriceRange.Name = "cbPriceRange";
             this.cbPriceRange.Size = new System.Drawing.Size(126, 19);
             this.cbPriceRange.TabIndex = 14;
@@ -120,7 +120,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(588, 105);
+            this.label3.Location = new System.Drawing.Point(590, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 15);
             this.label3.TabIndex = 15;
@@ -129,7 +129,7 @@
             // lblRecordsCount
             // 
             this.lblRecordsCount.AutoSize = true;
-            this.lblRecordsCount.Location = new System.Drawing.Point(685, 105);
+            this.lblRecordsCount.Location = new System.Drawing.Point(687, 33);
             this.lblRecordsCount.Name = "lblRecordsCount";
             this.lblRecordsCount.Size = new System.Drawing.Size(13, 15);
             this.lblRecordsCount.TabIndex = 16;
@@ -138,7 +138,7 @@
             // nuPRFrom
             // 
             this.nuPRFrom.Enabled = false;
-            this.nuPRFrom.Location = new System.Drawing.Point(208, 129);
+            this.nuPRFrom.Location = new System.Drawing.Point(210, 57);
             this.nuPRFrom.Maximum = new decimal(new int[] {
             50000,
             0,
@@ -151,7 +151,7 @@
             // nuPRTo
             // 
             this.nuPRTo.Enabled = false;
-            this.nuPRTo.Location = new System.Drawing.Point(342, 128);
+            this.nuPRTo.Location = new System.Drawing.Point(344, 56);
             this.nuPRTo.Maximum = new decimal(new int[] {
             50000,
             0,

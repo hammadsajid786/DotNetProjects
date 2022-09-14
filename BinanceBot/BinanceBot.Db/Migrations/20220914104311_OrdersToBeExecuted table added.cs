@@ -16,14 +16,13 @@ namespace BinanceBot.Db.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<long>(type: "bigint", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,8)", precision: 18, scale: 8, nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,8)", precision: 18, scale: 8, nullable: false),
                     OrderType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderSide = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClientOrderId = table.Column<long>(type: "bigint", nullable: false),
-                    QuantityFilled = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    QuantityFilled = table.Column<decimal>(type: "decimal(18,8)", precision: 18, scale: 8, nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
