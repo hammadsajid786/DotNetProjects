@@ -16,6 +16,7 @@ using CryptoExchange.Net.CommonObjects;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Windows.Forms.VisualStyles;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BinanceBot.Models
 {
@@ -29,8 +30,6 @@ namespace BinanceBot.Models
         private MultiThreadFileWriter fileLogging;
         private MultiThreadFileWriter fileLoggingNonSuccessOrders;
 
-        private BinanceDbContext _binanceDbContext;
-
         public BinanceCustomClient()
         {
             _binanceApiKey = Program.binanceAPIKey;
@@ -41,8 +40,6 @@ namespace BinanceBot.Models
 
             fileLogging = new MultiThreadFileWriter();
             fileLoggingNonSuccessOrders = new MultiThreadFileWriter("FileLoggingPathNotSuccessOrders");
-
-            _binanceDbContext = new BinanceDbContext();
         }
 
         public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin)
@@ -69,18 +66,41 @@ namespace BinanceBot.Models
                 }
                 else
                 {
-                    string textToWrite = DateTime.Now + Environment.NewLine
-                                         + "1st Order Created Time    : " + orderMarketSellDetails.Data.CreateTime + Environment.NewLine
-                                         + "1st Order Price Sell      : " + priceSell + Environment.NewLine
-                                         + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
-                                         + "2nd Order Type            : " + SpotOrderType.Limit.ToString() + Environment.NewLine
-                                         + "2nd Order Order Side      : " + OrderSide.Buy.ToString() + Environment.NewLine
-                                         + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
-                                         + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
-                                         + "Not fulfilled Reason      : " + orderLimitBuyDetails.Error.Message + Environment.NewLine
-                                         ;
+                    try
+                    {
+                        using (var _binanceDbContext = new BinanceDbContext())
+                        {
+                            _binanceDbContext.OrdersToBeExecuteds.Add(new Db.OrdersToBeExecuted()
+                            {
+                                Symbol = tradePair,
+                                Price = pricePurchased,
+                                Quantity = orderMarketSellDetails.Data.Quantity,
+                                OrderType = SpotOrderType.Limit.ToString(),
+                                OrderSide = OrderSide.Buy.ToString(),
+                                CreatedTime = DateTime.Now,
+                                QuantityFilled = orderMarketSellDetails.Data.Quantity - quantiyFilled,
+                                Reason = orderLimitBuyDetails.Error.Message
+                            });
 
-                    fileLogging.WriteToFile(textToWrite);
+                            _binanceDbContext.SaveChanges();
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        string textToWrite = DateTime.Now + Environment.NewLine
+                                             + "1st Order Created Time    : " + orderMarketSellDetails.Data.CreateTime + Environment.NewLine
+                                             + "1st Order Price Sell      : " + priceSell + Environment.NewLine
+                                             + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
+                                             + "2nd Order Type            : " + SpotOrderType.Limit.ToString() + Environment.NewLine
+                                             + "2nd Order Order Side      : " + OrderSide.Buy.ToString() + Environment.NewLine
+                                             + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
+                                             + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
+                                             + "Not fulfilled Reason      : " + orderLimitBuyDetails.Error.Message + Environment.NewLine
+                                             + "Database write Error      : " + exc.Message
+                                             ;
+
+                        fileLogging.WriteToFile(textToWrite);
+                    }
 
                     message = CustomEnums.Messages.PurchaseOrderNotCreated;
                 }
@@ -131,7 +151,28 @@ namespace BinanceBot.Models
                 }
                 else
                 {
-                    string textToWrite = DateTime.Now + Environment.NewLine
+                    try
+                    {
+                        using (var _binanceDbContext = new BinanceDbContext())
+                        {
+                            _binanceDbContext.OrdersToBeExecuteds.Add(new Db.OrdersToBeExecuted()
+                            {
+                                Symbol = tradePair,
+                                Price = pricePurchased,
+                                Quantity = orderMarketBuyDetails.Data.Quantity,
+                                OrderType = SpotOrderType.Limit.ToString(),
+                                OrderSide = OrderSide.Sell.ToString(),
+                                CreatedTime = DateTime.Now,
+                                QuantityFilled = orderMarketBuyDetails.Data.Quantity - quantiyFilled,
+                                Reason = orderLimitSellDetails.Error.Message
+                            });
+
+                            _binanceDbContext.SaveChanges();
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        string textToWrite = DateTime.Now + Environment.NewLine
                                          + "1st Order Created Time    : " + orderMarketBuyDetails.Data.CreateTime + Environment.NewLine
                                          + "1st Order Price Sell      : " + priceSell + Environment.NewLine
                                          + "1st Order Quantity Filled : " + quantiyFilled + Environment.NewLine
@@ -140,9 +181,11 @@ namespace BinanceBot.Models
                                          + "2nd Order Trade Pair      : " + tradePair + Environment.NewLine
                                          + "2nd Price to be Purchased : " + pricePurchased + Environment.NewLine
                                          + "Not fulfilled Reason      : " + orderLimitSellDetails.Error.Message + Environment.NewLine
+                                         + "Database write Error      : " + exc.Message
                                          ;
 
-                    fileLogging.WriteToFile(textToWrite);
+                        fileLogging.WriteToFile(textToWrite);
+                    }
 
                     message = CustomEnums.Messages.SellOrderNotCreated;
                 }
@@ -205,19 +248,22 @@ namespace BinanceBot.Models
             {
                 try
                 {
-                    _binanceDbContext.OrdersToBeExecuteds.Add(new Db.OrdersToBeExecuted()
+                    using (var _binanceDbContext = new BinanceDbContext())
                     {
-                        Symbol = cancelledOrder.Data.Symbol,
-                        Price = cancelledOrder.Data.Price,
-                        Quantity = cancelledOrder.Data.Quantity,
-                        OrderType = cancelledOrder.Data.Type.ToString(),
-                        OrderSide =cancelledOrder.Data.Side.ToString(),
-                        CreatedTime = DateTime.Now,
-                        QuantityFilled = cancelledOrder.Data.QuantityFilled,
-                        Reason = Messages.OpenOrderCancelReasonByBot
-                    });
+                        _binanceDbContext.OrdersToBeExecuteds.Add(new Db.OrdersToBeExecuted()
+                        {
+                            Symbol = cancelledOrder.Data.Symbol,
+                            Price = cancelledOrder.Data.Price,
+                            Quantity = cancelledOrder.Data.Quantity,
+                            OrderType = cancelledOrder.Data.Type.ToString(),
+                            OrderSide = cancelledOrder.Data.Side.ToString(),
+                            CreatedTime = DateTime.Now,
+                            QuantityFilled = cancelledOrder.Data.QuantityFilled,
+                            Reason = Messages.OpenOrderCancelReasonByBot
+                        });
 
-                    _binanceDbContext.SaveChanges();
+                        _binanceDbContext.SaveChanges();
+                    }
                 }
                 catch (Exception exc)
                 {
