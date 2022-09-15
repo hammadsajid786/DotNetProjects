@@ -66,7 +66,7 @@ namespace BinanceBot
                 long orderId = long.Parse(sRow.Cells[1].Value.ToString());
                 string symbol = sRow.Cells[0].Value.ToString();
 
-                if (quantityFilled == 0)
+                if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
                 {
                     await _binanceCustomClient.CancelOpenOrder(symbol,orderId);
                 }
