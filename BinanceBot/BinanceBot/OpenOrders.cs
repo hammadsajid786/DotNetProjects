@@ -18,9 +18,13 @@ namespace BinanceBot
 
         private async void btnFetchOpenOrders_Click(object sender, EventArgs e)
         {
+            EnableDisableFields(false);
+
             _ = Task.Run(async () =>
             {
                 await fetchOrders();
+
+                EnableDisableFields(true);
             });
         }
 
@@ -73,12 +77,12 @@ namespace BinanceBot
             }
 
             await fetchOrders();
+
+            EnableDisableFields(true);
         }
 
         private async Task fetchOrders()
         {
-            EnableDisableFields(false);
-
             bool isCbPriceRangeChecked = false;
             decimal prFrom = 0;
             decimal prTo = 0;
@@ -127,8 +131,6 @@ namespace BinanceBot
                 else
                     btnCancelOpenOrders.Visible = false;
             });
-
-            EnableDisableFields(true);
 
         }
     }
