@@ -33,5 +33,12 @@ namespace BinanceBot
             openOrders.MdiParent = this;
             openOrders.Show();
         }
+
+        private void ordersToExecuteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OrdersToBeExecuted ordersToBeExecuted = new OrdersToBeExecuted();
+            ordersToBeExecuted.MdiParent = this;
+            ordersToBeExecuted.Show();
+        }
     }
 }

@@ -33,6 +33,7 @@
             this.operationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mIPlaceOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.openOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordersToExecuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,8 @@
             // 
             this.operationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mIPlaceOrder,
-            this.openOrdersToolStripMenuItem});
+            this.openOrdersToolStripMenuItem,
+            this.ordersToExecuteToolStripMenuItem});
             this.operationsToolStripMenuItem.Name = "operationsToolStripMenuItem";
             this.operationsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.operationsToolStripMenuItem.Text = "Operations";
@@ -58,16 +60,23 @@
             // mIPlaceOrder
             // 
             this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(141, 22);
+            this.mIPlaceOrder.Size = new System.Drawing.Size(168, 22);
             this.mIPlaceOrder.Text = "Place Orders";
             this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
             // 
             // openOrdersToolStripMenuItem
             // 
             this.openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
-            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.openOrdersToolStripMenuItem.Text = "Open Orders";
             this.openOrdersToolStripMenuItem.Click += new System.EventHandler(this.openOrdersToolStripMenuItem_Click);
+            // 
+            // ordersToExecuteToolStripMenuItem
+            // 
+            this.ordersToExecuteToolStripMenuItem.Name = "ordersToExecuteToolStripMenuItem";
+            this.ordersToExecuteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.ordersToExecuteToolStripMenuItem.Text = "Orders To Execute";
+            this.ordersToExecuteToolStripMenuItem.Click += new System.EventHandler(this.ordersToExecuteToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -79,7 +88,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Binance Bot - v12.0.0";
+            this.Text = "Binance Bot - v13.0.0";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -93,5 +102,6 @@
         private ToolStripMenuItem operationsToolStripMenuItem;
         private ToolStripMenuItem mIPlaceOrder;
         private ToolStripMenuItem openOrdersToolStripMenuItem;
+        private ToolStripMenuItem ordersToExecuteToolStripMenuItem;
     }
 }

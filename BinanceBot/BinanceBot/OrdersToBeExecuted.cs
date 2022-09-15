@@ -1,31 +1,39 @@
-﻿using BinanceBot.Models;
+﻿using BinanceBot.Db;
+using BinanceBot.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BinanceBot
 {
-    public partial class OpenOrders : Form
+    public partial class OrdersToBeExecuted : Form
     {
         private BinanceCustomClient _binanceCustomClient;
 
-        public OpenOrders()
+        public OrdersToBeExecuted()
         {
             InitializeComponent();
 
             cbOrderPairs.SelectedIndex = 0;
 
+            cbOrderSide.SelectedIndex = 0;
+
             _binanceCustomClient = new BinanceCustomClient();
         }
 
-        private async void btnFetchOpenOrders_Click(object sender, EventArgs e)
+        private async void btnFetchOrdersFromDb_Click(object sender, EventArgs e)
         {
             EnableDisableFields(false);
 
-            _ = Task.Run(async () =>
-            {
-                await fetchOrders();
+            await fetchOrders();
 
-                EnableDisableFields(true);
-            });
+            EnableDisableFields(true);
         }
 
         private void EnableDisableFields(bool enableFlag)
@@ -33,7 +41,8 @@ namespace BinanceBot
             this.Invoke((MethodInvoker)delegate
             {
                 cbOrderPairs.Enabled = enableFlag;
-                btnFetchOpenOrders.Enabled = enableFlag;
+                cbOrderSide.Enabled = enableFlag;
+                btnFetchOrdersFromDb.Enabled = enableFlag;
                 cbPriceRange.Enabled = enableFlag;
 
                 openOrderGV.Enabled = enableFlag;
@@ -60,33 +69,13 @@ namespace BinanceBot
             nuPRTo.Enabled = cbPriceRange.Checked;
         }
 
-        private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
-        {
-            EnableDisableFields(false);
-
-            foreach (DataGridViewRow sRow in openOrderGV.Rows)
-            {
-                decimal quantityFilled = decimal.Parse(sRow.Cells[8].Value.ToString());
-                long orderId = long.Parse(sRow.Cells[1].Value.ToString());
-                string symbol = sRow.Cells[0].Value.ToString();
-
-                if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
-                {
-                    await _binanceCustomClient.CancelOpenOrder(symbol,orderId);
-                }
-            }
-
-            await fetchOrders();
-
-            EnableDisableFields(true);
-        }
-
         private async Task fetchOrders()
         {
             bool isCbPriceRangeChecked = false;
             decimal prFrom = 0;
             decimal prTo = 0;
             string tradePair = String.Empty;
+            string orderSide = string.Empty;
 
             this.Invoke(() =>
             {
@@ -96,13 +85,28 @@ namespace BinanceBot
                 prFrom = string.IsNullOrEmpty(nuPRFrom.Text) ? 0 : decimal.Parse(nuPRFrom.Text);
                 prTo = string.IsNullOrEmpty(nuPRTo.Text) ? 0 : decimal.Parse(nuPRTo.Text);
                 tradePair = cbOrderPairs.SelectedItem.ToString();
+                orderSide = cbOrderSide.SelectedItem.ToString();
             });
 
-            List<OpenOrderCustomModel> orders = await _binanceCustomClient.FetchOpenOrders(tradePair);
+            List<Db.OrdersToBeExecuted> orders = new List<Db.OrdersToBeExecuted>();
 
-            if (isCbPriceRangeChecked)
+            using (var dbContext = new BinanceDbContext())
             {
-                orders = orders.Where(x => x.Price >= prFrom && x.Price <= prTo).ToList();
+                var ordersQuery = dbContext.OrdersToBeExecuteds.AsQueryable().Where(x => x.Symbol == tradePair);
+
+                if (!orderSide.Equals("ALL"))
+                {
+                    ordersQuery = ordersQuery.Where(x => x.OrderSide == orderSide);
+                }
+
+                if (isCbPriceRangeChecked)
+                {
+                    ordersQuery = ordersQuery.Where(x => x.Price >= prFrom && x.Price <= prTo);
+                }
+
+                ordersQuery = ordersQuery.OrderBy(x => x.Price);
+
+                orders = ordersQuery.ToList();
             }
 
             if (!isCbPriceRangeChecked && orders.Count > 0)
@@ -132,6 +136,31 @@ namespace BinanceBot
                     btnCancelOpenOrders.Visible = false;
             });
 
+        }
+
+        private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
+        {
+            EnableDisableFields(false);
+
+            foreach (DataGridViewRow sRow in openOrderGV.Rows)
+            {
+                long orderId = long.Parse(sRow.Cells[0].Value.ToString());
+                decimal quantityFilled = decimal.Parse(sRow.Cells[7].Value.ToString());
+
+                if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
+                {
+                    bool isSuccessfullyExecuted = await _binanceCustomClient.CreateOrdersFromBacklog(orderId);
+
+                    if (!isSuccessfullyExecuted)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            await fetchOrders();
+
+            EnableDisableFields(true);
         }
     }
 }
