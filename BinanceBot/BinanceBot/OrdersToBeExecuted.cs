@@ -30,7 +30,7 @@ namespace BinanceBot
         private async void btnFetchOrdersFromDb_Click(object sender, EventArgs e)
         {
             EnableDisableFields(false);
-            
+
             await fetchOrders();
 
             EnableDisableFields(true);
@@ -136,6 +136,31 @@ namespace BinanceBot
                     btnCancelOpenOrders.Visible = false;
             });
 
+        }
+
+        private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
+        {
+            EnableDisableFields(false);
+
+            foreach (DataGridViewRow sRow in openOrderGV.Rows)
+            {
+                long orderId = long.Parse(sRow.Cells[0].Value.ToString());
+                decimal quantityFilled = decimal.Parse(sRow.Cells[7].Value.ToString());
+
+                if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
+                {
+                    bool isSuccessfullyExecuted = await _binanceCustomClient.CreateOrdersFromBacklog(orderId);
+
+                    if (!isSuccessfullyExecuted)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            await fetchOrders();
+
+            EnableDisableFields(true);
         }
     }
 }

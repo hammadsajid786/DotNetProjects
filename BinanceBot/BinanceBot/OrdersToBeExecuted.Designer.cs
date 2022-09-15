@@ -56,6 +56,7 @@
             this.btnCancelOpenOrders.Text = "Create Orders";
             this.btnCancelOpenOrders.UseVisualStyleBackColor = true;
             this.btnCancelOpenOrders.Visible = false;
+            this.btnCancelOpenOrders.Click += new System.EventHandler(this.btnCancelOpenOrders_Click);
             // 
             // nuPRTo
             // 

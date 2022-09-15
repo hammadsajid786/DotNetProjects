@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Windows.Forms.VisualStyles;
 using Microsoft.Extensions.DependencyInjection;
+using System.Numerics;
 
 namespace BinanceBot.Models
 {
@@ -27,7 +28,7 @@ namespace BinanceBot.Models
 
 
         private BinanceClient _client;
-        private MultiThreadFileWriter fileLogging;
+        private MultiThreadFileWriter fileLoggingPirority;
         private MultiThreadFileWriter fileLoggingNonSuccessOrders;
 
         public BinanceCustomClient()
@@ -38,7 +39,7 @@ namespace BinanceBot.Models
             _client = new BinanceClient();
             _client.SetApiCredentials(new ApiCredentials(_binanceApiKey, _binanceAPISecret));
 
-            fileLogging = new MultiThreadFileWriter();
+            fileLoggingPirority = new MultiThreadFileWriter();
             fileLoggingNonSuccessOrders = new MultiThreadFileWriter("FileLoggingPathNotSuccessOrders");
         }
 
@@ -99,7 +100,7 @@ namespace BinanceBot.Models
                                              + "Database write Error      : " + exc.Message
                                              ;
 
-                        fileLogging.WriteToFile(textToWrite);
+                        fileLoggingPirority.WriteToFile(textToWrite);
                     }
 
                     message = CustomEnums.Messages.PurchaseOrderNotCreated;
@@ -184,7 +185,7 @@ namespace BinanceBot.Models
                                          + "Database write Error      : " + exc.Message
                                          ;
 
-                        fileLogging.WriteToFile(textToWrite);
+                        fileLoggingPirority.WriteToFile(textToWrite);
                     }
 
                     message = CustomEnums.Messages.SellOrderNotCreated;
@@ -276,15 +277,73 @@ namespace BinanceBot.Models
                                          + "Not Logged to database err: " + exc.Message + Environment.NewLine
                                          ;
 
-                    fileLogging.WriteToFile(textToWrite);
+                    fileLoggingPirority.WriteToFile(textToWrite);
                 }
             }
             else
             {
                 MessageBox.Show(cancelledOrder.Error.Message);
+                return false;
             }
 
             return true;
+        }
+
+        public async Task<bool> CreateOrdersFromBacklog(long orderIdFromDb)
+        {
+            using (var _binanceDbContext = new BinanceDbContext())
+            {
+                var dbOrder = _binanceDbContext.OrdersToBeExecuteds.SingleOrDefault(x => x.Id == orderIdFromDb);
+
+                if (dbOrder != null)
+                {
+                    WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
+                        (dbOrder.Symbol, Enum.Parse<OrderSide>(dbOrder.OrderSide), Enum.Parse<SpotOrderType>(dbOrder.OrderType), dbOrder.Quantity, null, null, dbOrder.Price, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
+
+                    if (orderLimitSellDetails.Success)
+                    {
+                        try
+                        {
+                            _binanceDbContext.OrdersToBeExecuteds.Remove(dbOrder);
+                            _binanceDbContext.SaveChanges();
+
+                            return true;
+                        }
+                        catch (Exception exc)
+                        {
+                            string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "DB Order ID               : " + orderIdFromDb + Environment.NewLine
+                                         + "Order Trade Pair          : " + dbOrder.Symbol + Environment.NewLine
+                                         + "Order Type                : " + dbOrder.OrderType.ToString() + Environment.NewLine
+                                         + "Order Order Side          : " + dbOrder.OrderSide.ToString() + Environment.NewLine
+                                         + "Price                     : " + dbOrder.Price + Environment.NewLine
+                                         + "Quantity                  : " + dbOrder.Quantity + Environment.NewLine
+                                         + "Not removed from db error : " + exc.Message + Environment.NewLine
+                                         ;
+
+                            fileLoggingPirority.WriteToFile(textToWrite);
+                        }
+                    }
+                    else
+                    {
+                        string textToWrite = DateTime.Now + Environment.NewLine
+                                         + "DB Order ID               : " + orderIdFromDb + Environment.NewLine
+                                         + "Order Trade Pair          : " + dbOrder.Symbol + Environment.NewLine
+                                         + "Order Type                : " + dbOrder.OrderType.ToString() + Environment.NewLine
+                                         + "Order Order Side          : " + dbOrder.OrderSide.ToString() + Environment.NewLine
+                                         + "Price                     : " + dbOrder.Price + Environment.NewLine
+                                         + "Quantity                  : " + dbOrder.Quantity + Environment.NewLine 
+                                         + "Not Fulfilled Reason      : " + orderLimitSellDetails.Error.Message + Environment.NewLine
+                                         ;
+
+
+                        fileLoggingNonSuccessOrders.WriteToFile(textToWrite);
+                    }
+                }
+            }
+
+            return false;
+
         }
     }
 }
