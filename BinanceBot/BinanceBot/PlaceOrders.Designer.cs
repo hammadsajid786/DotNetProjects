@@ -32,8 +32,9 @@
             this.txtBUSDSellSMBL = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblSMBLCountDown = new System.Windows.Forms.Label();
             this.cbSMBL = new System.Windows.Forms.CheckBox();
-            this.pbMSBL = new System.Windows.Forms.ProgressBar();
+            this.pbSMBL = new System.Windows.Forms.ProgressBar();
             this.labelOrdersExecutedSMBL = new System.Windows.Forms.Label();
             this.labelU2OSMBL = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -68,6 +69,7 @@
             this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnPlaceOrderBMSL = new System.Windows.Forms.Button();
+            this.lblBMSLCountDown = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndlSleepSMBL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
@@ -76,20 +78,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlBMSL)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnPlaceMarketOrderMSLB
+            // btnPlaceOrderSMBL
             // 
             this.btnPlaceOrderSMBL.Location = new System.Drawing.Point(56, 192);
-            this.btnPlaceOrderSMBL.Name = "btnPlaceMarketOrderMSLB";
+            this.btnPlaceOrderSMBL.Name = "btnPlaceOrderSMBL";
             this.btnPlaceOrderSMBL.Size = new System.Drawing.Size(100, 23);
             this.btnPlaceOrderSMBL.TabIndex = 0;
             this.btnPlaceOrderSMBL.Text = "Start";
             this.btnPlaceOrderSMBL.UseVisualStyleBackColor = true;
             this.btnPlaceOrderSMBL.Click += new System.EventHandler(this.btnPlaceSellMarketBuyLimit_SMBL_Click);
             // 
-            // txtBUSDSellMSLB
+            // txtBUSDSellSMBL
             // 
             this.txtBUSDSellSMBL.Location = new System.Drawing.Point(162, 32);
-            this.txtBUSDSellSMBL.Name = "txtBUSDSellMSLB";
+            this.txtBUSDSellSMBL.Name = "txtBUSDSellSMBL";
             this.txtBUSDSellSMBL.Size = new System.Drawing.Size(100, 23);
             this.txtBUSDSellSMBL.TabIndex = 1;
             this.txtBUSDSellSMBL.Text = "20";
@@ -106,8 +108,9 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblSMBLCountDown);
             this.panel1.Controls.Add(this.cbSMBL);
-            this.panel1.Controls.Add(this.pbMSBL);
+            this.panel1.Controls.Add(this.pbSMBL);
             this.panel1.Controls.Add(this.labelOrdersExecutedSMBL);
             this.panel1.Controls.Add(this.labelU2OSMBL);
             this.panel1.Controls.Add(this.label16);
@@ -126,29 +129,40 @@
             this.panel1.Controls.Add(this.btnPlaceOrderSMBL);
             this.panel1.Location = new System.Drawing.Point(29, 52);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 297);
+            this.panel1.Size = new System.Drawing.Size(287, 313);
             this.panel1.TabIndex = 3;
             // 
-            // cBMSBL
+            // lblMSBLCountDown
+            // 
+            this.lblSMBLCountDown.AutoSize = true;
+            this.lblSMBLCountDown.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblSMBLCountDown.Location = new System.Drawing.Point(109, 279);
+            this.lblSMBLCountDown.Name = "lblMSBLCountDown";
+            this.lblSMBLCountDown.Size = new System.Drawing.Size(63, 15);
+            this.lblSMBLCountDown.TabIndex = 8;
+            this.lblSMBLCountDown.Text = "Wait 0 sec.";
+            this.lblSMBLCountDown.Visible = false;
+            // 
+            // cbSMBL
             // 
             this.cbSMBL.AutoSize = true;
             this.cbSMBL.Checked = true;
             this.cbSMBL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbSMBL.Location = new System.Drawing.Point(141, 163);
-            this.cbSMBL.Name = "cBMSBL";
+            this.cbSMBL.Name = "cbSMBL";
             this.cbSMBL.Size = new System.Drawing.Size(15, 14);
             this.cbSMBL.TabIndex = 22;
             this.cbSMBL.UseVisualStyleBackColor = true;
             this.cbSMBL.CheckedChanged += new System.EventHandler(this.cbSMBL_CheckedChanged);
             // 
-            // pBMSBL
+            // pbMSBL
             // 
-            this.pbMSBL.Location = new System.Drawing.Point(14, 269);
-            this.pbMSBL.Name = "pBMSBL";
-            this.pbMSBL.Size = new System.Drawing.Size(248, 23);
-            this.pbMSBL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.pbMSBL.TabIndex = 8;
-            this.pbMSBL.Visible = false;
+            this.pbSMBL.Location = new System.Drawing.Point(16, 275);
+            this.pbSMBL.Name = "pbMSBL";
+            this.pbSMBL.Size = new System.Drawing.Size(248, 23);
+            this.pbSMBL.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pbSMBL.TabIndex = 8;
+            this.pbSMBL.Visible = false;
             // 
             // labelOrdersExecutedSMBL
             // 
@@ -178,7 +192,7 @@
             this.label16.TabIndex = 19;
             this.label16.Text = "Unsuccessful 2nd Orders:";
             // 
-            // nUDSleepSMBL
+            // ndlSleepSMBL
             // 
             this.ndlSleepSMBL.Location = new System.Drawing.Point(162, 159);
             this.ndlSleepSMBL.Maximum = new decimal(new int[] {
@@ -191,7 +205,7 @@
             0,
             0,
             0});
-            this.ndlSleepSMBL.Name = "nUDSleepSMBL";
+            this.ndlSleepSMBL.Name = "ndlSleepSMBL";
             this.ndlSleepSMBL.Size = new System.Drawing.Size(100, 23);
             this.ndlSleepSMBL.TabIndex = 16;
             this.ndlSleepSMBL.Value = new decimal(new int[] {
@@ -209,11 +223,11 @@
             this.label5.TabIndex = 17;
             this.label5.Text = "Thread.Sleep (ms):";
             // 
-            // btnStopMSLB
+            // btnStopSMBL
             // 
             this.btnStopSMBL.Enabled = false;
             this.btnStopSMBL.Location = new System.Drawing.Point(162, 192);
-            this.btnStopSMBL.Name = "btnStopMSLB";
+            this.btnStopSMBL.Name = "btnStopSMBL";
             this.btnStopSMBL.Size = new System.Drawing.Size(100, 23);
             this.btnStopSMBL.TabIndex = 15;
             this.btnStopSMBL.Text = "Stop";
@@ -269,10 +283,10 @@
             this.label9.TabIndex = 9;
             this.label9.Text = "Max Order executed:";
             // 
-            // txtPurchaseMarginMSLB
+            // txtPurchaseMarginSMBL
             // 
             this.txtPurchaseMarginSMBL.Location = new System.Drawing.Point(162, 59);
-            this.txtPurchaseMarginSMBL.Name = "txtPurchaseMarginMSLB";
+            this.txtPurchaseMarginSMBL.Name = "txtPurchaseMarginSMBL";
             this.txtPurchaseMarginSMBL.Size = new System.Drawing.Size(100, 23);
             this.txtPurchaseMarginSMBL.TabIndex = 4;
             this.txtPurchaseMarginSMBL.Text = "1";
@@ -322,6 +336,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.lblBMSLCountDown);
             this.panel2.Controls.Add(this.cbBMSL);
             this.panel2.Controls.Add(this.pbBMSL);
             this.panel2.Controls.Add(this.labelU2OBMSL);
@@ -342,25 +357,25 @@
             this.panel2.Controls.Add(this.btnPlaceOrderBMSL);
             this.panel2.Location = new System.Drawing.Point(365, 52);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(284, 297);
+            this.panel2.Size = new System.Drawing.Size(284, 313);
             this.panel2.TabIndex = 4;
             // 
-            // cBMBSL
+            // cbBMSL
             // 
             this.cbBMSL.AutoSize = true;
             this.cbBMSL.Checked = true;
             this.cbBMSL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbBMSL.Location = new System.Drawing.Point(139, 163);
-            this.cbBMSL.Name = "cBMBSL";
+            this.cbBMSL.Name = "cbBMSL";
             this.cbBMSL.Size = new System.Drawing.Size(15, 14);
             this.cbBMSL.TabIndex = 25;
             this.cbBMSL.UseVisualStyleBackColor = true;
             this.cbBMSL.CheckedChanged += new System.EventHandler(this.cbBMSL_CheckedChanged);
             // 
-            // pBBMSL
+            // pbMBSL
             // 
-            this.pbBMSL.Location = new System.Drawing.Point(15, 269);
-            this.pbBMSL.Name = "pBBMSL";
+            this.pbBMSL.Location = new System.Drawing.Point(15, 275);
+            this.pbBMSL.Name = "pbMBSL";
             this.pbBMSL.Size = new System.Drawing.Size(248, 23);
             this.pbBMSL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pbBMSL.TabIndex = 24;
@@ -395,7 +410,7 @@
             this.label17.TabIndex = 21;
             this.label17.Text = "Unsuccessful 2nd Orders:";
             // 
-            // nUDSleepBMSL
+            // nudSleepBMSL
             // 
             this.nudSleepBMSL.Location = new System.Drawing.Point(161, 159);
             this.nudSleepBMSL.Maximum = new decimal(new int[] {
@@ -408,7 +423,7 @@
             0,
             0,
             0});
-            this.nudSleepBMSL.Name = "nUDSleepBMSL";
+            this.nudSleepBMSL.Name = "nudSleepBMSL";
             this.nudSleepBMSL.Size = new System.Drawing.Size(100, 23);
             this.nudSleepBMSL.TabIndex = 18;
             this.nudSleepBMSL.Value = new decimal(new int[] {
@@ -426,11 +441,11 @@
             this.label15.TabIndex = 19;
             this.label15.Text = "Thread.Sleep (ms):";
             // 
-            // btnStopMBLS
+            // btnStopBMSL
             // 
             this.btnStopBMSL.Enabled = false;
             this.btnStopBMSL.Location = new System.Drawing.Point(161, 192);
-            this.btnStopBMSL.Name = "btnStopMBLS";
+            this.btnStopBMSL.Name = "btnStopBMSL";
             this.btnStopBMSL.Size = new System.Drawing.Size(100, 23);
             this.btnStopBMSL.TabIndex = 17;
             this.btnStopBMSL.Text = "Stop";
@@ -532,15 +547,26 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Total BUSD Buy:";
             // 
-            // btnMarketBuyLimitSell
+            // btnPlaceOrderBMSL
             // 
             this.btnPlaceOrderBMSL.Location = new System.Drawing.Point(57, 192);
-            this.btnPlaceOrderBMSL.Name = "btnMarketBuyLimitSell";
+            this.btnPlaceOrderBMSL.Name = "btnPlaceOrderBMSL";
             this.btnPlaceOrderBMSL.Size = new System.Drawing.Size(100, 23);
             this.btnPlaceOrderBMSL.TabIndex = 0;
             this.btnPlaceOrderBMSL.Text = "Start";
             this.btnPlaceOrderBMSL.UseVisualStyleBackColor = true;
             this.btnPlaceOrderBMSL.Click += new System.EventHandler(this.btnPlaceBuyMarketSellLimit_BMSL_Click);
+            // 
+            // lblMBLSCountDown
+            // 
+            this.lblBMSLCountDown.AutoSize = true;
+            this.lblBMSLCountDown.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblBMSLCountDown.Location = new System.Drawing.Point(113, 279);
+            this.lblBMSLCountDown.Name = "lblMBLSCountDown";
+            this.lblBMSLCountDown.Size = new System.Drawing.Size(63, 15);
+            this.lblBMSLCountDown.TabIndex = 26;
+            this.lblBMSLCountDown.Text = "Wait 0 sec.";
+            this.lblBMSLCountDown.Visible = false;
             // 
             // PlaceOrders
             // 
@@ -607,9 +633,11 @@
         private Label labelOrdersExecutedSMBL;
         private Label labelOrdersExecutedBMSL;
         private Label labelU2OBMSL;
-        private ProgressBar pbMSBL;
+        private ProgressBar pbSMBL;
         private ProgressBar pbBMSL;
         private CheckBox cbSMBL;
         private CheckBox cbBMSL;
+        private Label lblSMBLCountDown;
+        private Label lblBMSLCountDown;
     }
 }

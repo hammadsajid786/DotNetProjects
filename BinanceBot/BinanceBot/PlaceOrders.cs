@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using Binance.Net.Objects.Models.Futures;
 
 namespace BinanceBot
 {
@@ -37,6 +38,9 @@ namespace BinanceBot
             _binanceRequestOrdersLimit = int.Parse(System.Configuration.ConfigurationManager.AppSettings["BinanceRequestOrdersLimit"]);
         }
 
+
+        private ManualResetEvent _manualResetEvent = new ManualResetEvent(false);
+
         private void btnPlaceSellMarketBuyLimit_SMBL_Click(object sender, EventArgs e)
         {
             InitializeCancellationToken();
@@ -45,6 +49,7 @@ namespace BinanceBot
 
             labelU2OSMBL.Text = "0";
             labelU2OSMBL.ForeColor = Color.Black;
+            pbSMBL.Style = ProgressBarStyle.Marquee;
 
             EnableDisableFields(false, OrderTypeCustomEnum.SellMarketBuyLimit);
 
@@ -62,15 +67,20 @@ namespace BinanceBot
                 return;
             }
 
-            _ = Task.Run(async () =>
+            _ = Task.Run(() =>
             {
                 int ordersExecuted = 0;
                 int secondOrderNotExecuted = 0;
 
                 var tasksList = new List<Task>();
 
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
+                if (maxOrderCount >= _binanceRequestOrdersLimit)
+                {
+                    tasksList.Add(Task.Run(async () =>
+                    {
+                        await CustomWaitTask(pbSMBL, lblSMBLCountDown);
+                    }));
+                }
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -135,16 +145,14 @@ namespace BinanceBot
                     if (i % _binanceRequestOrdersLimit == 0)
                     {
                         Task.WaitAll(tasksList.ToArray());
-                        stopWatch.Stop();
+                    }
 
-                        int waitFor50RequestsToCompleteMilliSeconds = (10000 - stopWatch.Elapsed.Milliseconds);
-                        if (waitFor50RequestsToCompleteMilliSeconds > 0)
+                    if (i != maxOrderCount && i % _binanceRequestOrdersLimit == 0)
+                    {
+                        tasksList.Add(Task.Run(async () =>
                         {
-                            cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
-                        }
-
-                        stopWatch.Reset();
-                        stopWatch.Start();
+                            await CustomWaitTask(pbSMBL, lblSMBLCountDown);
+                        }));
                     }
                 }
 
@@ -173,6 +181,7 @@ namespace BinanceBot
 
             labelU2OBMSL.Text = "0";
             labelU2OBMSL.ForeColor = Color.Black;
+            pbBMSL.Style = ProgressBarStyle.Marquee;
 
             EnableDisableFields(false, OrderTypeCustomEnum.BuyMarketSellLimit);
 
@@ -197,8 +206,13 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
+                if (maxOrderCount >= _binanceRequestOrdersLimit)
+                {
+                    tasksList.Add(Task.Run(async () =>
+                    {
+                        await CustomWaitTask(pbBMSL, lblBMSLCountDown);
+                    }));
+                }
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -263,16 +277,14 @@ namespace BinanceBot
                     if (i % _binanceRequestOrdersLimit == 0)
                     {
                         Task.WaitAll(tasksList.ToArray());
-                        stopWatch.Stop();
+                    }
 
-                        int waitFor50RequestsToCompleteMilliSeconds = (10000 - stopWatch.Elapsed.Milliseconds);
-                        if (waitFor50RequestsToCompleteMilliSeconds > 0)
+                    if (i != maxOrderCount && i % _binanceRequestOrdersLimit == 0)
+                    {
+                        tasksList.Add(Task.Run(async () =>
                         {
-                            cancellationToken.WaitHandle.WaitOne(waitFor50RequestsToCompleteMilliSeconds);
-                        }
-
-                        stopWatch.Reset();
-                        stopWatch.Start();
+                            await CustomWaitTask(pbBMSL, lblBMSLCountDown);
+                        }));
                     }
                 }
 
@@ -318,7 +330,7 @@ namespace BinanceBot
                         btnStopBMSL.Enabled = enableFlag;
                         btnStopSMBL.Enabled = !enableFlag;
 
-                        pbMSBL.Visible = true;
+                        pbSMBL.Visible = true;
                     }
                     else
                     {
@@ -337,8 +349,11 @@ namespace BinanceBot
                     btnStopBMSL.Enabled = false;
                     btnStopSMBL.Enabled = false;
 
-                    pbMSBL.Visible = false;
+                    pbSMBL.Visible = false;
+                    lblSMBLCountDown.Visible = false;
+
                     pbBMSL.Visible = false;
+                    lblBMSLCountDown.Visible = false;
 
                     nudSleepBMSL.Enabled = false;
                     ndlSleepSMBL.Enabled = false;
@@ -484,6 +499,27 @@ namespace BinanceBot
         private void cbBMSL_CheckedChanged(object sender, EventArgs e)
         {
             nudSleepBMSL.Enabled = cbBMSL.Checked;
+        }
+
+        private async Task CustomWaitTask(ProgressBar pBar, Label lblCountDown)
+        {
+            for (int _l = 10; _l > -1; _l--)
+            {
+                lblCountDown.Invoke(() =>
+                {
+                    lblCountDown.Text = "Wait : " + _l.ToString() + " sec.";
+                    lblCountDown.Visible = true;
+                });
+
+                pBar.Invoke(() =>
+                {
+                    pBar.Style = ProgressBarStyle.Continuous;
+
+                    pBar.Value = 100 - (_l * 10);
+                });
+
+                cancellationToken.WaitHandle.WaitOne(1000);
+            }
         }
 
     }
