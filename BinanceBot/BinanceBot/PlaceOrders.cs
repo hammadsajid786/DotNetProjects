@@ -24,7 +24,7 @@ namespace BinanceBot
 
         private decimal totalBUSDBuyBMSL = 0;
 
-        private int _binanceRequestOrdersLimit;
+        private readonly int _binanceRequestOrdersLimit;
 
         public PlaceOrders()
         {
@@ -37,9 +37,6 @@ namespace BinanceBot
             _binanceCustomClient = new BinanceCustomClient();
             _binanceRequestOrdersLimit = int.Parse(System.Configuration.ConfigurationManager.AppSettings["BinanceRequestOrdersLimit"]);
         }
-
-
-        private ManualResetEvent _manualResetEvent = new ManualResetEvent(false);
 
         private void btnPlaceSellMarketBuyLimit_SMBL_Click(object sender, EventArgs e)
         {
@@ -147,7 +144,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i != maxOrderCount && i % _binanceRequestOrdersLimit == 0)
+                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
@@ -279,7 +276,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i != maxOrderCount && i % _binanceRequestOrdersLimit == 0)
+                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
