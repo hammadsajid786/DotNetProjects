@@ -60,22 +60,22 @@
             // mIPlaceOrder
             // 
             this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(168, 22);
+            this.mIPlaceOrder.Size = new System.Drawing.Size(194, 22);
             this.mIPlaceOrder.Text = "Place Orders";
             this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
             // 
             // openOrdersToolStripMenuItem
             // 
             this.openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
-            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.openOrdersToolStripMenuItem.Text = "Open Orders";
+            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.openOrdersToolStripMenuItem.Text = "Open Orders (Client)";
             this.openOrdersToolStripMenuItem.Click += new System.EventHandler(this.openOrdersToolStripMenuItem_Click);
             // 
             // ordersToExecuteToolStripMenuItem
             // 
             this.ordersToExecuteToolStripMenuItem.Name = "ordersToExecuteToolStripMenuItem";
-            this.ordersToExecuteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.ordersToExecuteToolStripMenuItem.Text = "Orders To Execute";
+            this.ordersToExecuteToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.ordersToExecuteToolStripMenuItem.Text = "Orders To Execute (Db)";
             this.ordersToExecuteToolStripMenuItem.Click += new System.EventHandler(this.ordersToExecuteToolStripMenuItem_Click);
             // 
             // MainForm
@@ -88,7 +88,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Binance Bot - v14.0.0";
+            this.Text = "Binance Bot - v15.1.0";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

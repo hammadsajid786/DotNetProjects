@@ -1,4 +1,6 @@
-﻿using BinanceBot.Models;
+﻿using Binance.Net.Enums;
+using BinanceBot.Models;
+using CryptoExchange.Net.CommonObjects;
 using System.Data;
 
 namespace BinanceBot
@@ -12,6 +14,8 @@ namespace BinanceBot
             InitializeComponent();
 
             cbOrderPairs.SelectedIndex = 0;
+
+            cbOrderSide.SelectedIndex = 0;
 
             _binanceCustomClient = new BinanceCustomClient();
         }
@@ -35,6 +39,7 @@ namespace BinanceBot
                 cbOrderPairs.Enabled = enableFlag;
                 btnFetchOpenOrders.Enabled = enableFlag;
                 cbPriceRange.Enabled = enableFlag;
+                cbOrderSide.Enabled = enableFlag;
 
                 openOrderGV.Enabled = enableFlag;
 
@@ -72,7 +77,7 @@ namespace BinanceBot
 
                 if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
                 {
-                    await _binanceCustomClient.CancelOpenOrder(symbol,orderId);
+                    await _binanceCustomClient.CancelOpenOrder(symbol, orderId);
                 }
             }
 
@@ -86,7 +91,8 @@ namespace BinanceBot
             bool isCbPriceRangeChecked = false;
             decimal prFrom = 0;
             decimal prTo = 0;
-            string tradePair = String.Empty;
+            string tradePair = string.Empty;
+            string orderSide = string.Empty;
 
             this.Invoke(() =>
             {
@@ -96,9 +102,15 @@ namespace BinanceBot
                 prFrom = string.IsNullOrEmpty(nuPRFrom.Text) ? 0 : decimal.Parse(nuPRFrom.Text);
                 prTo = string.IsNullOrEmpty(nuPRTo.Text) ? 0 : decimal.Parse(nuPRTo.Text);
                 tradePair = cbOrderPairs.SelectedItem.ToString();
+                orderSide = cbOrderSide.SelectedItem.ToString();
             });
 
             List<OpenOrderCustomModel> orders = await _binanceCustomClient.FetchOpenOrders(tradePair);
+
+            if (!orderSide.Equals("ALL"))
+            {
+                orders = orders.Where(x => x.OrderSide== Enum.Parse<OrderSide>(orderSide)).ToList();
+            }
 
             if (isCbPriceRangeChecked)
             {
@@ -114,14 +126,17 @@ namespace BinanceBot
                 });
             }
 
+            openOrderGV.Invoke((MethodInvoker)delegate
+            {
+                bsOpenOrderGV.DataSource = orders.ToDataTable();
+                openOrderGV.DataSource = bsOpenOrderGV;
+                openOrderGV.Refresh();
+
+            });
+
             lblRecordsCount.Invoke(() =>
             {
                 lblRecordsCount.Text = orders.Count.ToString();
-            });
-
-            openOrderGV.Invoke((MethodInvoker)delegate
-            {
-                openOrderGV.DataSource = orders;
             });
 
             btnCancelOpenOrders.Invoke(() =>
@@ -132,6 +147,16 @@ namespace BinanceBot
                     btnCancelOpenOrders.Visible = false;
             });
 
+        }
+
+        private void openOrderGV_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            int rowsLeftInGridCount = bsOpenOrderGV.Count;
+            lblRecordsCount.Text = rowsLeftInGridCount.ToString();
+            if (rowsLeftInGridCount == 0)
+            {
+                btnCancelOpenOrders.Visible = false;
+            }
         }
     }
 }
