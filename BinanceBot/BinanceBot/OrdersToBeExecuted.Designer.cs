@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnCancelOpenOrders = new System.Windows.Forms.Button();
             this.nuPRTo = new System.Windows.Forms.NumericUpDown();
             this.nuPRFrom = new System.Windows.Forms.NumericUpDown();
@@ -42,9 +43,11 @@
             this.openOrderGV = new System.Windows.Forms.DataGridView();
             this.cbOrderSide = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.bSOpenGV = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSOpenGV)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancelOpenOrders
@@ -165,6 +168,7 @@
             // 
             // openOrderGV
             // 
+            this.openOrderGV.AllowUserToAddRows = false;
             this.openOrderGV.AllowUserToOrderColumns = true;
             this.openOrderGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.openOrderGV.Location = new System.Drawing.Point(12, 99);
@@ -173,6 +177,7 @@
             this.openOrderGV.RowTemplate.Height = 25;
             this.openOrderGV.Size = new System.Drawing.Size(714, 266);
             this.openOrderGV.TabIndex = 20;
+            this.openOrderGV.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.openOrderGV_RowsRemoved);
             // 
             // cbOrderSide
             // 
@@ -220,6 +225,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSOpenGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,5 +247,6 @@
         private DataGridView openOrderGV;
         private ComboBox cbOrderSide;
         private Label label5;
+        private BindingSource bSOpenGV;
     }
 }

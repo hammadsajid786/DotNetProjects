@@ -1,14 +1,6 @@
 ﻿using BinanceBot.Db;
 using BinanceBot.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace BinanceBot
 {
@@ -118,14 +110,16 @@ namespace BinanceBot
                 });
             }
 
+            openOrderGV.Invoke((MethodInvoker)delegate
+            {
+                bSOpenGV.DataSource = orders.ToDataTable();
+                openOrderGV.DataSource = bSOpenGV;
+                openOrderGV.Refresh();
+            });
+
             lblRecordsCount.Invoke(() =>
             {
                 lblRecordsCount.Text = orders.Count.ToString();
-            });
-
-            openOrderGV.Invoke((MethodInvoker)delegate
-            {
-                openOrderGV.DataSource = orders;
             });
 
             btnCancelOpenOrders.Invoke(() =>
@@ -161,6 +155,16 @@ namespace BinanceBot
             await fetchOrders();
 
             EnableDisableFields(true);
+        }
+
+        private void openOrderGV_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            int rowsLeftInGridCount = bSOpenGV.Count;
+            lblRecordsCount.Text = rowsLeftInGridCount.ToString();
+            if (rowsLeftInGridCount == 0)
+            {
+                btnCancelOpenOrders.Visible = false;
+            }
         }
     }
 }
