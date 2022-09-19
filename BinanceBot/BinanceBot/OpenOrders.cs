@@ -77,7 +77,10 @@ namespace BinanceBot
 
                 if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
                 {
-                    await _binanceCustomClient.CancelOpenOrder(symbol, orderId);
+                    if (!await _binanceCustomClient.CancelOpenOrder(symbol, orderId))
+                    {
+                        break; // Break the loop if an order not executed successfully.
+                    }
                 }
             }
 
@@ -109,7 +112,7 @@ namespace BinanceBot
 
             if (!orderSide.Equals("ALL"))
             {
-                orders = orders.Where(x => x.OrderSide== Enum.Parse<OrderSide>(orderSide)).ToList();
+                orders = orders.Where(x => x.OrderSide == Enum.Parse<OrderSide>(orderSide)).ToList();
             }
 
             if (isCbPriceRangeChecked)
