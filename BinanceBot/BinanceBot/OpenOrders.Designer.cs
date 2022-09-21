@@ -44,6 +44,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cbOrderPairs = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnStopCancelling = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).BeginInit();
@@ -148,7 +149,7 @@
             // 
             // btnCancelOpenOrders
             // 
-            this.btnCancelOpenOrders.Location = new System.Drawing.Point(544, 378);
+            this.btnCancelOpenOrders.Location = new System.Drawing.Point(546, 378);
             this.btnCancelOpenOrders.Name = "btnCancelOpenOrders";
             this.btnCancelOpenOrders.Size = new System.Drawing.Size(182, 23);
             this.btnCancelOpenOrders.TabIndex = 19;
@@ -201,11 +202,22 @@
             this.label4.TabIndex = 35;
             this.label4.Text = "Pair:";
             // 
+            // btnStopCancelling
+            // 
+            this.btnStopCancelling.Location = new System.Drawing.Point(546, 407);
+            this.btnStopCancelling.Name = "btnStopCancelling";
+            this.btnStopCancelling.Size = new System.Drawing.Size(180, 23);
+            this.btnStopCancelling.TabIndex = 38;
+            this.btnStopCancelling.Text = "Stop";
+            this.btnStopCancelling.UseVisualStyleBackColor = true;
+            this.btnStopCancelling.Visible = false;
+            // 
             // OpenOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 417);
+            this.ClientSize = new System.Drawing.Size(738, 442);
+            this.Controls.Add(this.btnStopCancelling);
             this.Controls.Add(this.cbOrderSide);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cbOrderPairs);
@@ -248,5 +260,6 @@
         private Label label5;
         private ComboBox cbOrderPairs;
         private Label label4;
+        private Button btnStopCancelling;
     }
 }

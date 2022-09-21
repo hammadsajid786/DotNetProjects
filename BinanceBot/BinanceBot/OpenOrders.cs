@@ -37,9 +37,9 @@ namespace BinanceBot
             this.Invoke((MethodInvoker)delegate
             {
                 cbOrderPairs.Enabled = enableFlag;
-                btnFetchOpenOrders.Enabled = enableFlag;
                 cbPriceRange.Enabled = enableFlag;
                 cbOrderSide.Enabled = enableFlag;
+                btnFetchOpenOrders.Enabled = enableFlag;
 
                 openOrderGV.Enabled = enableFlag;
 
@@ -59,6 +59,17 @@ namespace BinanceBot
             });
         }
 
+        private void EnableDisableProcessFields(bool enableFlag)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                btnStopCancelling.Visible = enableFlag;
+                btnStopCancelling.Enabled = enableFlag;
+                btnStopCancelling.Location = btnCancelOpenOrders.Location;
+                btnCancelOpenOrders.Visible = !enableFlag;
+            });
+        }
+
         private void cbPriceRange_CheckedChanged(object sender, EventArgs e)
         {
             nuPRFrom.Enabled = cbPriceRange.Checked;
@@ -68,6 +79,7 @@ namespace BinanceBot
         private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
         {
             EnableDisableFields(false);
+            EnableDisableProcessFields(true);
 
             foreach (DataGridViewRow sRow in openOrderGV.Rows)
             {
@@ -84,8 +96,11 @@ namespace BinanceBot
                 }
             }
 
+            Thread.Sleep(1000);
+
             await fetchOrders();
 
+            EnableDisableProcessFields(false);
             EnableDisableFields(true);
         }
 

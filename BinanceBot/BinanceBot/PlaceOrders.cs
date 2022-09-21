@@ -71,13 +71,11 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                if (maxOrderCount >= _binanceRequestOrdersLimit)
+
+                tasksList.Add(Task.Run(async () =>
                 {
-                    tasksList.Add(Task.Run(async () =>
-                    {
-                        await CustomWaitTask(pbSMBL, lblSMBLCountDown);
-                    }));
-                }
+                    await CustomWaitTask(pbSMBL, lblSMBLCountDown);
+                }));
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -144,7 +142,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
+                    if (i < maxOrderCount && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
@@ -203,13 +201,10 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                if (maxOrderCount >= _binanceRequestOrdersLimit)
-                {
                     tasksList.Add(Task.Run(async () =>
                     {
                         await CustomWaitTask(pbBMSL, lblBMSLCountDown);
                     }));
-                }
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -276,7 +271,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
+                    if (i < maxOrderCount && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
