@@ -400,9 +400,9 @@ namespace BinanceBot
                 return false;
             }
 
-            if (purchasePriceMargin < 1 || purchasePriceMargin > 50)
+            if (purchasePriceMargin < 0.01m || purchasePriceMargin > 50)
             {
-                MessageBox.Show("Purchase price Margin Must be in between 1-50 for safety.");
+                MessageBox.Show("Purchase price Margin Must be in between 0.01-50 for safety.");
                 return false;
             }
 
@@ -442,9 +442,9 @@ namespace BinanceBot
                 return false;
             }
 
-            if (sellPriceMargin < 1 || sellPriceMargin > 50)
+            if (sellPriceMargin < 0.01m || sellPriceMargin > 50)
             {
-                MessageBox.Show("Purchase price Margin Must be in between 1-30 for safety.");
+                MessageBox.Show("Purchase price Margin Must be in between 0.01-50 for safety.");
                 return false;
             }
 
