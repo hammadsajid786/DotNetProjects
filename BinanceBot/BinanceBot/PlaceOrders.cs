@@ -201,10 +201,10 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                    tasksList.Add(Task.Run(async () =>
-                    {
-                        await CustomWaitTask(pbBMSL, lblBMSLCountDown);
-                    }));
+                tasksList.Add(Task.Run(async () =>
+                {
+                    await CustomWaitTask(pbBMSL, lblBMSLCountDown);
+                }));
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -514,5 +514,18 @@ namespace BinanceBot
             }
         }
 
+        private void cbOrderPairs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbOrderPairs.SelectedItem.ToString() == "ETHBUSD")
+            {
+                txtPurchaseMarginSMBL.Text = "0.02";
+                txtSellMarginBMSL.Text = "0.02";
+            }
+            else
+            {
+                txtPurchaseMarginSMBL.Text = "2";
+                txtSellMarginBMSL.Text = "2";
+            }
+        }
     }
 }
