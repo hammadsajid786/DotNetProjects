@@ -211,6 +211,7 @@
             this.btnStopCancelling.Text = "Stop";
             this.btnStopCancelling.UseVisualStyleBackColor = true;
             this.btnStopCancelling.Visible = false;
+            this.btnStopCancelling.Click += new System.EventHandler(this.btnStopCancelling_Click);
             // 
             // OpenOrders
             // 

@@ -8,6 +8,8 @@ namespace BinanceBot
     public partial class OpenOrders : Form
     {
         private BinanceCustomClient _binanceCustomClient;
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationToken cancellationToken;
 
         public OpenOrders()
         {
@@ -78,11 +80,18 @@ namespace BinanceBot
 
         private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
         {
+            InitializeCancellationToken();
+
             EnableDisableFields(false);
             EnableDisableProcessFields(true);
 
             foreach (DataGridViewRow sRow in openOrderGV.Rows)
             {
+                if (cancellationTokenSource.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 decimal quantityFilled = decimal.Parse(sRow.Cells[8].Value.ToString());
                 long orderId = long.Parse(sRow.Cells[1].Value.ToString());
                 string symbol = sRow.Cells[0].Value.ToString();
@@ -95,8 +104,6 @@ namespace BinanceBot
                     }
                 }
             }
-
-            Thread.Sleep(1000);
 
             await fetchOrders();
 
@@ -175,6 +182,17 @@ namespace BinanceBot
             {
                 btnCancelOpenOrders.Visible = false;
             }
+        }
+
+        private void InitializeCancellationToken()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
+        }
+
+        private void btnStopCancelling_Click(object sender, EventArgs e)
+        {
+            cancellationTokenSource.Cancel();
         }
     }
 }
