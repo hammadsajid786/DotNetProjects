@@ -45,6 +45,7 @@
             this.cbOrderPairs = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnStopCancelling = new System.Windows.Forms.Button();
+            this.lblSuccessfullyCancelledOrders = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).BeginInit();
@@ -213,11 +214,21 @@
             this.btnStopCancelling.Visible = false;
             this.btnStopCancelling.Click += new System.EventHandler(this.btnStopCancelling_Click);
             // 
+            // label6
+            // 
+            this.lblSuccessfullyCancelledOrders.AutoSize = true;
+            this.lblSuccessfullyCancelledOrders.Location = new System.Drawing.Point(386, 382);
+            this.lblSuccessfullyCancelledOrders.Name = "label6";
+            this.lblSuccessfullyCancelledOrders.Size = new System.Drawing.Size(138, 15);
+            this.lblSuccessfullyCancelledOrders.TabIndex = 39;
+            this.lblSuccessfullyCancelledOrders.Text = "Successfully Cancelled: 0";
+            // 
             // OpenOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(738, 442);
+            this.Controls.Add(this.lblSuccessfullyCancelledOrders);
             this.Controls.Add(this.btnStopCancelling);
             this.Controls.Add(this.cbOrderSide);
             this.Controls.Add(this.label5);
@@ -262,5 +273,6 @@
         private ComboBox cbOrderPairs;
         private Label label4;
         private Button btnStopCancelling;
+        private Label lblSuccessfullyCancelledOrders;
     }
 }
