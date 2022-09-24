@@ -214,11 +214,11 @@
             this.btnStopCancelling.Visible = false;
             this.btnStopCancelling.Click += new System.EventHandler(this.btnStopCancelling_Click);
             // 
-            // label6
+            // lblSuccessfullyCancelledOrders
             // 
             this.lblSuccessfullyCancelledOrders.AutoSize = true;
             this.lblSuccessfullyCancelledOrders.Location = new System.Drawing.Point(386, 382);
-            this.lblSuccessfullyCancelledOrders.Name = "label6";
+            this.lblSuccessfullyCancelledOrders.Name = "lblSuccessfullyCancelledOrders";
             this.lblSuccessfullyCancelledOrders.Size = new System.Drawing.Size(138, 15);
             this.lblSuccessfullyCancelledOrders.TabIndex = 39;
             this.lblSuccessfullyCancelledOrders.Text = "Successfully Cancelled: 0";
@@ -245,7 +245,7 @@
             this.Controls.Add(this.btnFetchOpenOrders);
             this.Controls.Add(this.openOrderGV);
             this.Name = "OpenOrders";
-            this.Text = "OpenOrders";
+            this.Text = "Open Orders (Client)";
             ((System.ComponentModel.ISupportInitialize)(this.openOrderGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRFrom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuPRTo)).EndInit();
