@@ -51,6 +51,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbOrderPairs = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblBMSLCountDown = new System.Windows.Forms.Label();
             this.cbBMSL = new System.Windows.Forms.CheckBox();
             this.pbBMSL = new System.Windows.Forms.ProgressBar();
             this.labelU2OBMSL = new System.Windows.Forms.Label();
@@ -69,7 +70,6 @@
             this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnPlaceOrderBMSL = new System.Windows.Forms.Button();
-            this.lblBMSLCountDown = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndlSleepSMBL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
@@ -132,12 +132,12 @@
             this.panel1.Size = new System.Drawing.Size(287, 313);
             this.panel1.TabIndex = 3;
             // 
-            // lblMSBLCountDown
+            // lblSMBLCountDown
             // 
             this.lblSMBLCountDown.AutoSize = true;
             this.lblSMBLCountDown.BackColor = System.Drawing.SystemColors.ControlLight;
             this.lblSMBLCountDown.Location = new System.Drawing.Point(109, 279);
-            this.lblSMBLCountDown.Name = "lblMSBLCountDown";
+            this.lblSMBLCountDown.Name = "lblSMBLCountDown";
             this.lblSMBLCountDown.Size = new System.Drawing.Size(63, 15);
             this.lblSMBLCountDown.TabIndex = 8;
             this.lblSMBLCountDown.Text = "Wait 0 sec.";
@@ -155,10 +155,10 @@
             this.cbSMBL.UseVisualStyleBackColor = true;
             this.cbSMBL.CheckedChanged += new System.EventHandler(this.cbSMBL_CheckedChanged);
             // 
-            // pbMSBL
+            // pbSMBL
             // 
             this.pbSMBL.Location = new System.Drawing.Point(16, 275);
-            this.pbSMBL.Name = "pbMSBL";
+            this.pbSMBL.Name = "pbSMBL";
             this.pbSMBL.Size = new System.Drawing.Size(248, 23);
             this.pbSMBL.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pbSMBL.TabIndex = 8;
@@ -332,6 +332,7 @@
             this.cbOrderPairs.Name = "cbOrderPairs";
             this.cbOrderPairs.Size = new System.Drawing.Size(100, 23);
             this.cbOrderPairs.TabIndex = 6;
+            this.cbOrderPairs.SelectedIndexChanged += new System.EventHandler(this.cbOrderPairs_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -360,6 +361,17 @@
             this.panel2.Size = new System.Drawing.Size(284, 313);
             this.panel2.TabIndex = 4;
             // 
+            // lblBMSLCountDown
+            // 
+            this.lblBMSLCountDown.AutoSize = true;
+            this.lblBMSLCountDown.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblBMSLCountDown.Location = new System.Drawing.Point(113, 279);
+            this.lblBMSLCountDown.Name = "lblBMSLCountDown";
+            this.lblBMSLCountDown.Size = new System.Drawing.Size(63, 15);
+            this.lblBMSLCountDown.TabIndex = 26;
+            this.lblBMSLCountDown.Text = "Wait 0 sec.";
+            this.lblBMSLCountDown.Visible = false;
+            // 
             // cbBMSL
             // 
             this.cbBMSL.AutoSize = true;
@@ -372,10 +384,10 @@
             this.cbBMSL.UseVisualStyleBackColor = true;
             this.cbBMSL.CheckedChanged += new System.EventHandler(this.cbBMSL_CheckedChanged);
             // 
-            // pbMBSL
+            // pbBMSL
             // 
             this.pbBMSL.Location = new System.Drawing.Point(15, 275);
-            this.pbBMSL.Name = "pbMBSL";
+            this.pbBMSL.Name = "pbBMSL";
             this.pbBMSL.Size = new System.Drawing.Size(248, 23);
             this.pbBMSL.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pbBMSL.TabIndex = 24;
@@ -556,17 +568,6 @@
             this.btnPlaceOrderBMSL.Text = "Start";
             this.btnPlaceOrderBMSL.UseVisualStyleBackColor = true;
             this.btnPlaceOrderBMSL.Click += new System.EventHandler(this.btnPlaceBuyMarketSellLimit_BMSL_Click);
-            // 
-            // lblMBLSCountDown
-            // 
-            this.lblBMSLCountDown.AutoSize = true;
-            this.lblBMSLCountDown.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.lblBMSLCountDown.Location = new System.Drawing.Point(113, 279);
-            this.lblBMSLCountDown.Name = "lblMBLSCountDown";
-            this.lblBMSLCountDown.Size = new System.Drawing.Size(63, 15);
-            this.lblBMSLCountDown.TabIndex = 26;
-            this.lblBMSLCountDown.Text = "Wait 0 sec.";
-            this.lblBMSLCountDown.Visible = false;
             // 
             // PlaceOrders
             // 

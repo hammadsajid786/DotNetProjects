@@ -56,7 +56,7 @@ namespace BinanceBot.Models
                 decimal quantiyFilled = orderMarketSellDetails.Data.QuantityFilled;
                 decimal priceSell = orderMarketSellDetails.Data.AverageFillPrice.Value;
 
-                decimal pricePurchased = Math.Round(priceSell - purchaseMargin);
+                decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2);
 
                 WebCallResult<BinancePlacedOrder> orderLimitBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
@@ -141,7 +141,7 @@ namespace BinanceBot.Models
                 decimal quantiyFilled = orderMarketBuyDetails.Data.QuantityFilled;
                 decimal priceSell = orderMarketBuyDetails.Data.AverageFillPrice.Value;
 
-                decimal pricePurchased = Math.Round(priceSell + purchaseMargin);
+                decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2);
 
                 WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
@@ -332,7 +332,7 @@ namespace BinanceBot.Models
                                          + "Order Type                : " + dbOrder.OrderType.ToString() + Environment.NewLine
                                          + "Order Order Side          : " + dbOrder.OrderSide.ToString() + Environment.NewLine
                                          + "Price                     : " + dbOrder.Price + Environment.NewLine
-                                         + "Quantity                  : " + dbOrder.Quantity + Environment.NewLine 
+                                         + "Quantity                  : " + dbOrder.Quantity + Environment.NewLine
                                          + "Not Fulfilled Reason      : " + orderLimitSellDetails.Error.Message + Environment.NewLine
                                          ;
 

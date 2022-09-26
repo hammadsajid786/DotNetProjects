@@ -8,6 +8,8 @@ namespace BinanceBot
     public partial class OpenOrders : Form
     {
         private BinanceCustomClient _binanceCustomClient;
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationToken cancellationToken;
 
         public OpenOrders()
         {
@@ -37,9 +39,9 @@ namespace BinanceBot
             this.Invoke((MethodInvoker)delegate
             {
                 cbOrderPairs.Enabled = enableFlag;
-                btnFetchOpenOrders.Enabled = enableFlag;
                 cbPriceRange.Enabled = enableFlag;
                 cbOrderSide.Enabled = enableFlag;
+                btnFetchOpenOrders.Enabled = enableFlag;
 
                 openOrderGV.Enabled = enableFlag;
 
@@ -59,6 +61,17 @@ namespace BinanceBot
             });
         }
 
+        private void EnableDisableProcessFields(bool enableFlag)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                btnStopCancelling.Visible = enableFlag;
+                btnStopCancelling.Enabled = enableFlag;
+                btnStopCancelling.Location = btnCancelOpenOrders.Location;
+                btnCancelOpenOrders.Visible = !enableFlag;
+            });
+        }
+
         private void cbPriceRange_CheckedChanged(object sender, EventArgs e)
         {
             nuPRFrom.Enabled = cbPriceRange.Checked;
@@ -67,26 +80,48 @@ namespace BinanceBot
 
         private async void btnCancelOpenOrders_Click(object sender, EventArgs e)
         {
+            InitializeCancellationToken();
+
             EnableDisableFields(false);
+            EnableDisableProcessFields(true);
 
-            foreach (DataGridViewRow sRow in openOrderGV.Rows)
+            _ = Task.Run(async () =>
             {
-                decimal quantityFilled = decimal.Parse(sRow.Cells[8].Value.ToString());
-                long orderId = long.Parse(sRow.Cells[1].Value.ToString());
-                string symbol = sRow.Cells[0].Value.ToString();
+                int SuccessfullOrdersCount = 0;
 
-                if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
+                foreach (DataGridViewRow sRow in openOrderGV.Rows)
                 {
-                    if (!await _binanceCustomClient.CancelOpenOrder(symbol, orderId))
+                    if (cancellationTokenSource.IsCancellationRequested)
                     {
-                        break; // Break the loop if an order not executed successfully.
+                        break;
                     }
+
+                    decimal quantityFilled = decimal.Parse(sRow.Cells[8].Value.ToString());
+                    long orderId = long.Parse(sRow.Cells[1].Value.ToString());
+                    string symbol = sRow.Cells[0].Value.ToString();
+
+                    if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
+                    {
+                        if (!await _binanceCustomClient.CancelOpenOrder(symbol, orderId))
+                        {
+                            break; // Break the loop if an order not executed successfully.
+                        }
+
+                        Interlocked.Increment(ref SuccessfullOrdersCount);
+                    }
+
+                    lblSuccessfullyCancelledOrders.Invoke((MethodInvoker)delegate
+                    {
+                        lblSuccessfullyCancelledOrders.Text = "Successfully Cancelled: " + SuccessfullOrdersCount;
+                        lblSuccessfullyCancelledOrders.Visible = true;
+                    });
                 }
-            }
 
-            await fetchOrders();
+                await fetchOrders();
 
-            EnableDisableFields(true);
+                EnableDisableProcessFields(false);
+                EnableDisableFields(true);
+            });
         }
 
         private async Task fetchOrders()
@@ -160,6 +195,18 @@ namespace BinanceBot
             {
                 btnCancelOpenOrders.Visible = false;
             }
+        }
+
+        private void InitializeCancellationToken()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
+        }
+
+        private void btnStopCancelling_Click(object sender, EventArgs e)
+        {
+            btnStopCancelling.Enabled = false;
+            cancellationTokenSource.Cancel();
         }
     }
 }

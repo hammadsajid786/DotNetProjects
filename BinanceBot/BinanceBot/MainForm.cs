@@ -16,7 +16,7 @@ namespace BinanceBot
         {
             InitializeComponent();
 
-            mIPlaceOrder.PerformClick();
+            mIPlaceOrder.PerformClick();            
         }
 
         private void mIPlaceOrder_Click(object sender, EventArgs e)

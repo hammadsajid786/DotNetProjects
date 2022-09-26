@@ -71,13 +71,11 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                if (maxOrderCount >= _binanceRequestOrdersLimit)
+
+                tasksList.Add(Task.Run(async () =>
                 {
-                    tasksList.Add(Task.Run(async () =>
-                    {
-                        await CustomWaitTask(pbSMBL, lblSMBLCountDown);
-                    }));
-                }
+                    await CustomWaitTask(pbSMBL, lblSMBLCountDown);
+                }));
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -144,7 +142,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
+                    if (i < maxOrderCount && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
@@ -203,13 +201,10 @@ namespace BinanceBot
 
                 var tasksList = new List<Task>();
 
-                if (maxOrderCount >= _binanceRequestOrdersLimit)
+                tasksList.Add(Task.Run(async () =>
                 {
-                    tasksList.Add(Task.Run(async () =>
-                    {
-                        await CustomWaitTask(pbBMSL, lblBMSLCountDown);
-                    }));
-                }
+                    await CustomWaitTask(pbBMSL, lblBMSLCountDown);
+                }));
 
                 for (int i = 1; i <= maxOrderCount; i++)
                 {
@@ -276,7 +271,7 @@ namespace BinanceBot
                         Task.WaitAll(tasksList.ToArray());
                     }
 
-                    if (i <= (maxOrderCount - _binanceRequestOrdersLimit) && i % _binanceRequestOrdersLimit == 0)
+                    if (i < maxOrderCount && i % _binanceRequestOrdersLimit == 0)
                     {
                         tasksList.Add(Task.Run(async () =>
                         {
@@ -400,9 +395,9 @@ namespace BinanceBot
                 return false;
             }
 
-            if (purchasePriceMargin < 1 || purchasePriceMargin > 50)
+            if (purchasePriceMargin < 0.01m || purchasePriceMargin > 50)
             {
-                MessageBox.Show("Purchase price Margin Must be in between 1-50 for safety.");
+                MessageBox.Show("Purchase price Margin Must be in between 0.01-50 for safety.");
                 return false;
             }
 
@@ -442,9 +437,9 @@ namespace BinanceBot
                 return false;
             }
 
-            if (sellPriceMargin < 1 || sellPriceMargin > 50)
+            if (sellPriceMargin < 0.01m || sellPriceMargin > 50)
             {
-                MessageBox.Show("Purchase price Margin Must be in between 1-30 for safety.");
+                MessageBox.Show("Purchase price Margin Must be in between 0.01-50 for safety.");
                 return false;
             }
 
@@ -519,5 +514,18 @@ namespace BinanceBot
             }
         }
 
+        private void cbOrderPairs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbOrderPairs.SelectedItem.ToString() == "ETHBUSD")
+            {
+                txtPurchaseMarginSMBL.Text = "0.02";
+                txtSellMarginBMSL.Text = "0.02";
+            }
+            else
+            {
+                txtPurchaseMarginSMBL.Text = "2";
+                txtSellMarginBMSL.Text = "2";
+            }
+        }
     }
 }
