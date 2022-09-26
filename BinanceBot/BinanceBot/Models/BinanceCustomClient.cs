@@ -53,8 +53,8 @@ namespace BinanceBot.Models
 
             if (orderMarketSellDetails.Success) // 1st Order
             {
-                decimal quantiyFilled = orderMarketSellDetails.Data.QuantityFilled;
-                decimal priceSell = orderMarketSellDetails.Data.AverageFillPrice.Value;
+                decimal quantiyFilled = orderMarketSellDetails.Data.Quantity;
+                decimal priceSell = orderMarketSellDetails.Data.Price;
 
                 decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2);
 
@@ -138,8 +138,8 @@ namespace BinanceBot.Models
 
             if (orderMarketBuyDetails.Success) // 1st Order
             {
-                decimal quantiyFilled = orderMarketBuyDetails.Data.QuantityFilled;
-                decimal priceSell = orderMarketBuyDetails.Data.AverageFillPrice.Value;
+                decimal quantiyFilled = orderMarketBuyDetails.Data.Quantity;
+                decimal priceSell = orderMarketBuyDetails.Data.Price;
 
                 decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2);
 

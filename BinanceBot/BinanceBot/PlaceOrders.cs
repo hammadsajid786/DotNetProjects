@@ -51,8 +51,8 @@ namespace BinanceBot
             EnableDisableFields(false, OrderTypeCustomEnum.SellMarketBuyLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
-            decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
-            decimal purchaseMargin = 10; // Override in ValidateSellPrice method
+            decimal sellPriceBUSD = 20; // Override in ValidateSellPrice method
+            decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
             int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
 
@@ -181,8 +181,8 @@ namespace BinanceBot
             EnableDisableFields(false, OrderTypeCustomEnum.BuyMarketSellLimit);
 
             string tradePair = cbOrderPairs.SelectedItem.ToString();
-            decimal buyPriceBUSD = 50; // Override in ValidateSellPrice method
-            decimal purchaseMargin = 5; // Override in ValidateSellPrice method
+            decimal buyPriceBUSD = 20; // Override in ValidateSellPrice method
+            decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
             int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
 
