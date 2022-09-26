@@ -56,7 +56,14 @@ namespace BinanceBot.Models
                 decimal quantiyFilled = orderMarketSellDetails.Data.Quantity;
                 decimal priceSell = orderMarketSellDetails.Data.Price;
 
-                decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2);
+                decimal totalAmountOfTrade = orderMarketSellDetails.Data.QuoteQuantityFilled;
+                decimal tradeFeePercentage = (0.075m / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075%
+
+                decimal tradeFee = tradeFeePercentage * totalAmountOfTrade;
+
+                purchaseMargin += tradeFee;
+
+                decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2, MidpointRounding.ToPositiveInfinity);
 
                 WebCallResult<BinancePlacedOrder> orderLimitBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
@@ -141,7 +148,14 @@ namespace BinanceBot.Models
                 decimal quantiyFilled = orderMarketBuyDetails.Data.Quantity;
                 decimal priceSell = orderMarketBuyDetails.Data.Price;
 
-                decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2);
+                decimal totalAmountOfTrade = orderMarketBuyDetails.Data.QuoteQuantityFilled;
+                decimal tradeFeePercentage = (0.075m / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075%
+
+                decimal tradeFee = tradeFeePercentage * totalAmountOfTrade;
+
+                purchaseMargin += tradeFee;
+
+                decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2,MidpointRounding.ToPositiveInfinity);
 
                 WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
