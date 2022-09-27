@@ -42,7 +42,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnStopSMBL = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.nUpDownControlSMBL = new System.Windows.Forms.NumericUpDown();
+            this.nUpDownMOrderSMBL = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtPurchaseMarginSMBL = new System.Windows.Forms.TextBox();
@@ -62,7 +62,7 @@
             this.btnStopBMSL = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.nUpDownControlBMSL = new System.Windows.Forms.NumericUpDown();
+            this.nUpDownMOrderBMSL = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.txtSellMarginBMSL = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,12 +70,15 @@
             this.txtBUSDBuyBMSL = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnPlaceOrderBMSL = new System.Windows.Forms.Button();
+            this.nUDTrancsacFeeP = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndlSleepSMBL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownMOrderSMBL)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSleepBMSL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlBMSL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownMOrderBMSL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDTrancsacFeeP)).BeginInit();
             this.SuspendLayout();
             // 
             // btnPlaceOrderSMBL
@@ -118,7 +121,7 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btnStopSMBL);
             this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.nUpDownControlSMBL);
+            this.panel1.Controls.Add(this.nUpDownMOrderSMBL);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.txtPurchaseMarginSMBL);
@@ -127,7 +130,7 @@
             this.panel1.Controls.Add(this.txtBUSDSellSMBL);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnPlaceOrderSMBL);
-            this.panel1.Location = new System.Drawing.Point(29, 52);
+            this.panel1.Location = new System.Drawing.Point(31, 80);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(287, 313);
             this.panel1.TabIndex = 3;
@@ -243,23 +246,23 @@
             this.label13.TabIndex = 14;
             this.label13.Text = "Place Market Sell - Limit Buy Order";
             // 
-            // nUpDownControlSMBL
+            // nUpDownMOrderSMBL
             // 
-            this.nUpDownControlSMBL.Location = new System.Drawing.Point(162, 91);
-            this.nUpDownControlSMBL.Maximum = new decimal(new int[] {
+            this.nUpDownMOrderSMBL.Location = new System.Drawing.Point(162, 91);
+            this.nUpDownMOrderSMBL.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.nUpDownControlSMBL.Minimum = new decimal(new int[] {
+            this.nUpDownMOrderSMBL.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nUpDownControlSMBL.Name = "nUpDownControlSMBL";
-            this.nUpDownControlSMBL.Size = new System.Drawing.Size(100, 23);
-            this.nUpDownControlSMBL.TabIndex = 6;
-            this.nUpDownControlSMBL.Value = new decimal(new int[] {
+            this.nUpDownMOrderSMBL.Name = "nUpDownMOrderSMBL";
+            this.nUpDownMOrderSMBL.Size = new System.Drawing.Size(100, 23);
+            this.nUpDownMOrderSMBL.TabIndex = 6;
+            this.nUpDownMOrderSMBL.Value = new decimal(new int[] {
             5,
             0,
             0,
@@ -314,7 +317,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(29, 15);
+            this.label4.Location = new System.Drawing.Point(69, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 15);
             this.label4.TabIndex = 7;
@@ -328,7 +331,7 @@
             "BTCBUSD",
             "ETHBUSD",
             "BNBBUSD"});
-            this.cbOrderPairs.Location = new System.Drawing.Point(65, 12);
+            this.cbOrderPairs.Location = new System.Drawing.Point(117, 12);
             this.cbOrderPairs.Name = "cbOrderPairs";
             this.cbOrderPairs.Size = new System.Drawing.Size(100, 23);
             this.cbOrderPairs.TabIndex = 6;
@@ -348,7 +351,7 @@
             this.panel2.Controls.Add(this.btnStopBMSL);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.nUpDownControlBMSL);
+            this.panel2.Controls.Add(this.nUpDownMOrderBMSL);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.txtSellMarginBMSL);
             this.panel2.Controls.Add(this.label6);
@@ -356,7 +359,7 @@
             this.panel2.Controls.Add(this.txtBUSDBuyBMSL);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.btnPlaceOrderBMSL);
-            this.panel2.Location = new System.Drawing.Point(365, 52);
+            this.panel2.Location = new System.Drawing.Point(367, 80);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(284, 313);
             this.panel2.TabIndex = 4;
@@ -484,21 +487,21 @@
             // 
             // nUpDownControlBMSL
             // 
-            this.nUpDownControlBMSL.Location = new System.Drawing.Point(161, 97);
-            this.nUpDownControlBMSL.Maximum = new decimal(new int[] {
+            this.nUpDownMOrderBMSL.Location = new System.Drawing.Point(161, 97);
+            this.nUpDownMOrderBMSL.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.nUpDownControlBMSL.Minimum = new decimal(new int[] {
+            this.nUpDownMOrderBMSL.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nUpDownControlBMSL.Name = "nUpDownControlBMSL";
-            this.nUpDownControlBMSL.Size = new System.Drawing.Size(100, 23);
-            this.nUpDownControlBMSL.TabIndex = 10;
-            this.nUpDownControlBMSL.Value = new decimal(new int[] {
+            this.nUpDownMOrderBMSL.Name = "nUpDownControlBMSL";
+            this.nUpDownMOrderBMSL.Size = new System.Drawing.Size(100, 23);
+            this.nUpDownMOrderBMSL.TabIndex = 10;
+            this.nUpDownMOrderBMSL.Value = new decimal(new int[] {
             5,
             0,
             0,
@@ -569,11 +572,40 @@
             this.btnPlaceOrderBMSL.UseVisualStyleBackColor = true;
             this.btnPlaceOrderBMSL.Click += new System.EventHandler(this.btnPlaceBuyMarketSellLimit_BMSL_Click);
             // 
+            // nUDTrancsacFeeP
+            // 
+            this.nUDTrancsacFeeP.DecimalPlaces = 3;
+            this.nUDTrancsacFeeP.Location = new System.Drawing.Point(117, 41);
+            this.nUDTrancsacFeeP.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nUDTrancsacFeeP.Name = "nUDTrancsacFeeP";
+            this.nUDTrancsacFeeP.Size = new System.Drawing.Size(100, 23);
+            this.nUDTrancsacFeeP.TabIndex = 10;
+            this.nUDTrancsacFeeP.Value = new decimal(new int[] {
+            75,
+            0,
+            0,
+            196608});
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(31, 43);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(80, 15);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Transac Fee%:";
+            // 
             // PlaceOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 377);
+            this.ClientSize = new System.Drawing.Size(679, 410);
+            this.Controls.Add(this.nUDTrancsacFeeP);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbOrderPairs);
@@ -586,11 +618,12 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ndlSleepSMBL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlSMBL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownMOrderSMBL)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSleepBMSL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nUpDownControlBMSL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownMOrderBMSL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUDTrancsacFeeP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -616,9 +649,9 @@
         private Button btnPlaceOrderBMSL;
         private Label label9;
         private Label label11;
-        private NumericUpDown nUpDownControlSMBL;
+        private NumericUpDown nUpDownMOrderSMBL;
         private Label label12;
-        private NumericUpDown nUpDownControlBMSL;
+        private NumericUpDown nUpDownMOrderBMSL;
         private Label label10;
         private Button btnStopSMBL;
         private Label label13;
@@ -640,5 +673,7 @@
         private CheckBox cbBMSL;
         private Label lblSMBLCountDown;
         private Label lblBMSLCountDown;
+        private NumericUpDown nUDTrancsacFeeP;
+        private Label label18;
     }
 }
