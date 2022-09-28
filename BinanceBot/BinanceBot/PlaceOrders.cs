@@ -54,6 +54,7 @@ namespace BinanceBot
             decimal sellPriceBUSD = 20; // Override in ValidateSellPrice method
             decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
+            decimal feePercentage = decimal.Parse(nUDTrancsacFeeP.Value.ToString());
             int maxOrderCount = int.Parse(nUpDownMOrderSMBL.Value.ToString());
 
             int threadSleepValue = cbSMBL.Checked ? Convert.ToInt32(ndlSleepSMBL.Value) : 0;
@@ -184,6 +185,7 @@ namespace BinanceBot
             decimal buyPriceBUSD = 20; // Override in ValidateSellPrice method
             decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
+            decimal feePercentage = decimal.Parse(nUDTrancsacFeeP.Value.ToString());
             int maxOrderCount = int.Parse(nUpDownMOrderBMSL.Value.ToString());
 
             int threadSleepValue = cbBMSL.Checked ? Convert.ToInt32(nudSleepBMSL.Value) : 0;
