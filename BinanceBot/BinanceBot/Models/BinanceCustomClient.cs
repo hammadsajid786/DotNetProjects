@@ -43,7 +43,7 @@ namespace BinanceBot.Models
             fileLoggingNonSuccessOrders = new MultiThreadFileWriter("FileLoggingPathNotSuccessOrders");
         }
 
-        public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin)
+        public async Task<Tuple<bool, string>> SellMarketThenBuyLimitOrder(string tradePair, decimal sellPriceBUSD, decimal purchaseMargin, decimal tradeFeePercentage)
         {
             bool isSuccess = false;
             string message = string.Empty;
@@ -57,7 +57,7 @@ namespace BinanceBot.Models
                 decimal priceSell = orderMarketSellDetails.Data.Price;
 
                 decimal totalAmountOfTrade = orderMarketSellDetails.Data.QuoteQuantityFilled;
-                decimal tradeFeePercentage = (0.075m / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075%
+                tradeFeePercentage = (tradeFeePercentage / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075% (*2 for two orders Sell and Buy)
 
                 decimal tradeFee = tradeFeePercentage * totalAmountOfTrade;
 
@@ -135,7 +135,7 @@ namespace BinanceBot.Models
             return new Tuple<bool, string>(isSuccess, message);
         }
 
-        public async Task<Tuple<bool, string>> BuyMarketThenSellLimitOrder(string tradePair, decimal buyPriceBUSD, decimal purchaseMargin)
+        public async Task<Tuple<bool, string>> BuyMarketThenSellLimitOrder(string tradePair, decimal buyPriceBUSD, decimal purchaseMargin, decimal tradeFeePercentage )
         {
             bool isSuccess = false;
             string message = string.Empty;
@@ -149,7 +149,7 @@ namespace BinanceBot.Models
                 decimal priceSell = orderMarketBuyDetails.Data.Price;
 
                 decimal totalAmountOfTrade = orderMarketBuyDetails.Data.QuoteQuantityFilled;
-                decimal tradeFeePercentage = (0.075m / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075%
+                tradeFeePercentage = (tradeFeePercentage / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075% (*2 for two orders Buy and Sell)
 
                 decimal tradeFee = tradeFeePercentage * totalAmountOfTrade;
 

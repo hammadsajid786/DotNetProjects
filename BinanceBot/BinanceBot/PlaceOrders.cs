@@ -92,7 +92,7 @@ namespace BinanceBot
                             return;
                         }
 
-                        Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin, feePercentage);
 
                         if (!tupleResults.Item1)
                         {
@@ -222,7 +222,7 @@ namespace BinanceBot
                             return;
                         }
 
-                        Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin, feePercentage);
 
                         if (!tupleResults.Item1)
                         {
