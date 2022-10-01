@@ -54,7 +54,8 @@ namespace BinanceBot
             decimal sellPriceBUSD = 20; // Override in ValidateSellPrice method
             decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
-            int maxOrderCount = int.Parse(nUpDownControlSMBL.Value.ToString());
+            decimal feePercentage = decimal.Parse(nUDTrancsacFeeP.Value.ToString());
+            int maxOrderCount = int.Parse(nUpDownMOrderSMBL.Value.ToString());
 
             int threadSleepValue = cbSMBL.Checked ? Convert.ToInt32(ndlSleepSMBL.Value) : 0;
 
@@ -91,7 +92,7 @@ namespace BinanceBot
                             return;
                         }
 
-                        Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin, feePercentage);
 
                         if (!tupleResults.Item1)
                         {
@@ -184,7 +185,8 @@ namespace BinanceBot
             decimal buyPriceBUSD = 20; // Override in ValidateSellPrice method
             decimal purchaseMargin = 1; // Override in ValidateSellPrice method
 
-            int maxOrderCount = int.Parse(nUpDownControlBMSL.Value.ToString());
+            decimal feePercentage = decimal.Parse(nUDTrancsacFeeP.Value.ToString());
+            int maxOrderCount = int.Parse(nUpDownMOrderBMSL.Value.ToString());
 
             int threadSleepValue = cbBMSL.Checked ? Convert.ToInt32(nudSleepBMSL.Value) : 0;
 
@@ -220,7 +222,7 @@ namespace BinanceBot
                             return;
                         }
 
-                        Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin);
+                        Tuple<bool, string> tupleResults = await _binanceCustomClient.BuyMarketThenSellLimitOrder(tradePair, buyPriceBUSD, purchaseMargin, feePercentage);
 
                         if (!tupleResults.Item1)
                         {
@@ -301,16 +303,18 @@ namespace BinanceBot
         {
             this.Invoke((MethodInvoker)delegate
             {
-                btnPlaceOrderSMBL.Enabled = enableFlag;
                 cbOrderPairs.Enabled = enableFlag;
+                nUDTrancsacFeeP.Enabled = enableFlag;
+
+                btnPlaceOrderSMBL.Enabled = enableFlag;
                 txtBUSDSellSMBL.Enabled = enableFlag;
                 txtPurchaseMarginSMBL.Enabled = enableFlag;
-                nUpDownControlSMBL.Enabled = enableFlag;
+                nUpDownMOrderSMBL.Enabled = enableFlag;
 
                 btnPlaceOrderBMSL.Enabled = enableFlag;
                 txtBUSDBuyBMSL.Enabled = enableFlag;
                 txtSellMarginBMSL.Enabled = enableFlag;
-                nUpDownControlBMSL.Enabled = enableFlag;
+                nUpDownMOrderBMSL.Enabled = enableFlag;
 
                 cbBMSL.Enabled = enableFlag;
                 cbSMBL.Enabled = enableFlag;
@@ -516,15 +520,38 @@ namespace BinanceBot
 
         private void cbOrderPairs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbOrderPairs.SelectedItem.ToString() == "ETHBUSD")
+            switch (cbOrderPairs.SelectedItem.ToString()) // Transaction Fee
             {
-                txtPurchaseMarginSMBL.Text = "0.02";
-                txtSellMarginBMSL.Text = "0.02";
+                case "BTCBUSD":
+                    nUDTrancsacFeeP.Text = "0";
+                    break;
+                default:
+                    nUDTrancsacFeeP.Text = "0.075";
+                    break;
             }
-            else
+
+            switch (cbOrderPairs.SelectedItem.ToString()) // Price Margin Values
             {
-                txtPurchaseMarginSMBL.Text = "2";
-                txtSellMarginBMSL.Text = "2";
+                case "ETHBUSD":
+                    txtPurchaseMarginSMBL.Text = "0.02";
+                    txtSellMarginBMSL.Text = "0.02";
+                    break;
+                default:
+                    txtPurchaseMarginSMBL.Text = "2";
+                    txtSellMarginBMSL.Text = "2";
+                    break;
+            }
+
+            switch (cbOrderPairs.SelectedItem.ToString()) // Orders allowed at the moment.
+            {
+                case "BNBBUSD":
+                    btnPlaceOrderSMBL.Enabled = false;
+                    btnPlaceOrderBMSL.Enabled = false;
+                    break;
+                default:
+                    btnPlaceOrderSMBL.Enabled = true;
+                    btnPlaceOrderBMSL.Enabled = true;
+                    break;
             }
         }
     }
