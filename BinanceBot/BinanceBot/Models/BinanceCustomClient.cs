@@ -63,7 +63,7 @@ namespace BinanceBot.Models
 
                 purchaseMargin += tradeFee;
 
-                decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2, MidpointRounding.ToPositiveInfinity);
+                decimal pricePurchased = Math.Round(priceSell - purchaseMargin, 2, MidpointRounding.ToNegativeInfinity);
 
                 WebCallResult<BinancePlacedOrder> orderLimitBuyDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Buy, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);

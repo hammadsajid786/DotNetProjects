@@ -485,7 +485,7 @@
             this.label12.TabIndex = 15;
             this.label12.Text = "Successful Order Executed:";
             // 
-            // nUpDownControlBMSL
+            // nUpDownMOrderBMSL
             // 
             this.nUpDownMOrderBMSL.Location = new System.Drawing.Point(161, 97);
             this.nUpDownMOrderBMSL.Maximum = new decimal(new int[] {
@@ -498,7 +498,7 @@
             0,
             0,
             0});
-            this.nUpDownMOrderBMSL.Name = "nUpDownControlBMSL";
+            this.nUpDownMOrderBMSL.Name = "nUpDownMOrderBMSL";
             this.nUpDownMOrderBMSL.Size = new System.Drawing.Size(100, 23);
             this.nUpDownMOrderBMSL.TabIndex = 10;
             this.nUpDownMOrderBMSL.Value = new decimal(new int[] {
@@ -585,10 +585,10 @@
             this.nUDTrancsacFeeP.Size = new System.Drawing.Size(100, 23);
             this.nUDTrancsacFeeP.TabIndex = 10;
             this.nUDTrancsacFeeP.Value = new decimal(new int[] {
-            75,
+            1,
             0,
             0,
-            196608});
+            65536});
             // 
             // label18
             // 

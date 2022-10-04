@@ -526,7 +526,7 @@ namespace BinanceBot
                     nUDTrancsacFeeP.Text = "0";
                     break;
                 default:
-                    nUDTrancsacFeeP.Text = "0.075";
+                    nUDTrancsacFeeP.Text = "0.1";
                     break;
             }
 
