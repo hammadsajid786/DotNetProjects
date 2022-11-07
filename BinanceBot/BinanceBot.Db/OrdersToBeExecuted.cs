@@ -24,7 +24,11 @@ namespace BinanceBot.Db
         [Required]
         [Precision(18,8)]
         public decimal Quantity { get; set; }
-        
+
+        [Required]
+        [Precision(18,8)]
+        public decimal CalculatedAmount { get; set; }
+
         [Required]
         public string OrderType { get; set; }
         

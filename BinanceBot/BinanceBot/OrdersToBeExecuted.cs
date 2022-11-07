@@ -66,7 +66,7 @@ namespace BinanceBot
             bool isCbPriceRangeChecked = false;
             decimal prFrom = 0;
             decimal prTo = 0;
-            string tradePair = String.Empty;
+            string tradePair = string.Empty;
             string orderSide = string.Empty;
 
             this.Invoke(() =>
@@ -139,7 +139,7 @@ namespace BinanceBot
             foreach (DataGridViewRow sRow in openOrderGV.Rows)
             {
                 long orderId = long.Parse(sRow.Cells[0].Value.ToString());
-                decimal quantityFilled = decimal.Parse(sRow.Cells[7].Value.ToString());
+                decimal quantityFilled = decimal.Parse(sRow.Cells[8].Value.ToString());
 
                 if (quantityFilled == 0) //TODO: It needs to be check if There is quantity filled and Order quantity was different, This condition is added for the moment to came to know abou that order.
                 {
