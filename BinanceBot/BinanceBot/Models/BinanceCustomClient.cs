@@ -57,7 +57,7 @@ namespace BinanceBot.Models
                 decimal priceSell = orderMarketSellDetails.Data.Price;
 
                 decimal totalAmountOfTrade = orderMarketSellDetails.Data.QuoteQuantityFilled;
-                tradeFeePercentage = (tradeFeePercentage / 100) * 2; // 0.1% for Normal, if pay with BNB then 0.075% (*2 for two orders Sell and Buy)
+                tradeFeePercentage = (tradeFeePercentage / 100) * 3; // 0.1% for Normal, if pay with BNB then 0.075% (*2 for two orders Sell and Buy)
 
                 decimal tradeFee = tradeFeePercentage * totalAmountOfTrade;
 
@@ -135,7 +135,7 @@ namespace BinanceBot.Models
             return new Tuple<bool, string>(isSuccess, message);
         }
 
-        public async Task<Tuple<bool, string>> BuyMarketThenSellLimitOrder(string tradePair, decimal buyPriceBUSD, decimal purchaseMargin, decimal tradeFeePercentage )
+        public async Task<Tuple<bool, string>> BuyMarketThenSellLimitOrder(string tradePair, decimal buyPriceBUSD, decimal purchaseMargin, decimal tradeFeePercentage)
         {
             bool isSuccess = false;
             string message = string.Empty;
@@ -155,7 +155,7 @@ namespace BinanceBot.Models
 
                 purchaseMargin += tradeFee;
 
-                decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2,MidpointRounding.ToPositiveInfinity);
+                decimal pricePurchased = Math.Round(priceSell + purchaseMargin, 2, MidpointRounding.ToPositiveInfinity);
 
                 WebCallResult<BinancePlacedOrder> orderLimitSellDetails = await _client.SpotApi.Trading.PlaceOrderAsync
                 (tradePair, OrderSide.Sell, SpotOrderType.Limit, quantiyFilled, null, null, pricePurchased, TimeInForce.GoodTillCanceled, null, null, null, null, 10000);
@@ -270,6 +270,7 @@ namespace BinanceBot.Models
                             Symbol = cancelledOrder.Data.Symbol,
                             Price = cancelledOrder.Data.Price,
                             Quantity = cancelledOrder.Data.Quantity,
+                            CalculatedAmount = (cancelledOrder.Data.Price * cancelledOrder.Data.Quantity),
                             OrderType = cancelledOrder.Data.Type.ToString(),
                             OrderSide = cancelledOrder.Data.Side.ToString(),
                             CreatedTime = DateTime.Now,

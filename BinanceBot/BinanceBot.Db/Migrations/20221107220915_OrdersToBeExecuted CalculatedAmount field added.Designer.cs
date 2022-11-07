@@ -4,6 +4,7 @@ using BinanceBot.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BinanceBot.Db.Migrations
 {
     [DbContext(typeof(BinanceDbContext))]
-    partial class BinanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107220915_OrdersToBeExecuted CalculatedAmount field added")]
+    partial class OrdersToBeExecutedCalculatedAmountfieldadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
