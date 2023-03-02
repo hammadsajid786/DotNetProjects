@@ -399,7 +399,7 @@ namespace BinanceBot
                 return false;
             }
 
-            if (purchasePriceMargin < 0.01m || purchasePriceMargin > 50)
+            if (purchasePriceMargin < 0.01m || purchasePriceMargin > 200)
             {
                 MessageBox.Show("Purchase price Margin Must be in between 0.01-50 for safety.");
                 return false;
