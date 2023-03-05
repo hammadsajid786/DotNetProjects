@@ -29,72 +29,67 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.operationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mIPlaceOrder = new System.Windows.Forms.ToolStripMenuItem();
-            this.openOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ordersToExecuteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            menuStrip1 = new MenuStrip();
+            operationsToolStripMenuItem = new ToolStripMenuItem();
+            mIPlaceOrder = new ToolStripMenuItem();
+            openOrdersToolStripMenuItem = new ToolStripMenuItem();
+            ordersToExecuteToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.operationsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(747, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.Items.AddRange(new ToolStripItem[] { operationsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(747, 24);
+            menuStrip1.TabIndex = 2;
+            menuStrip1.Text = "menuStrip1";
             // 
             // operationsToolStripMenuItem
             // 
-            this.operationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mIPlaceOrder,
-            this.openOrdersToolStripMenuItem,
-            this.ordersToExecuteToolStripMenuItem});
-            this.operationsToolStripMenuItem.Name = "operationsToolStripMenuItem";
-            this.operationsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-            this.operationsToolStripMenuItem.Text = "Operations";
+            operationsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mIPlaceOrder, openOrdersToolStripMenuItem, ordersToExecuteToolStripMenuItem });
+            operationsToolStripMenuItem.Name = "operationsToolStripMenuItem";
+            operationsToolStripMenuItem.Size = new Size(77, 20);
+            operationsToolStripMenuItem.Text = "Operations";
             // 
             // mIPlaceOrder
             // 
-            this.mIPlaceOrder.Name = "mIPlaceOrder";
-            this.mIPlaceOrder.Size = new System.Drawing.Size(194, 22);
-            this.mIPlaceOrder.Text = "Place Orders";
-            this.mIPlaceOrder.Click += new System.EventHandler(this.mIPlaceOrder_Click);
+            mIPlaceOrder.Name = "mIPlaceOrder";
+            mIPlaceOrder.Size = new Size(194, 22);
+            mIPlaceOrder.Text = "Place Orders";
+            mIPlaceOrder.Click += mIPlaceOrder_Click;
             // 
             // openOrdersToolStripMenuItem
             // 
-            this.openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
-            this.openOrdersToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.openOrdersToolStripMenuItem.Text = "Open Orders (Client)";
-            this.openOrdersToolStripMenuItem.Click += new System.EventHandler(this.openOrdersToolStripMenuItem_Click);
+            openOrdersToolStripMenuItem.Name = "openOrdersToolStripMenuItem";
+            openOrdersToolStripMenuItem.Size = new Size(194, 22);
+            openOrdersToolStripMenuItem.Text = "Open Orders (Client)";
+            openOrdersToolStripMenuItem.Click += openOrdersToolStripMenuItem_Click;
             // 
             // ordersToExecuteToolStripMenuItem
             // 
-            this.ordersToExecuteToolStripMenuItem.Name = "ordersToExecuteToolStripMenuItem";
-            this.ordersToExecuteToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.ordersToExecuteToolStripMenuItem.Text = "Orders To Execute (Db)";
-            this.ordersToExecuteToolStripMenuItem.Click += new System.EventHandler(this.ordersToExecuteToolStripMenuItem_Click);
+            ordersToExecuteToolStripMenuItem.Name = "ordersToExecuteToolStripMenuItem";
+            ordersToExecuteToolStripMenuItem.Size = new Size(194, 22);
+            ordersToExecuteToolStripMenuItem.Text = "Orders To Execute (Db)";
+            ordersToExecuteToolStripMenuItem.Click += ordersToExecuteToolStripMenuItem_Click;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(747, 460);
-            this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "MainForm";
-            this.Text = "Binance Bot - v26.0.1";
-            this.TopMost = true;
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(747, 460);
+            Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            IsMdiContainer = true;
+            MainMenuStrip = menuStrip1;
+            Name = "MainForm";
+            Text = "Binance Bot - v27.0.0";
+            TopMost = true;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
