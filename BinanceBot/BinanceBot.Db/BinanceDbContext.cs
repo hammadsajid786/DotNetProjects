@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BinanceBot.Db
 {
@@ -13,7 +8,7 @@ namespace BinanceBot.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-QI7TCIK;Initial Catalog=BinanceDb;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(@"Server=ALPHA;Initial Catalog=BinanceDb;Integrated Security=True;");
         }
     }
 }
